@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 
-function Form(){
+function App(){
  const [name,setName] = useState('');
 
  function handleNameChange(e){ setName(e.targe.value) }
