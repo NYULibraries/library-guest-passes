@@ -1,15 +1,19 @@
-import './App.css';
+import React,{useState} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+function Form(){
+ const [name,setName] = useState('');
+
+ function handleNameChange(e){ setName(e.targe.value) }
+ function handleSubmit(e){
+   e.preventDefault() 
+     console.log(name); }
+
+    return (
+        <form onSubmit={handleSubmit}>
+          <input placeholder="Name" value={name} onChange={handleNameChange}/>          
+          <button>Submit</button>
+       </form>
+    )
 }
 
 export default App;
