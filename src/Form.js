@@ -1,19 +1,29 @@
-import React,{useState} from 'react';
+import React,{ useState } from 'react';
 
 const Form = () =>{
- const [name,setName] = useState('');
- const [guest,setGuest] = useState('');
+  const [name,setName] = useState('');
+  const [guest,setGuest] = useState('');
 
- const handleNameChange = (e) => { setName(e.targe.value) }
- const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault() 
-    console.log(name); 
+    console.log(); 
+  }
+  const handleChange = (e, type) => {
+    let updateFn;
+    switch (type){
+      case 'name':
+        updateFn = setName;
+        break;
+      case 'guest':
+        updateFn = setGuest;
+        break;
+    }
   }
 
     return (
         <form onSubmit={handleSubmit}>
-          <input placeholder="Name" value={name} onChange={handleNameChange}/> 
-          {/* <input placeholder="Guest" value={guest} onChange= />          */}
+          <input placeholder="Name" value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <input placeholder="Guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
           <button>Submit</button>
        </form>
     )
