@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import { restrictionList, statusList } from './tools'
+import { restrictionList, statusList } from '../tools'
 
 const Form = () =>{
   const [name, setName] = useState('');
