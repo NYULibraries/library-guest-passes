@@ -52,10 +52,10 @@ const Form = () =>{
           <input placeholder="Employee Initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
           <input placeholder="ID Type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
           <select value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
-            {restrictionList.map(e => <option value={e}>{e}</option>)}
+            {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
           <select value={status} onChange={(e) => handleChange(e, 'status')}>
-            {statusList.map(e => <option value={e}>{e}</option>)}
+            {statusList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
           <input placeholder="notes" value={notes} onChange={(e) => handleChange(e, "notes")} />
           <button>Submit</button>
