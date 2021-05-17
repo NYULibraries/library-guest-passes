@@ -47,16 +47,23 @@ const Form = () =>{
 
     return (
         <form onSubmit={handleSubmit}>
+          <p>Name</p>
           <input placeholder="Name" value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <p>Guest</p>
           <input placeholder="Guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
+          <p>Employee Initials</p>
           <input placeholder="Employee Initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
+          <p>ID Type</p>
           <input placeholder="ID Type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
+          <p>Restrictions</p>
           <select value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
             {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
+          <p>Status</p>
           <select value={status} onChange={(e) => handleChange(e, 'status')}>
             {statusList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
+          <p>Notes</p>
           <input placeholder="notes" value={notes} onChange={(e) => handleChange(e, "notes")} />
           <button>Submit</button>
        </form>

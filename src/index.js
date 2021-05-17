@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import "./styles.scss";
 import Form from './components/Form';
 import Header from './components/Header';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Header />
-    <Form />
+    <div id="wrapper">
+      <Header />
+      <Form />
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );
