@@ -5,22 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #57068c;
+  background: #42056a;
+  display: flex;
+  justify-content: center;
 }
 
 #wrapper {
   background: #fff;
+  width: 40em;
+  margin: 10px;
+  padding: 50px;
+  #header {
+    hr{
+      color: #acb6c2;
+    }
+  }
   form {
     display: flex;
     flex-direction: column;
     input {
-      width: 40vw;
+      width: 30em;
     }
     select {
-      width: 40vw;
+      width: 30em;
     }
     button {
-      width: 40vw
+      width: 10em;
     }
   }
 };
