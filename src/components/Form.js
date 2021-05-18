@@ -3,6 +3,7 @@ import { restrictionList, statusList } from '../tools'
 
 const Form = () =>{
   const [name, setName] = useState('');
+  const [permission, setPermission] = useState('-- enter name for permission status--');
   const [guest, setGuest] = useState('');
   const [initials, setInitials] = useState('');
   const [typeOfId, setTypeOfId] = useState('');
@@ -57,6 +58,7 @@ const Form = () =>{
         <form onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
           <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <p>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
           <label htmlFor='employee_initials'>Employee Initials</label>
