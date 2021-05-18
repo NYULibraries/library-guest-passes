@@ -8,11 +8,13 @@ const Form = () =>{
   const [typeOfId, setTypeOfId] = useState('');
   const [restrictions, setRestrictions] = useState('');
   const [status, setStatus] = useState('');
+  const [issuedOn, setIssuedOn] = useState('');
+  const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault() 
-    const data = [name, guest, initials, typeOfId, restrictions, status, notes]
+    const data = [name, guest, initials, typeOfId, restrictions, status, notes, issuedOn]
     console.log(data); 
   }
   const handleChange = (e, type) => {
@@ -36,6 +38,12 @@ const Form = () =>{
         case 'status':
           updateFn = setStatus;
           break;
+        case 'issuedOn':
+          updateFn = setIssuedOn;
+          break;
+        case 'expiresOn':
+          updateFn = setExpiresOn;
+          break;
         case 'notes':
           updateFn = setNotes;
           break;
@@ -47,24 +55,28 @@ const Form = () =>{
 
     return (
         <form onSubmit={handleSubmit}>
-          <p>Name</p>
-          <input placeholder="Name" value={name} onChange={(e) => handleChange(e, "name")} /> 
-          <p>Guest</p>
-          <input placeholder="Guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
-          <p>Employee Initials</p>
-          <input placeholder="Employee Initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
-          <p>ID Type</p>
-          <input placeholder="ID Type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
-          <p>Restrictions</p>
-          <select value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
+          <label htmlFor='name'>Name</label>
+          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <label htmlFor='guest'>Guest</label>
+          <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
+          <label htmlFor='employee_initials'>Employee Initials</label>
+          <input id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
+          <label htmlFor='id_type'>ID Type</label>
+          <input id="id_type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
+          <label htmlFor='restrictions'>Restrictions</label>
+          <select id='restrictions' value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
             {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
-          <p>Status</p>
-          <select value={status} onChange={(e) => handleChange(e, 'status')}>
+          <label htmlFor='status'>Status</label>
+          <select id='status' value={status} onChange={(e) => handleChange(e, 'status')}>
             {statusList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
-          <p>Notes</p>
-          <input placeholder="notes" value={notes} onChange={(e) => handleChange(e, "notes")} />
+          <label htmlFor='issued_on'>Card Issued On</label>
+          <input id='issued_on' type='date' value={issuedOn} onChange={(e) => handleChange(e, 'issuedOn')} />
+          <label htmlFor='expires_on'>Expiration Date</label>
+          <input id='expires_on' type='date' value={expiresOn} onChange={(e) => handleChange(e, 'expiresOn')} />
+          <label htmlFor='notes'>Notes</label>
+          <input id='notes' value={notes} onChange={(e) => handleChange(e, 'notes')} />
           <button>Submit</button>
        </form>
     )
