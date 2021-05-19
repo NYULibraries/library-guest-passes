@@ -30,26 +30,26 @@ const Form = () =>{
       case 'initials':
         updateFn = setInitials;
         break;
-        case 'typeOfId':
-          updateFn = setTypeOfId;
-          break;
-        case 'restrictions':
-          updateFn = setRestrictions;
-          break;
-        case 'status':
-          updateFn = setStatus;
-          break;
-        case 'issuedOn':
-          updateFn = setIssuedOn;
-          break;
-        case 'expiresOn':
-          updateFn = setExpiresOn;
-          break;
-        case 'notes':
-          updateFn = setNotes;
-          break;
-        default:
-          return;
+      case 'typeOfId':
+        updateFn = setTypeOfId;
+        break;
+      case 'restrictions':
+        updateFn = setRestrictions;
+        break;
+      case 'status':
+        updateFn = setStatus;
+        break;
+      case 'issuedOn':
+        updateFn = setIssuedOn;
+        break;
+      case 'expiresOn':
+        updateFn = setExpiresOn;
+        break;
+      case 'notes':
+        updateFn = setNotes;
+        break;
+      default:
+        return;
     }
     updateFn(e.currentTarget.value);
   }
