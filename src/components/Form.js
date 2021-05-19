@@ -5,6 +5,7 @@ const Form = () =>{
   const [name, setName] = useState('');
   const [permission, setPermission] = useState('-- enter name for permission status--');
   const [guest, setGuest] = useState('');
+  const [guestPermission, setGuestPermission] = useState('-- enter name for permission status--');
   const [initials, setInitials] = useState('');
   const [typeOfId, setTypeOfId] = useState('');
   const [restrictions, setRestrictions] = useState('');
@@ -61,6 +62,7 @@ const Form = () =>{
           <p>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
+          <p>{guestPermission}</p>
           <label htmlFor='employee_initials'>Employee Initials</label>
           <input id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
           <label htmlFor='id_type'>ID Type</label>
