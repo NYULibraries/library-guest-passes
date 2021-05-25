@@ -56,17 +56,17 @@ const Form = () =>{
   }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form data-testid='passes-form' onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
-          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <input data-testid='form-input' id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
           <p>{permission}</p>
           <label htmlFor='guest'>Guest</label>
-          <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
+          <input data-testid='form-input' id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
           <p>{guestPermission}</p>
           <label htmlFor='employee_initials'>Employee Initials</label>
-          <input id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
+          <input data-testid='form-input' id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
           <label htmlFor='id_type'>ID Type</label>
-          <input id="id_type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
+          <input data-testid='form-input' id="id_type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
           <label htmlFor='restrictions'>Restrictions</label>
           <select id='restrictions' value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
             {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
@@ -76,11 +76,11 @@ const Form = () =>{
             {statusList.map(e => <option value={e} key={e}>{e}</option>)}
           </select>
           <label htmlFor='issued_on'>Card Issued On</label>
-          <input id='issued_on' type='date' value={issuedOn} onChange={(e) => handleChange(e, 'issuedOn')} />
+          <input data-testid='form-input' id='issued_on' type='date' value={issuedOn} onChange={(e) => handleChange(e, 'issuedOn')} />
           <label htmlFor='expires_on'>Expiration Date</label>
-          <input id='expires_on' type='date' value={expiresOn} onChange={(e) => handleChange(e, 'expiresOn')} />
+          <input data-testid='form-input' id='expires_on' type='date' value={expiresOn} onChange={(e) => handleChange(e, 'expiresOn')} />
           <label htmlFor='notes'>Notes</label>
-          <input id='notes' value={notes} onChange={(e) => handleChange(e, 'notes')} />
+          <input data-testid='form-input' id='notes' value={notes} onChange={(e) => handleChange(e, 'notes')} />
           <button>Submit</button>
        </form>
     )
