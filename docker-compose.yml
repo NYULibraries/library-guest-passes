@@ -4,3 +4,9 @@ services:
     build: .
     ports:
       - "3000:3000"
+  mysql:
+    image: library/mysql:8
+    expose:
+      - 3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
