@@ -1,5 +1,6 @@
 import React,{ useState } from 'react';
 import { restrictionList, statusList } from '../tools'
+import { checkPermission } from '../helpers'
 
 const Form = () =>{
   const [name, setName] = useState('');
@@ -55,10 +56,20 @@ const Form = () =>{
     updateFn(e.currentTarget.value);
   }
 
+  // const handleKeyUp = (e, type) =>{
+  //   switch (type){
+  //     case 'name':
+  //       checkPermission(e);
+  //       break;
+  //     default:
+  //       return;
+  //   }
+  // }
+
     return (
         <form onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
-          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
+          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} onKeyPress={setPermission('...searching...')} /> 
           <p>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
