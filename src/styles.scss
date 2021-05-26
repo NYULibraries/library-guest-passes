@@ -32,3 +32,22 @@ body {
     }
   }
 };
+
+@media only screen and (max-width: 800px){
+  #wrapper{
+    max-width: 50vw;
+    form {
+      input {
+        width: 20em;
+        margin: 10px 0px 10px 0px;
+      }
+      select {
+        width: 20em;
+        margin: 10px 0px 10px 0px;
+      }
+      button {
+        width: 10em;
+      }
+    }
+  }
+}
