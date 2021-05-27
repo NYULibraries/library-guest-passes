@@ -26,6 +26,7 @@ const Form = () =>{
   }, [name])
 
   useEffect(() => { 
+    setPermission('-- enter name for permission status--')
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
       setGuestPermission(guest)
