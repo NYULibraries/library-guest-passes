@@ -1,6 +1,6 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { restrictionList, statusList } from '../tools'
-import { checkPermission } from '../helpers'
+//import { checkPermission } from '../helpers'
 
 const Form = () =>{
   const [name, setName] = useState('');
@@ -15,11 +15,31 @@ const Form = () =>{
   const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
 
+  useEffect(() => {
+    setPermission('-- enter name for permission status--')
+    const delayDebounceFn = setTimeout(() => {
+      // Send Axios request here
+      setPermission(name)
+    }, 1500)
+    
+    return () => clearTimeout(delayDebounceFn)
+  }, [name])
+
+  useEffect(() => { 
+    const delayDebounceFn = setTimeout(() => {
+      // Send Axios request here
+      setGuestPermission(guest)
+    }, 1500)
+    
+    return () => clearTimeout(delayDebounceFn)
+  }, [guest])
+
   const handleSubmit = (e) => {
     e.preventDefault() 
     const data = [name, guest, initials, typeOfId, restrictions, status, notes, issuedOn]
     console.log(data); 
   }
+
   const handleChange = (e, type) => {
     let updateFn;
     switch (type){
@@ -56,20 +76,10 @@ const Form = () =>{
     updateFn(e.currentTarget.value);
   }
 
-  // const handleKeyUp = (e, type) =>{
-  //   switch (type){
-  //     case 'name':
-  //       checkPermission(e);
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  // }
-
     return (
         <form onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
-          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} onKeyPress={setPermission('...searching...')} /> 
+          <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
           <p>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
