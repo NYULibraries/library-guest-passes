@@ -81,10 +81,12 @@ const Form = () =>{
         <form onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
           <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
-          <p>{permission}</p>
+          <label htmlFor='permission'>Permission status</label>
+          <p id='permission'>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
-          <p>{guestPermission}</p>
+          <label htmlFor='guestPermission'>Permission status</label>
+          <p id='guestPermission'>{guestPermission}</p>
           <label htmlFor='employee_initials'>Employee Initials</label>
           <input id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
           <label htmlFor='id_type'>ID Type</label>
