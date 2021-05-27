@@ -4,9 +4,9 @@ import { restrictionList, statusList } from '../tools'
 
 const Form = () =>{
   const [name, setName] = useState('');
-  const [permission, setPermission] = useState('-- enter name for permission status--');
+  const [permission, setPermission] = useState('');
   const [guest, setGuest] = useState('');
-  const [guestPermission, setGuestPermission] = useState('-- enter name for permission status--');
+  const [guestPermission, setGuestPermission] = useState('');
   const [initials, setInitials] = useState('');
   const [typeOfId, setTypeOfId] = useState('');
   const [restrictions, setRestrictions] = useState('');
@@ -15,10 +15,16 @@ const Form = () =>{
   const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
 
+  const artificialPromise = () => {
+    setTimeout(()=> {
+      setPermission('-- enter name for permission status--')
+    }, 1500)
+  }
+
   useEffect(() => {
-    setPermission('-- enter name for permission status--')
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
+      artificialPromise();
       setPermission(name)
     }, 1500)
     
@@ -26,9 +32,9 @@ const Form = () =>{
   }, [name])
 
   useEffect(() => { 
-    setPermission('-- enter name for permission status--')
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
+      setPermission('-- enter name for permission status--')
       setGuestPermission(guest)
     }, 1500)
     
