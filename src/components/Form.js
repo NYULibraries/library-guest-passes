@@ -1,12 +1,11 @@
 import React,{ useState, useEffect } from 'react';
 import { restrictionList, statusList } from '../tools'
-//import { checkPermission } from '../helpers'
 
 const Form = () =>{
   const [name, setName] = useState('');
-  const [permission, setPermission] = useState('');
+  const [permission, setPermission] = useState('-- enter name for permission status--');
   const [guest, setGuest] = useState('');
-  const [guestPermission, setGuestPermission] = useState('');
+  const [guestPermission, setGuestPermission] = useState('-- enter name for permission status--');
   const [initials, setInitials] = useState('');
   const [typeOfId, setTypeOfId] = useState('');
   const [restrictions, setRestrictions] = useState('');
@@ -15,17 +14,10 @@ const Form = () =>{
   const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
 
-  const artificialPromise = () => {
-    setTimeout(()=> {
-      setPermission('-- enter name for permission status--')
-    }, 1500)
-  }
-
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
-      artificialPromise();
-      setPermission(name)
+      setPermission('-- enter name for permission status--')
     }, 1500)
     
     return () => clearTimeout(delayDebounceFn)
@@ -34,8 +26,7 @@ const Form = () =>{
   useEffect(() => { 
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
-      setPermission('-- enter name for permission status--')
-      setGuestPermission(guest)
+      setGuestPermission('-- enter name for permission status--')
     }, 1500)
     
     return () => clearTimeout(delayDebounceFn)
