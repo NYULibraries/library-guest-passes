@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { restrictionList, statusList } from '../tools'
 
 const Form = () =>{
@@ -14,11 +14,30 @@ const Form = () =>{
   const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      // Send Axios request here
+      setPermission('-- enter name for permission status--')
+    }, 1500)
+    
+    return () => clearTimeout(delayDebounceFn)
+  }, [name])
+
+  useEffect(() => { 
+    const delayDebounceFn = setTimeout(() => {
+      // Send Axios request here
+      setGuestPermission('-- enter name for permission status--')
+    }, 1500)
+    
+    return () => clearTimeout(delayDebounceFn)
+  }, [guest])
+
   const handleSubmit = (e) => {
     e.preventDefault() 
     const data = [name, guest, initials, typeOfId, restrictions, status, notes, issuedOn]
     console.log(data); 
   }
+
   const handleChange = (e, type) => {
     let updateFn;
     switch (type){
@@ -59,10 +78,12 @@ const Form = () =>{
         <form onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
           <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
-          <p>{permission}</p>
+          <label htmlFor='permission'>Permission status</label>
+          <p id='permission'>{permission}</p>
           <label htmlFor='guest'>Guest</label>
           <input id="guest" value={guest} onChange={(e) => handleChange(e, "guest")} />
-          <p>{guestPermission}</p>
+          <label htmlFor='guestPermission'>Permission status</label>
+          <p id='guestPermission'>{guestPermission}</p>
           <label htmlFor='employee_initials'>Employee Initials</label>
           <input id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
           <label htmlFor='id_type'>ID Type</label>
