@@ -6,12 +6,12 @@ const port = 5000
 //create connection
 
 const db = mysql.createConnection({
-  host: 'mysql',
+  host: 'db',
   user: 'root',
-  password: ''
+  password: 'test'
 });
 
-// Connect
+// // Connect
 db.connect((err) => {
   if(err) throw err;
   console.log('MySql Connected...');
