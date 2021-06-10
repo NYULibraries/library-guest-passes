@@ -10,4 +10,4 @@ RUN yarn install
 
 COPY . ./
 
-CMD ["yarn", "start-backend"]
+CMD ["yarn", "start-dev-backend"]

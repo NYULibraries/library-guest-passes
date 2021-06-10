@@ -20,4 +20,6 @@ services:
       dockerfile: ./Dockerfile.node
     ports:
       - "4000:5000"
+    depends_on: 
+      - db
 
