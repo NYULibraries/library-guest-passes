@@ -1,7 +1,13 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const { Sequelize } = require('sequelize')
+const db = require('../../db')
 
-const AccessLog = db.define('accesslog', {
+const People = db.define('people', {
+  user_id:{
+    type: Sequelize.INTEGER,
+    autoIncrement:true,
+    allowNull:false,
+    primaryKey:true
+  },
   name: {
     type: Sequelize.STRING,
     unique: true,
@@ -47,9 +53,15 @@ const AccessLog = db.define('accesslog', {
     unique: true,
     allowNull: false,
   },
+  loginCount: {
+    type: Sequelize.TINYINT,
+    allowNull: false,
+  },
   notes: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
   },
 });
+
+module.exports = People
