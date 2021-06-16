@@ -13,6 +13,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: test
     restart: always 
+    cap_add:
+      - SYS_NICE
 
   backend:
     build:
@@ -22,4 +24,7 @@ services:
       - "4000:5000"
     depends_on: 
       - db
+    volumes:
+      - .:/app
+      - ./migrations:/app/migrations
 

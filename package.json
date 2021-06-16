@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-backend": "node server/app.js",
-    "start-dev-backend": "sequelize db:create; node server/app.js"
+    "start-dev-backend": "sequelize db:create; sequelize db:migrate; node server/app.js"
   },
   "eslintConfig": {
     "extends": [
