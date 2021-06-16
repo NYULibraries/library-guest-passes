@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const app = express();
 const PORT = 5000;
 const HOST = '0.0.0.0';
-//const routes = require('./routes');
+const routes = require('./routes');
 
 const db = mysql.createConnection({
   host: 'db',

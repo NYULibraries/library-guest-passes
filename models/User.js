@@ -51,12 +51,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     cardissue: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       unique: true,
       allowNull: false,
     },
     cardexp: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       unique: true,
       allowNull: false,
     },
