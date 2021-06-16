@@ -1,7 +1,9 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
-const port = 5000
+const PORT = 5000;
+const HOST = '0.0.0.0';
+//const routes = require('./routes');
 
 const db = mysql.createConnection({
   host: 'db',
@@ -15,7 +17,8 @@ db.connect((err) => {
   console.log('MySql Connected...');
 });
 
+app.use(express.json())
+app.use('/', routes);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
