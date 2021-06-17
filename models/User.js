@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    user_id:{
+    id:{
       type: DataTypes.INTEGER,
       autoIncrement:true,
       allowNull:false,
@@ -22,61 +22,41 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     guest: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     initials: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     restrictions: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     idtype: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     cardissue: {
       type: DataTypes.DATE,
-      unique: true,
-      allowNull: false,
     },
     cardexp: {
       type: DataTypes.DATE,
-      unique: true,
-      allowNull: false,
     },
     userStatus: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
     loginCount: {
       type: DataTypes.TINYINT,
-      allowNull: false,
     },
     notes: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
     },
   }, {
       sequelize,
       modelName: 'User',
+      timestamps: false,
     });
   return User;
 };
