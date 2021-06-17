@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const app = express();
 const PORT = 5000;
 const HOST = '0.0.0.0';
@@ -19,6 +19,10 @@ db.connect((err) => {
 
 app.use(express.json())
 app.use('/', routes);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

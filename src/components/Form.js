@@ -1,5 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import { restrictionList, statusList } from '../tools'
+const axios = require('axios');
 
 const Form = () =>{
   const [name, setName] = useState('');
@@ -32,10 +33,29 @@ const Form = () =>{
     return () => clearTimeout(delayDebounceFn)
   }, [guest])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault() 
-    const data = [name, guest, initials, typeOfId, restrictions, status, notes, issuedOn]
-    console.log(data); 
+    const data = {
+      "name": name,
+      "guest": guest,
+      "initials": initials,
+      "restrictions": restrictions,
+      "status": status,
+      "idtype": typeOfId,
+      "cardissue": issuedOn,
+      "cardexp": expiresOn,
+      "notes": notes,
+    }
+
+    try {
+      await axios({
+        method: 'post',
+        url: 'http://localhost:5000/users',
+        data: data,
+      });
+    } catch (err){
+      console.log(err)
+    }
   }
 
   const handleChange = (e, type) => {
