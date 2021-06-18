@@ -24,7 +24,6 @@
     "start-backend": "node server/app.js",
     "start-dev-backend": "sequelize db:create; sequelize db:migrate; node server/app.js"
   },
-  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",

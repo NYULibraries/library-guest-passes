@@ -47,17 +47,17 @@ const Form = () =>{
     }
 
     try {
-      const response = await fetch("/", {
-        method: 'GET',
+      const response = await fetch("http://0.0.0.0:5000/users", {
+        method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-          'Content-Type': 'application/text'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json'
         },
         redirect: 'follow', 
         referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
       });
       console.log(response.text()); 
     } catch (err){
