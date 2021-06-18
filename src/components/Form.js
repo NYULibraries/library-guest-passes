@@ -1,6 +1,5 @@
 import React,{ useState, useEffect } from 'react';
 import { restrictionList, statusList } from '../tools'
-const axios = require('axios');
 
 const Form = () =>{
   const [name, setName] = useState('');
@@ -48,11 +47,19 @@ const Form = () =>{
     }
 
     try {
-      await axios({
-        method: 'post',
-        url: 'http://localhost:5000/users',
-        data: data,
+      const response = await fetch("/", {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/text'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', 
+        referrerPolicy: 'no-referrer',
       });
+      console.log(response.text()); 
     } catch (err){
       console.log(err)
     }
