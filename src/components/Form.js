@@ -47,7 +47,7 @@ const Form = () =>{
     }
 
     try {
-      const response = await fetch("http://0.0.0.0:5000/users", {
+      const response = await fetch("http://localhost:5000/users", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',

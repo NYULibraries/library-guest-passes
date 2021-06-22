@@ -10,33 +10,44 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       guest: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       initials: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       restrictions: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       status: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       idtype: {
         type: Sequelize.STRING,
+        allowNull:false
       },
       cardissue: {
         type: Sequelize.DATE,
+        allowNull:false
       },
       cardexp: {
         type: Sequelize.DATE,
+        allowNull:false
       },
       userStatus: {
         type: Sequelize.STRING,
+        allowNull:false,
+        defaultValue: 1
       },
       loginCount: {
         type: Sequelize.TINYINT,
+        allowNull:false
       },
       notes: {
         type: Sequelize.STRING,

@@ -22,33 +22,44 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     guest: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     initials: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     restrictions: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     status: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     idtype: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     cardissue: {
       type: DataTypes.DATE,
+      allowNull:false
     },
     cardexp: {
       type: DataTypes.DATE,
+      allowNull:false
     },
     userStatus: {
       type: DataTypes.STRING,
+      allowNull:false,
+      defaultValue: 1
     },
     loginCount: {
       type: DataTypes.TINYINT,
+      allowNull:false
     },
     notes: {
       type: DataTypes.STRING,
