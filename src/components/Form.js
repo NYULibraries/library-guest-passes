@@ -44,25 +44,20 @@ const Form = () =>{
       "cardissue": issuedOn,
       "cardexp": expiresOn,
       "notes": notes,
+      "loginCount": 8
     }
 
-    try {
       const response = await fetch("http://localhost:5000/users", {
         method: 'POST',
         mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
+        cache: 'default',
+        credentials: 'omit',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        redirect: 'follow', 
-        referrerPolicy: 'no-referrer',
         body: JSON.stringify(data)
       });
-      console.log(response.text()); 
-    } catch (err){
-      console.log(err)
-    }
+      console.log(response.text());
   }
 
   const handleChange = (e, type) => {
