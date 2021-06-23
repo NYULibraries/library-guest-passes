@@ -44,7 +44,6 @@ const Form = () =>{
       "cardissue": issuedOn,
       "cardexp": expiresOn,
       "notes": notes,
-      "loginCount": 8
     }
 
       const response = await fetch("http://localhost:5000/users", {
