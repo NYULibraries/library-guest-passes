@@ -14,7 +14,7 @@ const updateOrCreateUser = async (req, res) => {
         user
       })
   } catch (error) {
-      return res.status(500).json({ error: "Error:" , log: error})
+      return res.sendStatus(500)
   }
 }
 

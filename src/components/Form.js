@@ -11,6 +11,7 @@ const Form = () =>{
   const [issuedOn, setIssuedOn] = useState('');
   const [expiresOn, setExpiresOn] = useState('');
   const [notes, setNotes] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -34,17 +35,20 @@ const Form = () =>{
       "notes": notes,
     }
 
-      const response = await fetch("http://localhost:5000/users", {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'default',
-        credentials: 'omit',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-      console.log(response.text());
+    const response = await fetch("http://localhost:5000/users", {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    if(response.status === 500){
+      setErrorMsg("Oops! Something went wrong. Please fill out all fields.");
+    }
   }
 
   const handleChange = (e, type) => {
@@ -105,6 +109,9 @@ const Form = () =>{
           <label htmlFor='notes'>Notes</label>
           <input data-testid='form-input' id='notes' value={notes} onChange={(e) => handleChange(e, 'notes')} />
           <button>Submit</button>
+          <div className='msgWrap'>
+            <span id='errorMsg'>{errorMsg}</span>
+          </div>
        </form>
     )
 }
