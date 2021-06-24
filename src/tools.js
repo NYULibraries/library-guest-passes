@@ -1,4 +1,5 @@
 export const statusList = [
+  '',
   'Day Pass (Forgotten NYU ID)',
   'Day Pass (Forgotten NYU Friends ID)',
   'Day Pass (NYU ID not swiping)',
@@ -49,6 +50,7 @@ export const statusList = [
 ]
 
 export const restrictionList = [
+  '',
   'Gen. Coll. + AFC',
   'General Collection (no AFC)',
   'U.S./U.N. Docs (Present to 5th fl. Lib.)',
