@@ -2,12 +2,7 @@ const { User } = require('../../models');
 
 const updateOrCreateUser = async (req, res) => {
   try {
-      // const user = await User.create(req.body);
-      // return res.status(201).json({
-      //     user,
-      // });
       const foundUser = await User.findOne({where: { name: req.body.name }})
-      console.log(foundUser);
       if(!foundUser) {
         const user = await User.create(req.body);
         return res.status(201).json({
