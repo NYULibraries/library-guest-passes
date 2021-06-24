@@ -12,10 +12,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false
       },
-      guest: {
-        type: Sequelize.STRING,
-        allowNull:false
-      },
       initials: {
         type: Sequelize.STRING,
         allowNull:false

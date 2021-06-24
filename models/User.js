@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false
     },
-    guest: {
-      type: DataTypes.STRING,
-      allowNull:false
-    },
     initials: {
       type: DataTypes.STRING,
       allowNull:false
