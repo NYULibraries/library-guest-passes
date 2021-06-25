@@ -40,9 +40,9 @@ const Form = () =>{
       "initials": userInput.initials,
       "restrictions": userInput.restrictions,
       "status": userInput.status,
-      "idtype": userInput.typeOfId,
-      "cardissue": userInput.issuedOn,
-      "cardexp": userInput.expiresOn,
+      "idtype": userInput.idtype,
+      "cardissue": userInput.cardissue,
+      "cardexp": userInput.cardexp,
       "notes": userInput.notes,
     }
 
@@ -57,12 +57,11 @@ const Form = () =>{
       body: JSON.stringify(data)
     });
 
-    if(response.status === 500){
-      setErrorMsg("Oops! Something went wrong. Please fill out all fields.");
-    } else {
-      Object.keys(data).map(e => {
-        //return handleChange("", e);
-        console.log(e);
+      if(response.status === 500){
+        setErrorMsg("Oops! Something went wrong. Please fill out all fields.");
+      } else {
+        Object.keys(data).map(e => {
+          return setUserInput({[e]: ''});
       });
     };
   };
@@ -76,7 +75,7 @@ const Form = () =>{
         <label htmlFor='employee_initials'>Employee Initials</label>
         <input data-testid='form-input' name="initials" value={userInput.initials} onChange={handleChange} />
         <label htmlFor='id_type'>ID Type</label>
-        <input data-testid='form-input' name="typeOfId" value={userInput.typeOfId} onChange={handleChange} />
+        <input data-testid='form-input' name="idtype" value={userInput.idtype} onChange={handleChange} />
         <label htmlFor='restrictions'>Restrictions</label>
         <select name='restrictions' value={userInput.restrictions} onChange={handleChange}>
           {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
@@ -85,10 +84,10 @@ const Form = () =>{
         <select name='status' value={userInput.status} onChange={handleChange}>
           {statusList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
-        <label htmlFor='issued_on'>Card Issued On</label>
-        <input data-testid='form-input' name='issuedOn' type='date' value={userInput.issuedOn} onChange={handleChange} />
-        <label htmlFor='expires_on'>Expiration Date</label>
-        <input data-testid='form-input' name='expiresOn' type='date' value={userInput.expiresOn} onChange={handleChange} />
+        <label htmlFor='cardissue'>Card Issued On</label>
+        <input data-testid='form-input' name='cardissue' type='date' value={userInput.cardissue} onChange={handleChange} />
+        <label htmlFor='cardexp'>Expiration Date</label>
+        <input data-testid='form-input' name='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
         <label htmlFor='notes'>Notes</label>
         <input data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
         <button>Submit</button>
