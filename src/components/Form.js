@@ -1,38 +1,49 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools'
 
 const Form = () =>{
-  const [name, setName] = useState('');
+  const [userInput, setUserInput] = useReducer(
+    (state, newState) => ({...state, ...newState}),
+    {
+      name: '',
+      initials: '',
+      restrictions: '',
+      status: '',
+      typeOfId: '',
+      issuedOn: '',
+      expiresOn: '',
+      notes: '',
+    }
+  );
+
   const [permission, setPermission] = useState('-- enter name for permission status--');
-  const [initials, setInitials] = useState('');
-  const [typeOfId, setTypeOfId] = useState('');
-  const [restrictions, setRestrictions] = useState('');
-  const [status, setStatus] = useState('');
-  const [issuedOn, setIssuedOn] = useState('');
-  const [expiresOn, setExpiresOn] = useState('');
-  const [notes, setNotes] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      // Send Axios request here
-      setPermission('-- enter name for permission status--')
-    }, 1500)
+  const handleChange = evt => {
+    const { name, value} = evt.target;
+    setUserInput({[name]: value});
+  }
+
+  // useEffect(() => {
+  //   const delayDebounceFn = setTimeout(() => {
+  //     // Send Axios request here
+  //     setPermission('-- enter name for permission status--')
+  //   }, 1500)
     
-    return () => clearTimeout(delayDebounceFn)
-  }, [name])
+  //   return () => clearTimeout(delayDebounceFn)
+  // }, [name])
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
     const data = {
-      "name": name,
-      "initials": initials,
-      "restrictions": restrictions,
-      "status": status,
-      "idtype": typeOfId,
-      "cardissue": issuedOn,
-      "cardexp": expiresOn,
-      "notes": notes,
+      "name": userInput.name,
+      "initials": userInput.initials,
+      "restrictions": userInput.restrictions,
+      "status": userInput.status,
+      "idtype": userInput.typeOfId,
+      "cardissue": userInput.issuedOn,
+      "cardexp": userInput.expiresOn,
+      "notes": userInput.notes,
     }
 
     const response = await fetch("http://localhost:5000/users", {
@@ -48,36 +59,41 @@ const Form = () =>{
 
     if(response.status === 500){
       setErrorMsg("Oops! Something went wrong. Please fill out all fields.");
-    }
-  }
+    } else {
+      Object.keys(data).map(e => {
+        //return handleChange("", e);
+        console.log(e);
+      });
+    };
+  };
 
   return (
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
-        <input id='name' value={name} onChange={(e) => handleChange(e, "name")} /> 
+        <input name='name' value={userInput.name} onChange={handleChange} /> 
         <label htmlFor='permission'>Permission status</label>
-        <p id='permission'>{permission}</p>
+        <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>
-        <input data-testid='form-input' id="employee_initials" value={initials} onChange={(e) => handleChange(e, "initials")} />
+        <input data-testid='form-input' name="initials" value={userInput.initials} onChange={handleChange} />
         <label htmlFor='id_type'>ID Type</label>
-        <input data-testid='form-input' id="id_type" value={typeOfId} onChange={(e) => handleChange(e, "typeOfId")} />
+        <input data-testid='form-input' name="typeOfId" value={userInput.typeOfId} onChange={handleChange} />
         <label htmlFor='restrictions'>Restrictions</label>
-        <select id='restrictions' value={restrictions} onChange={(e) => handleChange(e, "restrictions")}>
+        <select name='restrictions' value={userInput.restrictions} onChange={handleChange}>
           {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='status'>Status</label>
-        <select id='status' value={status} onChange={(e) => handleChange(e, 'status')}>
+        <select name='status' value={userInput.status} onChange={handleChange}>
           {statusList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='issued_on'>Card Issued On</label>
-        <input data-testid='form-input' id='issued_on' type='date' value={issuedOn} onChange={(e) => handleChange(e, 'issuedOn')} />
+        <input data-testid='form-input' name='issuedOn' type='date' value={userInput.issuedOn} onChange={handleChange} />
         <label htmlFor='expires_on'>Expiration Date</label>
-        <input data-testid='form-input' id='expires_on' type='date' value={expiresOn} onChange={(e) => handleChange(e, 'expiresOn')} />
+        <input data-testid='form-input' name='expiresOn' type='date' value={userInput.expiresOn} onChange={handleChange} />
         <label htmlFor='notes'>Notes</label>
-        <input data-testid='form-input' id='notes' value={notes} onChange={(e) => handleChange(e, 'notes')} />
+        <input data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
         <button>Submit</button>
         <div className='msgWrap'>
-          <span id='errorMsg'>{errorMsg}</span>
+          <span name='errorMsg'>{errorMsg}</span>
         </div>
       </form>
   )
