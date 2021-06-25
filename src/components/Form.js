@@ -17,7 +17,7 @@ const Form = () =>{
   );
 
   const [permission, setPermission] = useState('-- enter name for permission status--');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleChange = evt => {
     const { name, value} = evt.target;
@@ -57,11 +57,12 @@ const Form = () =>{
       body: JSON.stringify(data)
     });
 
-      if(response.status === 500){
-        setErrorMsg("Oops! Something went wrong. Please fill out all fields.");
-      } else {
-        Object.keys(data).map(e => {
-          return setUserInput({[e]: ''});
+    if(response.status === 500){
+      setMessage("Oops! Something went wrong. Please fill out all fields.");
+    } else {
+      setMessage('Success!')
+      Object.keys(data).map(e => {
+        return setUserInput({[e]: ''});
       });
     };
   };
@@ -92,7 +93,7 @@ const Form = () =>{
         <input data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
         <button>Submit</button>
         <div className='msgWrap'>
-          <span name='errorMsg'>{errorMsg}</span>
+          <span name='message'>{message}</span>
         </div>
       </form>
   )
