@@ -21,7 +21,7 @@ For running the Sequelize commands:
   `docker-compose up`
 2. Go into the shell of the 'backend' container
   `docker-compose exec backend sh`
-3. Run any of the [Sequelize CLI]('https://github.com/sequelize/cli') commands in it. 
+3. Run any of the [Sequelize CLI](https://github.com/sequelize/cli) commands in it. 
 
 Similarly, to see the changes reflected in the 'db' container:
 1. Run the entire project
