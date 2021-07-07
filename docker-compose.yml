@@ -1,12 +1,27 @@
 version: "3.8"
 services:
   dev:
+    image: guest-passes-frontend
     build: .
+    command: ["yarn", "start"]
     ports:
       - "3000:3000"
     depends_on: 
         - backend
         - db
+
+  backend:
+    image: guest-passes-backend
+    build: .
+    command: ["yarn", "start-dev-backend"]
+    ports:
+      - "5000:5000"
+    depends_on: 
+      - db
+    volumes:
+      - .:/app
+      - ./migrations:/app/migrations
+      - node_modules:/app/node_modules
 
   db:
     image: mysql:5.7
@@ -18,15 +33,5 @@ services:
     cap_add:
       - SYS_NICE
 
-  backend:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.node
-    ports:
-      - "5000:5000"
-    depends_on: 
-      - db
-    volumes:
-      - .:/app
-      - ./migrations:/app/migrations
-
+volumes:
+  node_modules:
