@@ -1,6 +1,7 @@
 node_modules
 build
 .dockerignore
+.node-version
 **/.git
 **/.DS_Store
 **/node_modules

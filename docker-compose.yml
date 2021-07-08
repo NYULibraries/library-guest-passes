@@ -1,27 +1,31 @@
 version: "3.8"
+
+x-default-volumes: &default-volumes
+  volumes:
+    - .:/app
+    - ./migrations:/app/migrations
+    - node_modules:/app/node_modules
+
 services:
   dev:
-    image: guest-passes-frontend
+    image: guest-passes
     build: .
-    command: ["yarn", "start"]
+    command: ["/tmp/wait-for", "backend:5000", "--", "yarn", "start"]
     ports:
       - "3000:3000"
     depends_on: 
-        - backend
-        - db
+      - backend
+    <<: *default-volumes
 
   backend:
-    image: guest-passes-backend
+    image: guest-passes
     build: .
-    command: ["yarn", "start-dev-backend"]
+    command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
     ports:
       - "5000:5000"
     depends_on: 
       - db
-    volumes:
-      - .:/app
-      - ./migrations:/app/migrations
-      - node_modules:/app/node_modules
+    <<: *default-volumes
 
   db:
     image: mysql:5.7
