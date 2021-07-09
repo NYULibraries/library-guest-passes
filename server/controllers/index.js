@@ -20,8 +20,8 @@ const updateOrCreateUser = async (req, res) => {
 
 const lookupUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ where: {name: req.body.name }})
-     return users
+    const users = await User.findAll({ where: {name: req.query.name }})
+     return users.dataValues
   } catch (error) {
     return res.sendStatus(500)
   }
