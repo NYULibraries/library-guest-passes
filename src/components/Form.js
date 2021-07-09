@@ -24,19 +24,19 @@ const Form = () =>{
     setUserInput({[name]: value});
   }
 
-  useEffect((e) => {
-    const userLookup = fetch("http://localhost:5000/users", {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'default',
-      credentials: 'omit',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(e)
-    });
-    console.log(userLookup);
-  }, [userInput.name]);
+  // useEffect((e) => {
+  //   const userLookup = fetch("http://localhost:5000/users", {
+  //     method: 'POST',
+  //     mode: 'cors',
+  //     cache: 'default',
+  //     credentials: 'omit',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(e)
+  //   });
+  //   console.log(userLookup);
+  // }, [userInput.name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
