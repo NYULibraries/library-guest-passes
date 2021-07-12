@@ -18,6 +18,10 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
+          name: Docker Pull
+          command: |
+            docker-compose pull db
+      - run:
           name: Build
           command: |
             docker-compose build
