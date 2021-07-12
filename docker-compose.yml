@@ -37,5 +37,11 @@ services:
     cap_add:
       - SYS_NICE
 
+  curl-dev:
+    image: appropriate/curl
+    command: ["dev:3000"]
+    depends_on:
+      - dev
+
 volumes:
   node_modules:
