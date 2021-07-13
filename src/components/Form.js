@@ -18,25 +18,25 @@ const Form = () =>{
   
   const [permission, setPermission] = useState('-- enter name for permission status--');
   const [message, setMessage] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
     const { name, value} = evt.target;
     setUserInput({[name]: value});
   }
-
-  // useEffect((e) => {
-  //   const userLookup = fetch("http://localhost:5000/users", {
-  //     method: 'POST',
-  //     mode: 'cors',
-  //     cache: 'default',
-  //     credentials: 'omit',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(e)
-  //   });
-  //   console.log(userLookup);
-  // }, [userInput.name]);
+ 
+  useEffect(() => {
+    const userLookup = async () => {
+      const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
+      const response = await fetch(encodedURL);
+      return response;
+    };
+    const results = userLookup();
+    console.log("RESULTS VARIABLE:", results);
+    setSearchResults(results);
+    console.log("RESULTS STATE:", searchResults);
+  }, [userInput.name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
@@ -51,7 +51,7 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = await fetch("http://localhost:5000/users", {
+    const response = await fetch(fetchURL, {
       method: 'POST',
       mode: 'cors',
       cache: 'default',
