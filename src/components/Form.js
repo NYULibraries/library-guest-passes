@@ -27,11 +27,14 @@ const Form = () =>{
   }
  
   useEffect(() => {
+
     const userLookup = async () => {
       const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
       const response = await fetch(encodedURL);
-      return response;
+      const json = await response.json();
+      return json;
     };
+    
     const results = userLookup();
     console.log("RESULTS VARIABLE:", results);
     setSearchResults(results);
