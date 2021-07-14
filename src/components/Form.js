@@ -18,27 +18,36 @@ const Form = () =>{
   
   const [permission, setPermission] = useState('-- enter name for permission status--');
   const [message, setMessage] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState();
+  const [debouncedName, setDebouncedName] = useState(userInput.name);
   const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
     const { name, value} = evt.target;
     setUserInput({[name]: value});
   }
+
+
+  // de-bouncing the search term
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedName(userInput.name);
+    }, 500);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [userInput.name]);
  
   useEffect(() => {
-    const userLookup = async () => {
+    const searchUser = async () => {
       const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
-      const response = await fetch(encodedURL);
-      const json = response.json();
-      return json;
+      const { data } = await fetch(encodedURL);
+      setSearchResults(data);
     };
-    
-    const results = userLookup();
-    console.log("RESULTS VARIABLE:", results);
-    setSearchResults(results);
-    console.log("RESULTS STATE:", searchResults);
-  }, [userInput.name]);
+    if(debouncedName){
+      searchUser();
+    }
+  }, [debouncedName]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
