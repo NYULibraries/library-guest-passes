@@ -27,11 +27,10 @@ const Form = () =>{
   }
  
   useEffect(() => {
-
     const userLookup = async () => {
       const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
       const response = await fetch(encodedURL);
-      const json = await response.json();
+      const json = response.json();
       return json;
     };
     
