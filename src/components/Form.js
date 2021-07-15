@@ -1,5 +1,6 @@
-import React,{ useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools'
+import UserLookup from './UserLookup';
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
@@ -87,6 +88,7 @@ const Form = () =>{
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
         <input name='name' value={userInput.name} onChange={handleChange} /> 
+          <UserLookup name={userInput.name} results={searchResults} />
         <label htmlFor='permission'>Permission status</label>
         <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>
