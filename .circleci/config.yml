@@ -30,7 +30,7 @@ jobs:
           command: |
             docker-compose up -d
             timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
-            docker-compose run curl-dev | grep 'Library Privileges'
+            script/check_dev.sh
       - <<: *auth_quay
       - run:
           name: Push image
