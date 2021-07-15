@@ -20,7 +20,6 @@ const Form = () =>{
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState('');
-  const [render, setRender] = useState(false);
   const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
@@ -47,16 +46,9 @@ const Form = () =>{
 
     if(debouncedName){
       searchUser();
-      setRender(true);
-      console.log(searchResults, render)
+      console.log(searchResults)
     }
   }, [debouncedName]);
-
-  useEffect(() =>{
-    if(render){
-      setRender(false);
-    }
-  }, [render]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
