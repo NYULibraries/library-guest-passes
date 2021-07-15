@@ -39,13 +39,16 @@ const Form = () =>{
   }, [userInput.name]);
  
   useEffect(() => {
-    const searchUser = async () => {
+    const searchUser = () => {
       const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
-      const { data } = await fetch(encodedURL);
-      setSearchResults(data);
-    };
+      fetch(encodedURL)
+      .then(response => response.json())
+      .then(data => setSearchResults(data))
+    }
+
     if(debouncedName){
       searchUser();
+      console.log(searchResults)
     }
   }, [debouncedName]);
 
