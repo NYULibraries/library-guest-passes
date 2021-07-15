@@ -15,7 +15,7 @@ services:
       - "3000:3000"
     depends_on: 
       - backend
-    <<: *default-volumes
+        #<<: *default-volumes
 
   backend:
     image: guest-passes
@@ -25,7 +25,7 @@ services:
       - "5000:5000"
     depends_on: 
       - db
-    <<: *default-volumes
+        #<<: *default-volumes
 
   db:
     image: mysql:5.7
@@ -36,6 +36,12 @@ services:
     restart: always 
     cap_add:
       - SYS_NICE
+
+  curl-dev:
+    image: appropriate/curl
+    command: ["dev:3000"]
+    depends_on:
+      - dev
 
 volumes:
   node_modules:

@@ -5,7 +5,7 @@ ARG production
 ENV INSTALL_PATH /app
 
 COPY package.json yarn.lock /tmp/
-RUN cd /tmp && yarn install --frozen-lockfile --ignore-scripts $(if [[ ! -z $production ]]; then echo "--production"; fi) \ 
+RUN cd /tmp && yarn install $(if [[ ! -z $production ]]; then echo "--production"; fi) \ 
   && mkdir -p ${INSTALL_PATH} \
   && cd ${INSTALL_PATH} \
   && cp -R /tmp/node_modules ${INSTALL_PATH} \
