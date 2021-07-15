@@ -9,9 +9,9 @@ const Form = () =>{
       initials: '',
       restrictions: '',
       status: '',
-      typeOfId: '',
-      issuedOn: '',
-      expiresOn: '',
+      idtype: '',
+      cardexp: '2000-06-09T00:00:00.000Z',
+      cardissue: '2000-06-09T00:00:00.000Z',
       notes: '',
     }
   );
