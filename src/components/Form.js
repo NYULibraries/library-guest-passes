@@ -21,6 +21,7 @@ const Form = () =>{
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState('');
+  const [dropdownChosenUser, setDropdownChosenUser] = useState();
   const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
@@ -88,7 +89,7 @@ const Form = () =>{
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
         <input name='name' value={userInput.name} onChange={handleChange} /> 
-          <UserLookup name={userInput.name} results={searchResults} />
+          <UserLookup results={searchResults} />
         <label htmlFor='permission'>Permission status</label>
         <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>

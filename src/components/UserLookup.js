@@ -1,14 +1,14 @@
-import { useState, useEffect, useReducer } from 'react';
-
-const UserLookup = ({ name, results }) => {
+const UserLookup = ({ results }) => {
  if(results){
   return (
-    <div>
-      {results.map(e => <div>{e.id}</div>)}
+    <div className="dropdown">
+      <select>
+        {results.map((e) => <option key={e.id}>{e.name}</option>)}
+      </select>
     </div>
   )
  }
  return (<div></div>)
 }
-
+    
 export default UserLookup
