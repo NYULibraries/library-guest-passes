@@ -45,8 +45,7 @@ const Form = () =>{
     }
 
     if(debouncedName){
-      searchUser();
-      console.log(searchResults)
+      return searchUser();
     }
   }, [debouncedName]);
 
