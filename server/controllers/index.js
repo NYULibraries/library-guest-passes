@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { User } = require('../../models');
 const { emptyFields } = require('../tools');
 
@@ -25,7 +26,7 @@ const updateOrCreateUser = async (req, res) => {
 const lookupUsers = async (req, res) => {
   try {
     const users = await User.findAll({ where: {
-      name: req.query.name 
+      name: { [Op.startsWith]: `${req.query.name}` }
     }});
     console.log("BACKEND:", users);
     return res.status(200).json(users);
