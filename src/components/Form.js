@@ -14,7 +14,7 @@ const Form = () =>{
       cardexp: '2000-06-09T00:00:00.000Z',
       cardissue: '2000-06-09T00:00:00.000Z',
       notes: '',
-      dropdownChoice: []
+      dropdownChoice: {}
     }
   );
   
@@ -50,6 +50,21 @@ const Form = () =>{
       return searchUser();
     }
   }, [debouncedName]);
+
+  useEffect(() => {
+    const chosenUserData = {
+    "name": userInput.name,
+    "initials": userInput.initials,
+    "restrictions": userInput.restrictions,
+    "status": userInput.status,
+    "idtype": userInput.idtype,
+    }
+    if(userInput.dropdownChoice !== 'empty'){
+      Object.keys(chosenUserData).map(e => {
+        return setUserInput({[e]: 'hehe'});
+      });
+    }
+  }, [userInput.dropdownChoice]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
