@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger } from '../helpers';
+import { userLookupTrigger, fetchUser } from '../helpers';
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
@@ -64,16 +64,7 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = await fetch(fetchURL, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'default',
-      credentials: 'omit',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
+    const response = fetchUser(fetchURL, data);
 
     if(response.status === 500){
       setMessage("Oops! Something went wrong. Please fill out all fields.");
