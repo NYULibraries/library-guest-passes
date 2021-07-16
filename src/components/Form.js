@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
-import { restrictionList, statusList } from '../tools'
-import UserLookup from './UserLookup';
+import { restrictionList, statusList } from '../tools';
+import { userLookupTrigger } from '../helpers';
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
@@ -14,6 +14,7 @@ const Form = () =>{
       cardexp: '2000-06-09T00:00:00.000Z',
       cardissue: '2000-06-09T00:00:00.000Z',
       notes: '',
+      dropdownChoice: []
     }
   );
   
@@ -21,7 +22,6 @@ const Form = () =>{
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState('');
-  const [dropdownChosenUser, setDropdownChosenUser] = useState();
   const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
@@ -89,7 +89,7 @@ const Form = () =>{
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
         <input name='name' value={userInput.name} onChange={handleChange} /> 
-          <UserLookup results={searchResults} />
+          <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
         <label htmlFor='permission'>Permission status</label>
         <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>
