@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const HOST = '0.0.0.0';
+const HOST = process.env.HOST || '0.0.0.0';
 const routes = require('./routes');
 const cors = require('cors');
 
