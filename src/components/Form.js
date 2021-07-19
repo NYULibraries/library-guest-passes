@@ -1,6 +1,8 @@
 import React,{ useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools'
 
+const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
+
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({...state, ...newState}),
@@ -46,7 +48,7 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = await fetch("http://localhost:5000/users", {
+    const response = await fetch(`${backendDomain}/users`, {
       method: 'POST',
       mode: 'cors',
       cache: 'default',
