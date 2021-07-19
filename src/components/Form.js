@@ -1,7 +1,7 @@
 import React,{ useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools'
 
-const backendDomain = `${process.env.BACKEND_FULL_HOST || 'http://localhost:5000'}`
+const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
