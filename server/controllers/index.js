@@ -5,7 +5,7 @@ const { emptyFields } = require('../tools');
 const updateOrCreateUser = async (req, res) => {
   try {
     const foundUser = await User.findOne({where: { name: req.body.name }});
-    if(emptyFields(req.body) === false) return res.sendStatus(500);
+    if(emptyFields(req.body) === true) return res.sendStatus(500);
     else {
       if(!foundUser) {
         const user = await User.create(req.body);
