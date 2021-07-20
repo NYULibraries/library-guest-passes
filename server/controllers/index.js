@@ -38,7 +38,6 @@ const lookupUsers = async (req, res) => {
     const users = await User.findAll({ where: {
       name: { [Op.startsWith]: `${req.query.name}` }
     }});
-    console.log("BACKEND:", users);
     return res.status(200).json(users);
   } catch (error) {
     return res.sendStatus(500)
