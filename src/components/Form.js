@@ -11,8 +11,8 @@ const Form = () =>{
       restrictions: '',
       status: '',
       idtype: '',
-      cardexp: '2000-06-09T00:00:00.000Z',
-      cardissue: '2000-06-09T00:00:00.000Z',
+      cardexp: '',
+      cardissue: '',
       notes: '',
       dropdownChoice: ''
     }
@@ -83,12 +83,13 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = postUser(fetchURL, data);
+    const response = await postUser(fetchURL, data);
 
     if(response.status === 500){
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
-      setMessage('Success!')
+      setMessage('Success!');
+      setSearchResults('');
       Object.keys(data).map(e => {
         return setUserInput({[e]: ''});
       });
