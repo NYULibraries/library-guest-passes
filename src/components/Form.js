@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, fetchUser } from '../helpers';
+import { userLookupTrigger, postUser } from '../helpers';
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
@@ -60,7 +60,7 @@ const Form = () =>{
     "idtype": userInput.idtype,
     }
   
-    let chosenUser
+    let chosenUser;
     if(userInput.dropdownChoice !== ""){
       chosenUser = JSON.parse(userInput.dropdownChoice);
       return Object.keys(chosenUserData).map(e => {
@@ -82,7 +82,7 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = fetchUser(fetchURL, data);
+    const response = postUser(fetchURL, data);
 
     if(response.status === 500){
       setMessage("Oops! Something went wrong. Please fill out all fields.");
