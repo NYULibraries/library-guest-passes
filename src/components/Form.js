@@ -61,11 +61,12 @@ const Form = () =>{
     }
   
     let chosenUser;
+
     if(userInput.dropdownChoice !== ""){
       chosenUser = JSON.parse(userInput.dropdownChoice);
       return Object.keys(chosenUserData).map(e => {
         return setUserInput({[e]: chosenUser[e]});
-      });
+      }); 
     }
   }, [userInput.dropdownChoice]);
 

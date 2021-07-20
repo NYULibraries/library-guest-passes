@@ -1,5 +1,5 @@
 export const userLookupTrigger = (results, dropdownChoice, handleChange) => {
-  if(results){
+  if(results?.length){
     return (
       <div className="dropdown">
         <select name="dropdownChoice" value={dropdownChoice} onChange={handleChange}>
