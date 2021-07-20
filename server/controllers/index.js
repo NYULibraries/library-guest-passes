@@ -13,9 +13,19 @@ const updateOrCreateUser = async (req, res) => {
           user,
         });
       };
-      const user = await foundUser.increment('loginCount', { by: 1 });
+      const updateUserCount = await foundUser.increment('loginCount', { by: 1 });
+      const updateUserInfo = await foundUser.update({
+        initials: req.body.initials,
+        restrictions: req.body.restrictions,
+        status: req.body.status,
+        idtype: req.body.idtype,
+        cardexp: req.body.cardexp,
+        cardissue: req.body.cardissue,
+        notes: req.body.notes
+      })
       return res.status(200).json({
-        user
+        updateUserCount,
+        updateUserInfo
       })
     }
   } catch (error) {
