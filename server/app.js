@@ -6,10 +6,14 @@ const HOST = process.env.REACT_APP_HOST || '0.0.0.0';
 const routes = require('./routes');
 const cors = require('cors');
 
+const DB_HOST = process.env.DB_HOST || 'db';
+const DB_USER = process.env.DB_USER || 'root';
+const DB_PASSWORD = process.env.DB_PASSWORD || 'test';
+
 const db = mysql.createConnection({
-  host: 'db',
-  user: 'root',
-  password: 'test'
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD
 });
 
 db.connect((err) => {
