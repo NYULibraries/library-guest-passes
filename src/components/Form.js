@@ -14,7 +14,7 @@ const Form = () =>{
       cardexp: '2000-06-09T00:00:00.000Z',
       cardissue: '2000-06-09T00:00:00.000Z',
       notes: '',
-      dropdownChoice: {}
+      dropdownChoice: ''
     }
   );
   
@@ -59,9 +59,12 @@ const Form = () =>{
     "status": userInput.status,
     "idtype": userInput.idtype,
     }
-    if(userInput.dropdownChoice !== 'empty'){
-      Object.keys(chosenUserData).map(e => {
-        return setUserInput({[e]: 'hehe'});
+  
+    let chosenUser
+    if(userInput.dropdownChoice !== ""){
+      chosenUser = JSON.parse(userInput.dropdownChoice);
+      return Object.keys(chosenUserData).map(e => {
+        return setUserInput({[e]: chosenUser[e]});
       });
     }
   }, [userInput.dropdownChoice]);
