@@ -3,7 +3,7 @@ export const userLookupTrigger = (results, dropdownChoice, handleChange) => {
     return (
       <div className="dropdown">
         <select name="dropdownChoice" value={dropdownChoice} onChange={handleChange}>
-          <option key="empty" value="empty">Returning User?</option>
+          <option key="empty" value="">Returning User?</option>
           {results.map((e) => <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>)}
         </select>
       </div>
