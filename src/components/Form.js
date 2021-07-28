@@ -58,6 +58,7 @@ const Form = () =>{
     "restrictions": userInput.restrictions,
     "status": userInput.status,
     "idtype": userInput.idtype,
+    "notes": userInput.notes
     }
   
     let chosenUser;
@@ -67,8 +68,12 @@ const Form = () =>{
       return Object.keys(chosenUserData).map(e => {
         return setUserInput({[e]: chosenUser[e]});
       }); 
+    } else if (chosenUser === "") {
+      Object.keys(chosenUserData).map(e => {
+        return setUserInput({[e]: ''});
+      });
     }
-  }, [userInput.dropdownChoice]);
+  }, [userInput.dropdownChoice, userInput.name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
@@ -99,28 +104,28 @@ const Form = () =>{
   return (
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
-        <input name='name' value={userInput.name} onChange={handleChange} /> 
+        <input className='form-control' name='name' value={userInput.name} onChange={handleChange} /> 
           <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
         <label htmlFor='permission'>Permission status</label>
         <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>
-        <input data-testid='form-input' name="initials" value={userInput.initials} onChange={handleChange} />
+        <input className='form-control' data-testid='form-input' name="initials" value={userInput.initials} onChange={handleChange} />
         <label htmlFor='id_type'>ID Type</label>
-        <input data-testid='form-input' name="idtype" value={userInput.idtype} onChange={handleChange} />
+        <input className='form-control' data-testid='form-input' name="idtype" value={userInput.idtype} onChange={handleChange} />
         <label htmlFor='restrictions'>Restrictions</label>
-        <select name='restrictions' value={userInput.restrictions} onChange={handleChange}>
+        <select className='form-control' name='restrictions' value={userInput.restrictions} onChange={handleChange}>
           {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='status'>Status</label>
-        <select name='status' value={userInput.status} onChange={handleChange}>
+        <select className='form-control' name='status' value={userInput.status} onChange={handleChange}>
           {statusList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='cardissue'>Card Issued On</label>
-        <input data-testid='form-input' name='cardissue' type='date' value={userInput.cardissue} onChange={handleChange} />
+        <input className='form-control' data-testid='form-input' name='cardissue' type='date' value={userInput.cardissue} onChange={handleChange} />
         <label htmlFor='cardexp'>Expiration Date</label>
-        <input data-testid='form-input' name='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
+        <input className='form-control' data-testid='form-input' name='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
         <label htmlFor='notes'>Notes</label>
-        <input data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
+        <textarea className='form-control' data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
         <button>Submit</button>
         <div className='msgWrap'>
           <span name='message'>{message}</span>
