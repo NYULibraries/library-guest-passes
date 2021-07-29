@@ -29,6 +29,12 @@ const Form = () =>{
     setUserInput({[name]: value});
   }
 
+  const emptyForm = (obj) => {
+    Object.keys(obj).map(e => {
+      return setUserInput({[e]: ''});
+    });
+  }
+ 
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedName(userInput.name);
@@ -68,12 +74,8 @@ const Form = () =>{
       return Object.keys(chosenUserData).map(e => {
         return setUserInput({[e]: chosenUser[e]});
       }); 
-    } else if (chosenUser === "") {
-      Object.keys(chosenUserData).map(e => {
-        return setUserInput({[e]: ''});
-      });
     }
-  }, [userInput.dropdownChoice, userInput.name]);
+  }, [userInput.dropdownChoice]);
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
@@ -95,14 +97,12 @@ const Form = () =>{
     } else {
       setMessage('Success!');
       setSearchResults('');
-      Object.keys(data).map(e => {
-        return setUserInput({[e]: ''});
-      });
+      emptyForm(userInput)
     };
   };
 
   return (
-      <form data-testid='passes-form' onSubmit={handleSubmit}>
+      <form data-testid='passes-form' onSubmit={handleSubmit} autoComplete="off">
         <label htmlFor='name'>Name</label>
         <input className='form-control' name='name' value={userInput.name} onChange={handleChange} /> 
           <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
@@ -126,7 +126,10 @@ const Form = () =>{
         <input className='form-control' data-testid='form-input' name='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
         <label htmlFor='notes'>Notes</label>
         <textarea className='form-control' data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
-        <button>Submit</button>
+        <div className='btn-group' role='group'>
+          <button className='btn btn-primary' type='submit'>Submit</button>
+          <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput)}>Clear</button>
+        </div>
         <div className='msgWrap'>
           <span name='message'>{message}</span>
         </div>
