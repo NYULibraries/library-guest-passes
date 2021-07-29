@@ -37,6 +37,13 @@ services:
     cap_add:
       - SYS_NICE
 
+  test:
+    image: guest-passes
+    build: .
+    command: ["/tmp/wait-for", "db:3306", "--", "npm", "run", "test"]
+    depends_on: 
+      - db
+
   curl-dev:
     image: appropriate/curl
     command: ["dev:3000"]
