@@ -72,7 +72,7 @@ const Form = () =>{
   return (
       <form data-testid='passes-form' onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
-        <input name='name' value={userInput.name} onChange={handleChange} /> 
+        <input data-testid='form-input' name='name' value={userInput.name} onChange={handleChange} /> 
         <label htmlFor='permission'>Permission status</label>
         <p name='permission'>{permission}</p>
         <label htmlFor='employee_initials'>Employee Initials</label>
