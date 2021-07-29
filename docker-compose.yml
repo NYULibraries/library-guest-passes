@@ -40,7 +40,7 @@ services:
   test:
     image: guest-passes
     build: .
-    command: ["/tmp/wait-for", "db:3306", "--", "npm", "run", "test"]
+    command: ["/tmp/wait-for", "db:3306", "--", "npm", "test", "--", "--watchAll=false"]
     depends_on: 
       - db
 
