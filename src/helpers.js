@@ -24,3 +24,9 @@ export const postUser = async (url, data) => {
     body: JSON.stringify(data)
   });
 }
+
+export const emptyForm = (fieldsToEmpty, fn) => {
+  Object.keys(fieldsToEmpty).map(e => {
+    return fn({[e]: ''});
+  });
+}

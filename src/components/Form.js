@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, postUser } from '../helpers';
+import { userLookupTrigger, postUser, emptyForm } from '../helpers';
 
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
@@ -27,12 +27,6 @@ const Form = () =>{
   const handleChange = evt => {
     const { name, value} = evt.target;
     setUserInput({[name]: value});
-  }
-
-  const emptyForm = (obj) => {
-    Object.keys(obj).map(e => {
-      return setUserInput({[e]: ''});
-    });
   }
  
   useEffect(() => {
@@ -97,7 +91,7 @@ const Form = () =>{
     } else {
       setMessage('Success!');
       setSearchResults('');
-      emptyForm(userInput)
+      emptyForm(userInput, setUserInput)
     };
   };
 
@@ -128,7 +122,7 @@ const Form = () =>{
         <textarea className='form-control' data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
         <div className='btn-group' role='group'>
           <button className='btn btn-primary' type='submit'>Submit</button>
-          <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput)}>Clear</button>
+          <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput, setUserInput)}>Clear</button>
         </div>
         <div className='msgWrap'>
           <span name='message'>{message}</span>
