@@ -107,11 +107,11 @@ const Form = () =>{
         <label htmlFor='id_type'>ID Type</label>
         <input className='form-control' data-testid='form-input' name="idtype" value={userInput.idtype} onChange={handleChange} />
         <label htmlFor='restrictions'>Restrictions</label>
-        <select className='form-control' name='restrictions' value={userInput.restrictions} onChange={handleChange}>
+        <select className='form-select' name='restrictions' value={userInput.restrictions} onChange={handleChange}>
           {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='status'>Status</label>
-        <select className='form-control' name='status' value={userInput.status} onChange={handleChange}>
+        <select className='form-select' name='status' value={userInput.status} onChange={handleChange}>
           {statusList.map(e => <option value={e} key={e}>{e}</option>)}
         </select>
         <label htmlFor='cardissue'>Card Issued On</label>
