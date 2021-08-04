@@ -97,35 +97,37 @@ const Form = () =>{
 
   return (
       <form data-testid='passes-form' onSubmit={handleSubmit} autoComplete="off">
-        <label htmlFor='name'>Name</label>
-        <input className='form-control' name='name' value={userInput.name} onChange={handleChange} /> 
-          <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
-        <label htmlFor='permission'>Permission status</label>
-        <p name='permission'>{permission}</p>
-        <label htmlFor='employee_initials'>Employee Initials</label>
-        <input className='form-control' data-testid='form-input' name="initials" value={userInput.initials} onChange={handleChange} />
-        <label htmlFor='id_type'>ID Type</label>
-        <input className='form-control' data-testid='form-input' name="idtype" value={userInput.idtype} onChange={handleChange} />
-        <label htmlFor='restrictions'>Restrictions</label>
-        <select className='form-select' name='restrictions' value={userInput.restrictions} onChange={handleChange}>
-          {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
-        </select>
-        <label htmlFor='status'>Status</label>
-        <select className='form-select' name='status' value={userInput.status} onChange={handleChange}>
-          {statusList.map(e => <option value={e} key={e}>{e}</option>)}
-        </select>
-        <label htmlFor='cardissue'>Card Issued On</label>
-        <input className='form-control' data-testid='form-input' name='cardissue' type='date' value={userInput.cardissue} onChange={handleChange} />
-        <label htmlFor='cardexp'>Expiration Date</label>
-        <input className='form-control' data-testid='form-input' name='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
-        <label htmlFor='notes'>Notes</label>
-        <textarea className='form-control' data-testid='form-input' name='notes' value={userInput.notes} onChange={handleChange} />
-        <div className='btn-group' role='group'>
-          <button className='btn btn-primary' type='submit'>Submit</button>
-          <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput, setUserInput)}>Clear</button>
-        </div>
-        <div className='msgWrap'>
-          <span name='message'>{message}</span>
+        <div className='form-group'>
+          <label htmlFor='name'>Name</label>
+          <input className='form-control' name='name' id='name' value={userInput.name} onChange={handleChange} /> 
+            <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
+          <label htmlFor='permission'>Permission status</label>
+          <p name='permission'>{permission}</p>
+          <label htmlFor='employee_initials'>Employee Initials</label>
+          <input className='form-control' data-testid='form-input' name="initials" id='initials' value={userInput.initials} onChange={handleChange} />
+          <label htmlFor='id_type'>ID Type</label>
+          <input className='form-control' data-testid='form-input' name="idtype" id='idtype' value={userInput.idtype} onChange={handleChange} />
+          <label htmlFor='restrictions'>Restrictions</label>
+          <select className='form-select' name='restrictions' id='restrictions'  value={userInput.restrictions} onChange={handleChange}>
+            {restrictionList.map(e => <option value={e} key={e}>{e}</option>)}
+          </select>
+          <label htmlFor='status'>Status</label>
+          <select className='form-select' name='status' id='status' value={userInput.status} onChange={handleChange}>
+            {statusList.map(e => <option value={e} key={e}>{e}</option>)}
+          </select>
+          <label htmlFor='cardissue'>Card Issued On</label>
+          <input className='form-control' data-testid='form-input' name='cardissue' id='cardissue' type='date' value={userInput.cardissue} onChange={handleChange} />
+          <label htmlFor='cardexp'>Expiration Date</label>
+          <input className='form-control' data-testid='form-input' name='cardexp' id='cardexp' type='date' value={userInput.cardexp} onChange={handleChange} />
+          <label htmlFor='notes'>Notes</label>
+          <textarea className='form-control' data-testid='form-input' name='notes' id='notes' value={userInput.notes} onChange={handleChange} />
+          <div className='btn-group ' role='group'>
+            <button className='btn btn-primary' type='submit'>Submit</button>
+            <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput, setUserInput)}>Clear</button>
+          </div>
+          <div className='msgWrap'>
+            <span name='message'>{message}</span>
+          </div>
         </div>
       </form>
   )
