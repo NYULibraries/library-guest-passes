@@ -13,7 +13,7 @@ export const userLookupTrigger = (results, dropdownChoice, handleChange) => {
 }
 
 export const postUser = async (url, data) => {
-  return await fetch(url, {
+  return await fetch(`${url}/users`, {
     method: 'POST',
     mode: 'cors',
     cache: 'default',

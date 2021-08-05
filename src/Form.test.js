@@ -10,13 +10,13 @@ test('renders form', () => {
 test('renders form', () => {
   const arrayOfInputs = [
     'name', 
-    'employee_initials',
-    'id_type',
-    'issued_on',
-    'expires_on',
+    'initials',
+    'idtype',
+    'cardissue',
+    'cardexp',
     'notes',
   ]
   const formElements = screen.getAllByTestId('form-input');
-  const formInputs = formElements.map((e) => e.getAttribute('id'))
-  expect(formInputs).toStrictEqual(arrayOfInputs);
+  const formInputs = formElements.map((e) => e.getAttribute('name'))
+  expect(formInputs).toEqual(arrayOfInputs);
 });
