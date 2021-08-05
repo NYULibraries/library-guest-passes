@@ -104,9 +104,9 @@ const Form = () =>{
             <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
           <label htmlFor='permission'>Permission status</label>
           <p name='permission'>{permission}</p>
-          <label htmlFor='employee_initials'>Employee Initials</label>
+          <label htmlFor='initials'>Employee Initials</label>
           <input className='form-control' data-testid='form-input' name="initials" id='initials' value={userInput.initials} onChange={handleChange} />
-          <label htmlFor='id_type'>ID Type</label>
+          <label htmlFor='idtype'>ID Type</label>
           <input className='form-control' data-testid='form-input' name="idtype" id='idtype' value={userInput.idtype} onChange={handleChange} />
           <label htmlFor='restrictions'>Restrictions</label>
           <select className='form-select' name='restrictions' id='restrictions'  value={userInput.restrictions} onChange={handleChange}>
