@@ -2,6 +2,8 @@ import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
 import { userLookupTrigger, postUser, emptyForm } from '../helpers';
 
+const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
+
 const Form = () =>{
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({...state, ...newState}),
@@ -22,7 +24,6 @@ const Form = () =>{
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState('');
-  const fetchURL = 'http://localhost:5000/users'
 
   const handleChange = evt => {
     const { name, value} = evt.target;
@@ -40,7 +41,7 @@ const Form = () =>{
  
   useEffect(() => {
     const searchUser = () => {
-      const encodedURL = encodeURI(fetchURL + "?name=" + userInput.name)
+      const encodedURL = encodeURI(backendDomain + "/users/?name=" + userInput.name)
       fetch(encodedURL)
       .then(response => response.json())
       .then(data => setSearchResults(data))
@@ -84,7 +85,7 @@ const Form = () =>{
       "notes": userInput.notes,
     }
 
-    const response = await postUser(fetchURL, data);
+    const response = await postUser(backendDomain, data);
 
     if(response.status === 500){
       setMessage("Oops! Something went wrong. Please fill out all fields.");

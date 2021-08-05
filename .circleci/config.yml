@@ -28,6 +28,10 @@ jobs:
       - run:
           name: Test
           command: |
+            docker-compose run test
+      - run:
+          name: Test if dev starts properly
+          command: |
             docker-compose up -d
             timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
             script/check_dev.sh
