@@ -7,7 +7,7 @@ import Header from './components/Header';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div id="wrapper">
+    <div id="wrapper" role='main'>
       <Header />
       <Form />
     </div>
