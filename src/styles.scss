@@ -48,12 +48,8 @@ body {
       width: 17em;
     }
     form {
-      input, select {
+      input, select, .btn-group, div.dropdown {
         width: 17em;
-        margin: 10px 0px 10px 0px;
-      }
-      button {
-        margin-top: 10px;
       }
       #errorMsg {
         width: 15em;
