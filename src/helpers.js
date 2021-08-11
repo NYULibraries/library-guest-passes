@@ -1,4 +1,4 @@
-export const userLookupTrigger = (results, dropdownChoice, handleChange) => {
+const userLookupTrigger = (results, dropdownChoice, handleChange) => {
   if(results?.length){
     return (
       <div className="dropdown input-group mb-3">
@@ -12,7 +12,7 @@ export const userLookupTrigger = (results, dropdownChoice, handleChange) => {
    return (<div></div>)
 }
 
-export const postUser = async (url, data) => {
+const postUser = async (url, data) => {
   return await fetch(`${url}/users`, {
     method: 'POST',
     mode: 'cors',
@@ -25,11 +25,41 @@ export const postUser = async (url, data) => {
   });
 }
 
-export const emptyForm = (fieldsToEmpty, fn, optionalfn) => {
+const emptyForm = (fieldsToEmpty, fn, optionalfn) => {
   Object.keys(fieldsToEmpty).map(e => {
     return fn({[e]: ''});
   });
   if(optionalfn){
     optionalfn('');
   };
+}
+
+const delayedSearchEffect = (fn, element) => {
+  const timerId = setTimeout(() => {
+    fn(element);
+  }, 500);
+  return () => {
+    clearTimeout(timerId);
+  };
+}
+
+const searchUserEffect = (url, name, fn, trigger) => {
+  const searchUser = () => {
+    const encodedURL = encodeURI(url + "/users/?name=" + name)
+    fetch(encodedURL)
+    .then(response => response.json())
+    .then(data => fn(data))
+  }
+
+  if(trigger){
+    return searchUser();
+  }
+}
+
+export {
+  userLookupTrigger,
+  postUser,
+  emptyForm,
+  delayedSearchEffect,
+  searchUserEffect
 }

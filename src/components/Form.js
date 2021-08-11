@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, postUser, emptyForm } from '../helpers';
+import { userLookupTrigger, postUser, emptyForm, delayedSearchEffect, searchUserEffect } from '../helpers';
 
 const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
 
@@ -31,25 +31,11 @@ const Form = () =>{
   }
  
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedName(userInput.name);
-    }, 500);
-    return () => {
-      clearTimeout(timerId);
-    };
+    delayedSearchEffect(setDebouncedName, userInput.name);
   }, [userInput.name]);
  
   useEffect(() => {
-    const searchUser = () => {
-      const encodedURL = encodeURI(backendDomain + "/users/?name=" + userInput.name)
-      fetch(encodedURL)
-      .then(response => response.json())
-      .then(data => setSearchResults(data))
-    }
-
-    if(debouncedName){
-      return searchUser();
-    }
+    searchUserEffect(backendDomain, userInput.name, setSearchResults, debouncedName);
   }, [debouncedName]);
 
   useEffect(() => {
