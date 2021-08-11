@@ -34,7 +34,7 @@ const emptyForm = (fieldsToEmpty, fn, optionalfn) => {
   };
 }
 
-const delayedSearchEffect = (fn, element) => {
+const delaySearchEffect = (fn, element) => {
   const timerId = setTimeout(() => {
     fn(element);
   }, 500);
@@ -56,10 +56,22 @@ const searchUserEffect = (url, name, fn, trigger) => {
   }
 }
 
+const dropdownChoiceEffect = (choice, obj, fn ) => {
+  let chosenUser;
+
+  if(choice !== ""){
+    chosenUser = JSON.parse(choice);
+    return Object.keys(obj).map(e => {
+      return fn({[e]: chosenUser[e]});
+    }); 
+  }
+}
+
 export {
   userLookupTrigger,
   postUser,
   emptyForm,
-  delayedSearchEffect,
-  searchUserEffect
+  delaySearchEffect,
+  searchUserEffect,
+  dropdownChoiceEffect
 }

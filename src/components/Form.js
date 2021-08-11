@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, postUser, emptyForm, delayedSearchEffect, searchUserEffect } from '../helpers';
+import { userLookupTrigger, postUser, emptyForm, delaySearchEffect, searchUserEffect, dropdownChoiceEffect } from '../helpers';
 
 const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
 
@@ -31,7 +31,7 @@ const Form = () =>{
   }
  
   useEffect(() => {
-    delayedSearchEffect(setDebouncedName, userInput.name);
+    delaySearchEffect(setDebouncedName, userInput.name);
   }, [userInput.name]);
  
   useEffect(() => {
@@ -47,15 +47,8 @@ const Form = () =>{
     "idtype": userInput.idtype,
     "notes": userInput.notes
     }
-  
-    let chosenUser;
 
-    if(userInput.dropdownChoice !== ""){
-      chosenUser = JSON.parse(userInput.dropdownChoice);
-      return Object.keys(chosenUserData).map(e => {
-        return setUserInput({[e]: chosenUser[e]});
-      }); 
-    }
+    dropdownChoiceEffect(userInput.dropdownChoice, chosenUserData, setUserInput)
   }, [userInput.dropdownChoice]);
 
   const handleSubmit = async (e) => {
