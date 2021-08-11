@@ -70,7 +70,6 @@ const Form = () =>{
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
       setMessage('Success!');
-      setSearchResults('');
       emptyForm(userInput, setUserInput, setSearchResults)
     };
   };
