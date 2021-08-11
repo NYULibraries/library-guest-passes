@@ -25,8 +25,11 @@ export const postUser = async (url, data) => {
   });
 }
 
-export const emptyForm = (fieldsToEmpty, fn) => {
+export const emptyForm = (fieldsToEmpty, fn, optionalfn) => {
   Object.keys(fieldsToEmpty).map(e => {
     return fn({[e]: ''});
   });
+  if(optionalfn){
+    optionalfn('');
+  };
 }

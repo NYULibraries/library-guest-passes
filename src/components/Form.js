@@ -92,7 +92,7 @@ const Form = () =>{
     } else {
       setMessage('Success!');
       setSearchResults('');
-      emptyForm(userInput, setUserInput)
+      emptyForm(userInput, setUserInput, setSearchResults)
     };
   };
 
@@ -124,7 +124,7 @@ const Form = () =>{
           <textarea className='form-control' data-testid='form-input' name='notes' id='notes' value={userInput.notes} onChange={handleChange} />
           <div className='btn-group ' role='group'>
             <button className='btn btn-primary' type='submit'>Submit</button>
-            <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput, setUserInput)}>Clear</button>
+            <button className='btn btn-secondary' type='button' onClick={() => emptyForm(userInput, setUserInput, setSearchResults)}>Clear</button>
           </div>
           <div className='msgWrap'>
             <span name='message'>{message}</span>
