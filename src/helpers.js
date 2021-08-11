@@ -25,12 +25,12 @@ const postUser = async (url, data) => {
   });
 }
 
-const emptyForm = (fieldsToEmpty, fn, optionalfn) => {
+const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
   Object.keys(fieldsToEmpty).map(e => {
     return fn({[e]: ''});
   });
-  if(optionalfn){
-    optionalfn('');
+  if(optionalFn){
+    optionalFn('');
   };
 }
 
@@ -67,11 +67,24 @@ const dropdownChoiceEffect = (choice, obj, fn ) => {
   }
 }
 
+const eraseMessageEffect = (msg, fn) => {
+  if(msg.includes('Success')){
+    setTimeout(() => {
+      fn('')
+    }, 1500);
+  } else if (msg.includes('Oops')) {
+    setTimeout(() => {
+      fn('')
+    }, 2000);
+  }
+}
+
 export {
   userLookupTrigger,
   postUser,
   emptyForm,
   delaySearchEffect,
   searchUserEffect,
-  dropdownChoiceEffect
+  dropdownChoiceEffect,
+  eraseMessageEffect
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, postUser, emptyForm, delaySearchEffect, searchUserEffect, dropdownChoiceEffect } from '../helpers';
+import { userLookupTrigger, postUser, emptyForm, delaySearchEffect, searchUserEffect, dropdownChoiceEffect, eraseMessageEffect } from '../helpers';
 
 const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
 
@@ -48,8 +48,12 @@ const Form = () =>{
     "notes": userInput.notes
     }
 
-    dropdownChoiceEffect(userInput.dropdownChoice, chosenUserData, setUserInput)
+    dropdownChoiceEffect(userInput.dropdownChoice, chosenUserData, setUserInput);
   }, [userInput.dropdownChoice]);
+
+  useEffect(() => {
+    eraseMessageEffect(message, setMessage);
+  }, [message])
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
