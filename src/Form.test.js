@@ -7,7 +7,7 @@ test('renders form', () => {
   expect(formElement).toBeInTheDocument();
 });
 
-test('renders form', () => {
+test('renders form inputs', () => {
   const arrayOfInputs = [
     'name', 
     'initials',
@@ -16,6 +16,7 @@ test('renders form', () => {
     'cardexp',
     'notes',
   ]
+
   const formElements = screen.getAllByTestId('form-input');
   const formInputs = formElements.map((e) => e.getAttribute('name'))
   expect(formInputs).toEqual(arrayOfInputs);

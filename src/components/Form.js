@@ -100,7 +100,7 @@ const Form = () =>{
       <form data-testid='passes-form' onSubmit={handleSubmit} autoComplete="off">
         <div className='form-group'>
           <label htmlFor='name'>Name</label>
-          <input className='form-control' name='name' id='name' value={userInput.name} onChange={handleChange} /> 
+          <input className='form-control' data-testid='form-input' name='name' id='name' value={userInput.name} onChange={handleChange} /> 
             <div>{userLookupTrigger(searchResults, userInput.dropdownChoice, handleChange)}</div>
           <label htmlFor='permission'>Permission status</label>
           <p name='permission'>{permission}</p>
