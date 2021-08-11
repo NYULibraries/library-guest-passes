@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import { restrictionList, statusList } from '../tools';
-import { userLookupTrigger, postUser, emptyForm, delaySearchEffect, searchUserEffect, dropdownChoiceEffect, eraseMessageEffect } from '../helpers';
+import { userLookupTrigger, postUser, emptyForm, searchUserEffect, dropdownChoiceEffect, eraseMessageEffect } from '../helpers';
 
 const backendDomain = `${process.env.REACT_APP_BACKEND_FULL_HOST || 'http://localhost:5000'}`
 
@@ -31,10 +31,16 @@ const Form = () =>{
   }
  
   useEffect(() => {
-    delaySearchEffect(setDebouncedName, userInput.name);
+    const timerId = setTimeout(() => {
+      setDebouncedName(userInput.name);
+    }, 500);
+    return () => {
+      clearTimeout(timerId);
+    };
   }, [userInput.name]);
  
   useEffect(() => {
+    console.log(debouncedName?.length)
     searchUserEffect(backendDomain, userInput.name, setSearchResults, debouncedName);
   }, [debouncedName]);
 

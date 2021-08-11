@@ -34,15 +34,6 @@ const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
   };
 }
 
-const delaySearchEffect = (fn, element) => {
-  const timerId = setTimeout(() => {
-    fn(element);
-  }, 500);
-  return () => {
-    clearTimeout(timerId);
-  };
-}
-
 const searchUserEffect = (url, name, fn, trigger) => {
   const searchUser = () => {
     const encodedURL = encodeURI(url + "/users/?name=" + name)
@@ -83,7 +74,6 @@ export {
   userLookupTrigger,
   postUser,
   emptyForm,
-  delaySearchEffect,
   searchUserEffect,
   dropdownChoiceEffect,
   eraseMessageEffect
