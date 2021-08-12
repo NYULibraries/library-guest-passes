@@ -1,50 +1,50 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
-      id:{
+    await queryInterface.createTable("Users", {
+      id: {
         type: Sequelize.INTEGER,
-        autoIncrement:true,
-        allowNull:false,
-        primaryKey:true
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       initials: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       restrictions: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       status: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       idtype: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       cardissue: {
         type: Sequelize.DATE,
-        allowNull:false
+        allowNull: false,
       },
       cardexp: {
         type: Sequelize.DATE,
-        allowNull:false
+        allowNull: false,
       },
       userStatus: {
         type: Sequelize.STRING,
-        allowNull:false,
-        defaultValue: 1
+        allowNull: false,
+        defaultValue: 1,
       },
       loginCount: {
         type: Sequelize.TINYINT,
-        allowNull:false,
-        defaultValue: 1
+        allowNull: false,
+        defaultValue: 1,
       },
       notes: {
         type: Sequelize.STRING,
@@ -52,6 +52,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
-  }
+    await queryInterface.dropTable("Users");
+  },
 };

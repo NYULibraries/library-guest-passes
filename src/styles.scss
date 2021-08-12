@@ -10,20 +10,20 @@ body {
   padding: 60px;
   display: flex;
   flex-direction: column;
-  #header{
+  #header {
     padding-top: 3em;
   }
-  #logo{  
+  #logo {
     background-color: #57068c;
     height: max-content;
     padding: 1vh 3vw 1vh 5vw;
     width: 100vw;
-    position:absolute;
-    top:0;
-    left:0;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   form {
-    .msgWrap{
+    .msgWrap {
       #message {
         width: 30em;
         margin-top: 20px;
@@ -32,21 +32,21 @@ body {
     input, select, .btn-group {
       margin: 10px 0px 10px 0px;
     }
-    .btn-group{
+    .btn-group {
       width: 17em;
     }
     button.btn-primary {
       background-color: #57068c;
       border-color: #57068c;
     }
-    button.btn-primary:hover{
+    button.btn-primary:hover {
       background-color: #6c07ae;
     }
   }
-};
+}
 
-@media only screen and (max-width: 800px){
-  #wrapper{
+@media only screen and (max-width: 800px) {
+  #wrapper {
     hr {
       width: 17em;
     }
@@ -57,7 +57,7 @@ body {
       #errorMsg {
         width: 15em;
       }
-      #notes{
+      #notes {
         width: 17em;
       }
     }

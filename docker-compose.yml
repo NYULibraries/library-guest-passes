@@ -13,7 +13,7 @@ services:
     command: ["/tmp/wait-for", "backend:5000", "--", "yarn", "start"]
     ports:
       - "3000:3000"
-    depends_on: 
+    depends_on:
       - backend
         #<<: *default-volumes
 
@@ -23,7 +23,7 @@ services:
     command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
     ports:
       - "5000:5000"
-    depends_on: 
+    depends_on:
       - db
         #<<: *default-volumes
 
@@ -33,15 +33,16 @@ services:
       - 3306
     environment:
       MYSQL_ROOT_PASSWORD: test
-    restart: always 
+    restart: always
     cap_add:
       - SYS_NICE
 
   test:
     image: guest-passes
     build: .
-    command: ["/tmp/wait-for", "db:3306", "--", "npm", "test", "--", "--watchAll=false"]
-    depends_on: 
+    command:
+      ["/tmp/wait-for", "db:3306", "--", "npm", "test", "--", "--watchAll=false"]
+    depends_on:
       - db
 
   curl-dev:

@@ -1,16 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import "bootstrap/dist/css/bootstrap.css";
+import React from "react";
+import ReactDOM from "react-dom";
 import "./styles.scss";
-import Form from './components/Form';
-import Header from './components/Header';
+import Form from "./components/Form";
+import Header from "./components/Header";
 
 ReactDOM.render(
   <React.StrictMode>
-    <div id="wrapper" role='main'>
+    <div id="wrapper" role="main">
       <Header />
       <Form />
     </div>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

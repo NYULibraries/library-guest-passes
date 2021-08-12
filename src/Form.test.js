@@ -1,23 +1,23 @@
-import { render, screen } from '@testing-library/react';
-import Form from './components/Form';
+import { render, screen } from "@testing-library/react";
+import Form from "./components/Form";
 
-beforeEach(()=> render(<Form />));
-test('renders form', () => {
-  const formElement = screen.getByTestId('passes-form');
+beforeEach(() => render(<Form />));
+test("renders form", () => {
+  const formElement = screen.getByTestId("passes-form");
   expect(formElement).toBeInTheDocument();
 });
 
-test('renders form inputs', () => {
+test("renders form inputs", () => {
   const arrayOfInputs = [
-    'name', 
-    'initials',
-    'idtype',
-    'cardissue',
-    'cardexp',
-    'notes',
-  ]
+    "name",
+    "initials",
+    "idtype",
+    "cardissue",
+    "cardexp",
+    "notes",
+  ];
 
-  const formElements = screen.getAllByTestId('form-input');
-  const formInputs = formElements.map((e) => e.getAttribute('name'))
+  const formElements = screen.getAllByTestId("form-input");
+  const formInputs = formElements.map((e) => e.getAttribute("name"));
   expect(formInputs).toEqual(arrayOfInputs);
 });
