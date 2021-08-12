@@ -40,7 +40,6 @@ const Form = () =>{
   }, [userInput.name]);
  
   useEffect(() => {
-    console.log(debouncedName?.length)
     searchUserEffect(backendDomain, userInput.name, setSearchResults, debouncedName);
   }, [debouncedName]);
 
@@ -54,7 +53,11 @@ const Form = () =>{
     "notes": userInput.notes
     }
 
-    dropdownChoiceEffect(userInput.dropdownChoice, chosenUserData, setUserInput);
+    if(userInput.dropdownChoice === "empty"){
+      emptyForm(userInput, setUserInput, setSearchResults, )
+    } else if (userInput.dropdownChoice !== '') {
+      dropdownChoiceEffect(userInput.dropdownChoice, chosenUserData, setUserInput);
+    }
   }, [userInput.dropdownChoice]);
 
   useEffect(() => {
