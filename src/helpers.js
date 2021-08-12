@@ -3,7 +3,7 @@ const userLookupTrigger = (results, dropdownChoice, handleChange) => {
     return (
       <div className="dropdown input-group mb-3">
         <select className='form-select' name="dropdownChoice" value={dropdownChoice} onChange={handleChange}>
-          <option key="empty" value="">Returning User?</option>
+          <option key="empty" value="empty">Returning User?</option>
           {results.map((e) => <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>)}
         </select>
       </div>
@@ -48,14 +48,10 @@ const searchUserEffect = (url, name, fn, trigger) => {
 }
 
 const dropdownChoiceEffect = (choice, obj, fn ) => {
-  let chosenUser;
-
-  if(choice !== ""){
-    chosenUser = JSON.parse(choice);
-    return Object.keys(obj).map(e => {
-      return fn({[e]: chosenUser[e]});
-    }); 
-  }
+  const chosenUser = JSON.parse(choice);
+  return Object.keys(obj).map(e => {
+    return fn({[e]: chosenUser[e]});
+  }); 
 }
 
 const eraseMessageEffect = (msg, fn) => {
