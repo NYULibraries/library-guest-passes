@@ -17,21 +17,15 @@ body {
     }
   }
   form {
-    display: flex;
-    flex-direction: column;
-    input, select {
-      width: 30em;
-      margin: 20px 0px 20px 0px;
-    }
-    button {
-      width: 10em;
-    }
     .msgWrap{
       display: flex;
-      #errorMsg {
+      #message {
         width: 30em;
         margin-top: 20px;
       }
+    }
+    input, select, .btn-group {
+      margin: 10px 0px 10px 0px;
     }
   }
 };
@@ -45,6 +39,7 @@ body {
         margin: 10px 0px 10px 0px;
       }
       button {
+        margin-top: 10px;
         width: 10em;
       }
       #errorMsg {
