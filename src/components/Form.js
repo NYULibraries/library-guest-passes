@@ -214,7 +214,7 @@ const Form = () => {
           </button>
         </div>
         <div className="msgWrap">
-          <span name="message">{message}</span>
+          <em name="message" aria-live="assertive">{message}</em>
         </div>
       </div>
     </form>
