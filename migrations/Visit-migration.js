@@ -1,12 +1,28 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Visit', {
       id:{
         type: Sequelize.INTEGER,
         autoIncrement:true,
         allowNull:false,
         primaryKey:true
+      },
+      guest_id:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Guest',
+          key: 'id',
+          as: 'guest_id',
+        }
+      },
+      affiliate_id:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Affiliate',
+          key: 'id',
+          as: 'affiliate_id',
+        }
       },
       name: {
         type: Sequelize.STRING,
@@ -43,7 +59,8 @@ module.exports = {
       },
       loginCount: {
         type: Sequelize.TINYINT,
-        allowNull:false
+        allowNull:false,
+        defaultValue: 1
       },
       notes: {
         type: Sequelize.STRING,
@@ -51,6 +68,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Visit');
   }
 };
