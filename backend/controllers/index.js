@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User } = require("../models");
+const { User, Visit } = require("../models");
 const { emptyFields } = require("../tools");
 
 const updateOrCreateUser = async (req, res) => {

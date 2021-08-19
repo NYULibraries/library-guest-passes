@@ -10,7 +10,7 @@ services:
   dev:
     image: guest-passes
     build: .
-    command: ["/tmp/wait-for", "backend:5000", "--", "yarn", "start"]
+    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
     ports:
       - "3000:3000"
     depends_on:
