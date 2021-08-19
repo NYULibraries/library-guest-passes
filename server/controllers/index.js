@@ -40,7 +40,9 @@ const test = async (req, res) => {
       visit,
     });
   } catch (error) {
-    return res.sendStatus(500)
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
   }
 }
 
