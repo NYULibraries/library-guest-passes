@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { User } = require('../../models');
+const { User, Visit } = require('../../models');
 const { emptyFields } = require('../tools');
 
 const updateOrCreateUser = async (req, res) => {
@@ -33,6 +33,17 @@ const updateOrCreateUser = async (req, res) => {
   }
 }
 
+const test = async (req, res) => {
+  try {
+    const visit = await Visit.create(req.body);
+    return res.status(201).json({
+      visit,
+    });
+  } catch (error) {
+    return res.sendStatus(500)
+  }
+}
+
 const lookupUsers = async (req, res) => {
   try {
     const users = await User.findAll({ where: {
@@ -46,5 +57,6 @@ const lookupUsers = async (req, res) => {
 
 module.exports = {
   updateOrCreateUser,
-  lookupUsers
+  lookupUsers,
+  test
 }
