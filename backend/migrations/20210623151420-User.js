@@ -1,12 +1,17 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+<<<<<<< HEAD:backend/migrations/Visit-migration.js
     await queryInterface.createTable('Visit', {
       id:{
+=======
+    await queryInterface.createTable("Users", {
+      id: {
+>>>>>>> 7b2d9330b6b58d608cba3e534f3a4673bc29bd96:backend/migrations/20210623151420-User.js
         type: Sequelize.INTEGER,
-        autoIncrement:true,
-        allowNull:false,
-        primaryKey:true
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
       },
       guest_id:{
         type: Sequelize.INTEGER,
@@ -26,41 +31,41 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       initials: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       restrictions: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       status: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       idtype: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false,
       },
       cardissue: {
         type: Sequelize.DATE,
-        allowNull:false
+        allowNull: false,
       },
       cardexp: {
         type: Sequelize.DATE,
-        allowNull:false
+        allowNull: false,
       },
       userStatus: {
         type: Sequelize.STRING,
-        allowNull:false,
-        defaultValue: 1
+        allowNull: false,
+        defaultValue: 1,
       },
       loginCount: {
         type: Sequelize.TINYINT,
-        allowNull:false,
-        defaultValue: 1
+        allowNull: false,
+        defaultValue: 1,
       },
       notes: {
         type: Sequelize.STRING,
@@ -68,6 +73,11 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
+<<<<<<< HEAD:backend/migrations/Visit-migration.js
     await queryInterface.dropTable('Visit');
   }
+=======
+    await queryInterface.dropTable("Users");
+  },
+>>>>>>> 7b2d9330b6b58d608cba3e534f3a4673bc29bd96:backend/migrations/20210623151420-User.js
 };
