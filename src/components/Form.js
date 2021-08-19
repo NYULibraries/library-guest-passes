@@ -108,7 +108,7 @@ const Form = () => {
   return (
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Name<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -116,6 +116,7 @@ const Form = () => {
           id="name"
           value={userInput.name}
           onChange={handleChange}
+          aria-required="true"
         />
         <div>
           {userLookupTrigger(
@@ -126,7 +127,7 @@ const Form = () => {
         </div>
         <label htmlFor="permission">Permission status</label>
         <p name="permission">{permission}</p>
-        <label htmlFor="initials">Employee Initials</label>
+        <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -134,8 +135,9 @@ const Form = () => {
           id="initials"
           value={userInput.initials}
           onChange={handleChange}
+          aria-required="true"
         />
-        <label htmlFor="idtype">ID Type</label>
+        <label htmlFor="idtype">ID Type<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -143,14 +145,16 @@ const Form = () => {
           id="idtype"
           value={userInput.idtype}
           onChange={handleChange}
+          aria-required="true"
         />
-        <label htmlFor="restrictions">Restrictions</label>
+        <label htmlFor="restrictions">Restrictions<div style={{ color: "red" }}>*</div></label>
         <select
           className="form-select"
           name="restrictions"
           id="restrictions"
           value={userInput.restrictions}
           onChange={handleChange}
+          aria-required="true"
         >
           {restrictionList.map((e) => (
             <option value={e} key={e}>
@@ -158,13 +162,14 @@ const Form = () => {
             </option>
           ))}
         </select>
-        <label htmlFor="status">Status</label>
+        <label htmlFor="status">Status<div style={{ color: "red" }}>*</div></label>
         <select
           className="form-select"
           name="status"
           id="status"
           value={userInput.status}
           onChange={handleChange}
+          aria-required="true"
         >
           {statusList.map((e) => (
             <option value={e} key={e}>
@@ -172,7 +177,7 @@ const Form = () => {
             </option>
           ))}
         </select>
-        <label htmlFor="cardissue">Card Issued On</label>
+        <label htmlFor="cardissue">Card Issued On<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -181,8 +186,9 @@ const Form = () => {
           type="date"
           value={userInput.cardissue}
           onChange={handleChange}
+          aria-required="true"
         />
-        <label htmlFor="cardexp">Expiration Date</label>
+        <label htmlFor="cardexp">Expiration Date<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -191,6 +197,7 @@ const Form = () => {
           type="date"
           value={userInput.cardexp}
           onChange={handleChange}
+          aria-required="true"
         />
         <label htmlFor="notes">Notes</label>
         <textarea

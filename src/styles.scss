@@ -12,6 +12,10 @@ body {
   flex-direction: column;
   #header {
     padding-top: 3em;
+    p{
+      display: flex;
+      flex-direction: row;
+    }
   }
   #logo {
     background-color: #57068c;
@@ -28,6 +32,10 @@ body {
         width: 30em;
         margin-top: 20px;
       }
+    }
+    label{
+      display: flex;
+      flex-direction: row;
     }
     input, select, .btn-group {
       margin: 10px 0px 10px 0px;
