@@ -1,13 +1,8 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-<<<<<<< HEAD:backend/migrations/Visit-migration.js
     await queryInterface.createTable('Visit', {
       id:{
-=======
-    await queryInterface.createTable("Users", {
-      id: {
->>>>>>> 7b2d9330b6b58d608cba3e534f3a4673bc29bd96:backend/migrations/20210623151420-User.js
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
@@ -28,10 +23,6 @@ module.exports = {
           key: 'id',
           as: 'affiliate_id',
         }
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
       },
       initials: {
         type: Sequelize.STRING,
