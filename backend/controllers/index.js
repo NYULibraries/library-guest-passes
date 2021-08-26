@@ -38,13 +38,16 @@ const updateOrCreateUser = async (req, res) => {
 const createVisit = async (req, res) => {
   // req.body.input = {}
   // req.body.name = name
+  const userInputBody = 
   try {
-    const visit = await Visit.create(req.body.input, {include: [{
-      association: Guest,
-    }]});
+    const guest = await Guest.create(req.body.guest);
+    const visit = await Visit.create(req.body, {
+      include: [{
+        association: Guest,
+      }]
+    });
     console.log(visit);
-    const guest = await Guest.create(req.body.name);
-    console.log(guest)
+    console.log(guest);
     return res.status(201).json({
       visit,
       guest
