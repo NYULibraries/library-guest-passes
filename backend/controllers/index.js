@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Visit } = require("../models");
+const { User, Visit, Guest } = require("../models");
 const { emptyFields } = require("../tools");
 
 const updateOrCreateUser = async (req, res) => {
@@ -35,6 +35,27 @@ const updateOrCreateUser = async (req, res) => {
   }
 };
 
+const createVisit = async (req, res) => {
+  // req.body.input = {}
+  // req.body.name = name
+  try {
+    const visit = await Visit.create(req.body.input, {include: [{
+      association: Guest,
+    }]});
+    console.log(visit);
+    const guest = await Guest.create(req.body.name);
+    console.log(guest)
+    return res.status(201).json({
+      visit,
+      guest
+    });
+  } catch (error) {
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
+  }
+}
+
 const test = async (req, res) => {
   try {
     const visit = await Visit.create(req.body);
@@ -64,5 +85,6 @@ const lookupUsers = async (req, res) => {
 module.exports = {
   updateOrCreateUser,
   lookupUsers,
-  test
+  test,
+  createVisit
 }
