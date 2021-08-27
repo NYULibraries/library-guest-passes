@@ -70,6 +70,5 @@ const lookupUsers = async (req, res) => {
 module.exports = {
   updateOrCreateUser,
   lookupUsers,
-  test,
   createVisit
 }
