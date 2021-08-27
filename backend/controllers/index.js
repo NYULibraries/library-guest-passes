@@ -54,19 +54,6 @@ const createVisit = async (req, res) => {
   }
 }
 
-const test = async (req, res) => {
-  try {
-    const visit = await Visit.create(req.body);
-    return res.status(201).json({
-      visit,
-    });
-  } catch (error) {
-    console.error(error.stack)
-    res.status(500)
-    res.render('error', { error: error })
-  }
-}
-
 const lookupUsers = async (req, res) => {
   try {
     const users = await User.findAll({
