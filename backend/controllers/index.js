@@ -55,9 +55,10 @@ const createVisit = async (req, res) => {
     // });
 
     const guest = await Guest.create({
-      name: req.body.name,
+      name: req.body.guest.name,
       permission_status: true,
-      Visit: {
+    }).then(function(guest) {
+      guest.addVisit({
         initials: req.body.initials,
         restrictions: req.body.restrictions,
         status: req.body.status,
@@ -65,10 +66,8 @@ const createVisit = async (req, res) => {
         cardexp: req.body.cardexp,
         cardissue: req.body.cardissue,
         notes: req.body.notes,
-      }
-    }, {
-      include: Visit
-    })
+      })
+    });
 
     return res.status(201).json({
       guest,
