@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Visit',
       timestamps: false,
       freezeTableName: true,
+      underscored: true
     });
   return Visit;
 };

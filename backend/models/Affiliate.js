@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Affiliate',
       timestamps: false,
       freezeTableName: true,
+      underscored: true
     });
   return Affiliate;
 };
