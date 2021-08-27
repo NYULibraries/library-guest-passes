@@ -64,11 +64,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-<<<<<<< HEAD:backend/migrations/Visit-migration.js
     await queryInterface.dropTable('Visit');
   }
-=======
-    await queryInterface.dropTable("Users");
-  },
->>>>>>> 7b2d9330b6b58d608cba3e534f3a4673bc29bd96:backend/migrations/20210623151420-User.js
 };

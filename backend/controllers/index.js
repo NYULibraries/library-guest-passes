@@ -36,9 +36,6 @@ const updateOrCreateUser = async (req, res) => {
 };
 
 const createVisit = async (req, res) => {
-  // req.body.input = {}
-  // req.body.name = name
-  const userInputBody = 
   try {
     const guest = await Guest.create(req.body.guest);
     const visit = await Visit.create(req.body, {
@@ -46,8 +43,6 @@ const createVisit = async (req, res) => {
         association: Guest,
       }]
     });
-    console.log(visit);
-    console.log(guest);
     return res.status(201).json({
       visit,
       guest
