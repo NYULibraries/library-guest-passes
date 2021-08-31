@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Visit, Guest } = require("../models");
+const { User, Visit, Guest, Affiliate } = require("../models");
 const { emptyFields } = require("../tools");
 
 const updateOrCreateUser = async (req, res) => {
@@ -37,12 +37,21 @@ const updateOrCreateUser = async (req, res) => {
 
 const createVisit = async (req, res) => {
   try {
-    const guest = await Guest.findOrCreate({
-      where: { name: req.body.guest.name },
+    const affiliate = await Affiliate.findOrCreate({
+      where: { name: req.body.affiliate.name },
       defaults: {
-        name: req.body.guest.name
+        name: req.body.affiliate.name
       }
     });
+    // if(req.body.guest.name){
+    //   const guest = await Guest.findOrCreate({
+    //     where: { name: req.body.guest.name },
+    //     defaults: {
+    //       name: req.body.guest.name
+    //     }
+    //   });
+    // }
+    
     const visit = await Visit.create({
         initials: req.body.initials,
         restrictions: req.body.restrictions,
@@ -52,10 +61,11 @@ const createVisit = async (req, res) => {
         cardissue: req.body.cardissue,
         notes: req.body.notes,
     });
-    await guest[0].addVisit(visit);
+    await affiliate[0].addVisit(visit);
+    // await guest[0].addVisit(visit);
 
     return res.status(201).json({
-      guest,
+      affiliate,
       visit,
     });
   } catch (error) {
