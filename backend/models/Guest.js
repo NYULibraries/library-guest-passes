@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     permission_status: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
       allowNull:false
     },
   }, {

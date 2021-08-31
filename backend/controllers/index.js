@@ -37,26 +37,8 @@ const updateOrCreateUser = async (req, res) => {
 
 const createVisit = async (req, res) => {
   try {
-    //const guest = await Guest.create(req.body.guest);
-    // const visit = await Visit.create({
-    //   initials: req.body.initials,
-    //   restrictions: req.body.restrictions,
-    //   status: req.body.status,
-    //   idtype: req.body.idtype,
-    //   cardexp: req.body.cardexp,
-    //   cardissue: req.body.cardissue,
-    //   notes: req.body.notes,
-    //   Guest: {
-    //     name: req.body.name,
-    //     permission_status: true,
-    //   }
-    // }, {
-    //   include: Guest
-    // });
-
     const guest = await Guest.create({
       name: req.body.guest.name,
-      permission_status: true,
     });
     const visit = await Visit.create({
         initials: req.body.initials,
