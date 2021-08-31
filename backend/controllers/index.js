@@ -57,8 +57,8 @@ const createVisit = async (req, res) => {
     const guest = await Guest.create({
       name: req.body.guest.name,
       permission_status: true,
-    }).then(function(guest) {
-      guest.addVisit({
+    });
+    const visit = await Visit.create({
         initials: req.body.initials,
         restrictions: req.body.restrictions,
         status: req.body.status,
@@ -66,11 +66,12 @@ const createVisit = async (req, res) => {
         cardexp: req.body.cardexp,
         cardissue: req.body.cardissue,
         notes: req.body.notes,
-      })
     });
+    await guest.addVisit(visit);
 
     return res.status(201).json({
       guest,
+      visit,
     });
   } catch (error) {
     console.error(error.stack)

@@ -48,12 +48,12 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      userStatus: {
+      user_status: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 1,
       },
-      loginCount: {
+      login_count: {
         type: Sequelize.TINYINT,
         allowNull: false,
         defaultValue: 1,

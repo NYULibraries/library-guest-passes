@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Visit.belongsTo(models.Guest);
+      Visit.belongsTo(models.Guest, {as: 'guest'});
       Visit.belongsTo(models.Affiliate);
     }
   };
@@ -45,12 +45,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull:false
     },
-    userStatus: {
+    user_status: {
       type: DataTypes.STRING,
       allowNull:false,
       defaultValue: 1
     },
-    loginCount: {
+    login_count: {
       type: DataTypes.TINYINT,
       allowNull:false,
       defaultValue: 1
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Visit',
       timestamps: false,
       freezeTableName: true,
-      underscored: true
+      underscored: true,
     });
   return Visit;
 };
