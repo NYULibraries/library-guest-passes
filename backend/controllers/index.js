@@ -37,8 +37,11 @@ const updateOrCreateUser = async (req, res) => {
 
 const createVisit = async (req, res) => {
   try {
-    const guest = await Guest.create({
-      name: req.body.guest.name,
+    const guest = await Guest.findOrCreate({
+      where: { name: req.body.guest.name },
+      defaults: {
+        name: req.body.guest.name
+      }
     });
     const visit = await Visit.create({
         initials: req.body.initials,
@@ -49,7 +52,7 @@ const createVisit = async (req, res) => {
         cardissue: req.body.cardissue,
         notes: req.body.notes,
     });
-    await guest.addVisit(visit);
+    await guest[0].addVisit(visit);
 
     return res.status(201).json({
       guest,
