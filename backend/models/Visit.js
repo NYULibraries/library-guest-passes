@@ -50,11 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       defaultValue: 1
     },
-    login_count: {
-      type: DataTypes.TINYINT,
-      allowNull:false,
-      defaultValue: 1
-    },
     notes: {
       type: DataTypes.STRING,
     },

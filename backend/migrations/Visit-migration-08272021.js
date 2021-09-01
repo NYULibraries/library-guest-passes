@@ -53,11 +53,6 @@ module.exports = {
         allowNull: false,
         defaultValue: 1,
       },
-      login_count: {
-        type: Sequelize.TINYINT,
-        allowNull: false,
-        defaultValue: 1,
-      },
       notes: {
         type: Sequelize.STRING,
       },
