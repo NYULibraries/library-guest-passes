@@ -7,17 +7,17 @@ const createVisit = async (req, res) => {
     if (emptyFields(req.body) === true) return res.sendStatus(500);
     else {
       const affiliate = await Affiliate.findOrCreate({
-        where: { name: req.body.affiliate.name },
+        where: { name: req.body.affiliate_name },
         defaults: {
-          name: req.body.affiliate.name
+          name: req.body.affiliate_name
         }
       });
       let guest;
-      if(req.body.guest?.name){
+      if(req.body?.guest_name){
         guest = await Guest.findOrCreate({
-          where: { name: req.body.guest.name },
+          where: { name: req.body.guest_name },
           defaults: {
-            name: req.body.guest.name
+            name: req.body.guest_name
           }
         });
       }
@@ -49,19 +49,18 @@ const createVisit = async (req, res) => {
 
 const lookupUsers = async (req, res) => {
   try {
-    const users = await User.findAll({
+    const queryResults = await Affiliate.findAll({
       where: {
-        name: { [Op.startsWith]: `${req.query.name}` },
+        name: { [Op.startsWith]: `${req.query.affiliate_name}` },
       },
     });
-    return res.status(200).json(users);
+    return res.status(200).json(queryResults);
   } catch (error) {
     return res.sendStatus(500);
   }
 };
 
 module.exports = {
-  updateOrCreateUser,
   lookupUsers,
   createVisit
 }

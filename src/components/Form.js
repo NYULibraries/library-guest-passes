@@ -17,7 +17,8 @@ const Form = () => {
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      name: "",
+      affiliate_name: "",
+      guest_name: "",
       initials: "",
       restrictions: "",
       status: "",
@@ -41,17 +42,17 @@ const Form = () => {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setDebouncedName(userInput.name);
+      setDebouncedName(userInput.affiliate_name);
     }, 500);
     return () => {
       clearTimeout(timerId);
     };
-  }, [userInput.name]);
+  }, [userInput.affiliate_name]);
 
   useEffect(() => {
     searchUserEffect(
       backendDomain,
-      userInput.name,
+      userInput.affiliate_name,
       setSearchResults,
       debouncedName
     );
@@ -59,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     const chosenUserData = {
-      name: userInput.name,
+      name: userInput.affiliate_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
       status: userInput.status,
@@ -85,7 +86,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      name: userInput.name,
+      name: userInput.affiliate_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
       status: userInput.status,
@@ -108,13 +109,13 @@ const Form = () => {
   return (
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
-        <label htmlFor="name">Name<div style={{ color: "red" }}>*</div></label>
+        <label htmlFor="affiliate_name">Name<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
-          name="name"
-          id="name"
-          value={userInput.name}
+          name="affiliate_name"
+          id="affiliate_name"
+          value={userInput.affiliate_name}
           onChange={handleChange}
           aria-required="true"
         />

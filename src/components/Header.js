@@ -11,7 +11,7 @@ export default function Header() {
       </h1>
       <h2>Library Privileges</h2>
       <h3>Passes Form</h3>
-      <p>Required fields are marked with an <div style={{ color: "red" }}>&#160;*</div></p>
+      <p>Required fields are marked with an <p style={{ color: "red" }}>&#160;*</p></p>
       <hr />
     </div>
   );

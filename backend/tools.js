@@ -1,6 +1,6 @@
 const emptyFields = (obj) => {
   for (const key in obj) {
-    if (obj[key] === "" && key !== "notes") return true;
+    if (obj[key] === "" && key !== "notes" && key !== "guest") return true;
   }
   return false;
 };

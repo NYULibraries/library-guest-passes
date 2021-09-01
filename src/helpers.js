@@ -47,7 +47,7 @@ const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
 
 const searchUserEffect = (url, name, fn, trigger) => {
   const searchUser = () => {
-    const encodedURL = encodeURI(url + "/users/?name=" + name);
+    const encodedURL = encodeURI(url + "/users/?affiliate_name=" + name);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));
