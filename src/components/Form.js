@@ -60,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     const chosenUserData = {
-      name: userInput.affiliate_name,
+      affiliate_name: userInput.affiliate_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
       status: userInput.status,
@@ -109,7 +109,7 @@ const Form = () => {
   return (
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
-        <label htmlFor="affiliate_name">Name<div style={{ color: "red" }}>*</div></label>
+        <label htmlFor="affiliate_name">Affiliate Name<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
@@ -128,6 +128,15 @@ const Form = () => {
         </div>
         <label htmlFor="permission">Permission status</label>
         <p name="permission">{permission}</p>
+        <label htmlFor="guest_name">Guest Name</label>
+        <input
+          className="form-control"
+          data-testid="form-input"
+          name="guest_name"
+          id="guest_name"
+          value={userInput.guest_name}
+          onChange={handleChange}
+        />
         <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"

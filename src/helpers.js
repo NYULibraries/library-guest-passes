@@ -72,9 +72,12 @@ const chooseVisit = (e) => {
 
 const dropdownChoiceEffect = (choice, obj, fn) => {
   const chosenUser = JSON.parse(choice);
-  const visitInfoObject = chooseVisit(chosenUser.Visits)
+  //the most recent visit is chosen as the basis for the form autopopulation
+  const chosenVisit = chooseVisit(chosenUser.Visits);
+  //then, the User's name is added to the object that will be mapped for the form
+  chosenVisit.affiliate_name = chosenUser.name;
   return Object.keys(obj).map((e) => {
-    return fn({ [e]: visitInfoObject[e] });
+    return fn({ [e]: chosenVisit[e] });
   });
 };
 
