@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Visit, Guest, Affiliate } = require("../models");
+const { Visit, Guest, Affiliate } = require("../models");
 const { emptyFields } = require("../tools");
 
 const createVisit = async (req, res) => {
@@ -53,6 +53,9 @@ const lookupUsers = async (req, res) => {
       where: {
         name: { [Op.startsWith]: `${req.query.affiliate_name}` },
       },
+      include: [{
+        model: Visit
+      }]
     });
     return res.status(200).json(queryResults);
   } catch (error) {

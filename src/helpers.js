@@ -58,10 +58,23 @@ const searchUserEffect = (url, name, fn, trigger) => {
   }
 };
 
+const chooseVisit = (e) => {
+  let highestNum = 0;
+  let chosenVisitObject;
+  for (let i = 0; i < e.length; i++){
+    if(e[i].id > highestNum){
+      highestNum = e[i].id;
+      chosenVisitObject = e[i];
+    }
+  }
+  return chosenVisitObject;
+}
+
 const dropdownChoiceEffect = (choice, obj, fn) => {
   const chosenUser = JSON.parse(choice);
+  const visitInfoObject = chooseVisit(chosenUser.Visits)
   return Object.keys(obj).map((e) => {
-    return fn({ [e]: chosenUser[e] });
+    return fn({ [e]: visitInfoObject[e] });
   });
 };
 

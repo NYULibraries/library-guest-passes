@@ -86,7 +86,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      name: userInput.affiliate_name,
+      affiliate_name: userInput.affiliate_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
       status: userInput.status,
