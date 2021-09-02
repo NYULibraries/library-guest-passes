@@ -10,6 +10,7 @@ test("renders form", () => {
 test("renders form inputs", () => {
   const arrayOfInputs = [
     "affiliate_name",
+    "guest_name",
     "initials",
     "idtype",
     "cardissue",
