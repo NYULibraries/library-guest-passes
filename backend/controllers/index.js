@@ -6,18 +6,18 @@ const createVisit = async (req, res) => {
   try {
     if (emptyFields(req.body) === true) return res.sendStatus(500);
     else {
-      const affiliate = await Affiliate.findOrCreate({
-        where: { name: req.body.affiliate_name },
+      const guest = await Guest.findOrCreate({
+        where: { name: req.body.guest_name },
         defaults: {
-          name: req.body.affiliate_name
+          name: req.body.guest_name
         }
       });
-      let guest;
-      if(req.body?.guest_name){
-        guest = await Guest.findOrCreate({
-          where: { name: req.body.guest_name },
+      let affiliate;
+      if(req.body?.affiliate_name){
+        affiliate = await Affiliate.findOrCreate({
+          where: { name: req.body.affiliate_name },
           defaults: {
-            name: req.body.guest_name
+            name: req.body.affiliate_name
           }
         });
       }
@@ -30,9 +30,9 @@ const createVisit = async (req, res) => {
           cardissue: req.body.cardissue,
           notes: req.body.notes,
       });
-      await affiliate[0].addVisit(visit);
-      if(guest){
-        await guest[0].addVisit(visit);
+      await guest[0].addVisit(visit);
+      if(affiliate){
+        await affiliate[0].addVisit(visit);
       }
       return res.status(201).json({
         affiliate,
@@ -47,11 +47,11 @@ const createVisit = async (req, res) => {
   }
 }
 
-const lookupUsers = async (req, res) => {
+const lookupGuest = async (req, res) => {
   try {
-    const queryResults = await Affiliate.findAll({
+    const queryResults = await Guest.findAll({
       where: {
-        name: { [Op.startsWith]: `${req.query.affiliate_name}` },
+        name: { [Op.startsWith]: `${req.query.guest_name}` },
       },
       include: [{
         model: Visit
@@ -64,6 +64,6 @@ const lookupUsers = async (req, res) => {
 };
 
 module.exports = {
-  lookupUsers,
+  lookupGuest,
   createVisit
 }

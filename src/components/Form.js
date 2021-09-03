@@ -1,10 +1,10 @@
 import { useState, useEffect, useReducer } from "react";
 import { restrictionList, statusList } from "../tools";
 import {
-  userLookupTrigger,
-  postUser,
+  guestLookupTrigger,
+  postVisit,
   emptyForm,
-  searchUserEffect,
+  searchGuestEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
 } from "../helpers";
@@ -42,17 +42,17 @@ const Form = () => {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setDebouncedName(userInput.affiliate_name);
+      setDebouncedName(userInput.guest_name);
     }, 500);
     return () => {
       clearTimeout(timerId);
     };
-  }, [userInput.affiliate_name]);
+  }, [userInput.guest_name]);
 
   useEffect(() => {
-    searchUserEffect(
+    searchGuestEffect(
       backendDomain,
-      userInput.affiliate_name,
+      userInput.guest_name,
       setSearchResults,
       debouncedName
     );
@@ -60,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     const chosenUserData = {
-      affiliate_name: userInput.affiliate_name,
+      guest_name: userInput.guest_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
       status: userInput.status,
@@ -86,6 +86,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
+      guest_name: userInput.guest_name,
       affiliate_name: userInput.affiliate_name,
       initials: userInput.initials,
       restrictions: userInput.restrictions,
@@ -96,7 +97,7 @@ const Form = () => {
       notes: userInput.notes,
     };
 
-    const response = await postUser(backendDomain, data);
+    const response = await postVisit(backendDomain, data);
 
     if (response.status === 500) {
       setMessage("Oops! Something went wrong. Please fill out all fields.");
@@ -109,18 +110,18 @@ const Form = () => {
   return (
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
-        <label htmlFor="affiliate_name">Affiliate Name<div style={{ color: "red" }}>*</div></label>
+        <label htmlFor="guest_name">Guest Name<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
           data-testid="form-input"
-          name="affiliate_name"
-          id="affiliate_name"
-          value={userInput.affiliate_name}
+          name="guest_name"
+          id="guest_name"
+          value={userInput.guest_name}
           onChange={handleChange}
           aria-required="true"
         />
         <div>
-          {userLookupTrigger(
+          {guestLookupTrigger(
             searchResults,
             userInput.dropdownChoice,
             handleChange
@@ -128,13 +129,13 @@ const Form = () => {
         </div>
         <label htmlFor="permission">Permission status</label>
         <p name="permission">{permission}</p>
-        <label htmlFor="guest_name">Guest Name</label>
+        <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
           className="form-control"
           data-testid="form-input"
-          name="guest_name"
-          id="guest_name"
-          value={userInput.guest_name}
+          name="affiliate_name"
+          id="affiliate_name"
+          value={userInput.affiliate_name}
           onChange={handleChange}
         />
         <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
