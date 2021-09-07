@@ -9,8 +9,8 @@ test("renders form", () => {
 
 test("renders form inputs", () => {
   const arrayOfInputs = [
-    "affiliate_name",
     "guest_name",
+    "affiliate_name",
     "initials",
     "idtype",
     "cardissue",
