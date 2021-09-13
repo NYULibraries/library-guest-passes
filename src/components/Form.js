@@ -108,6 +108,11 @@ const Form = () => {
   };
 
   return (
+    <div id="header">
+      <h2>Library Privileges</h2>
+      <h3>Passes Form</h3>
+      <p>Required fields are marked with an <p style={{ color: "red" }}>&#160;*</p></p>
+      <hr />
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
         <label htmlFor="guest_name">Guest Name<div style={{ color: "red" }}>*</div></label>
@@ -236,6 +241,7 @@ const Form = () => {
         </div>
       </div>
     </form>
+  </div>
   );
 };
 
