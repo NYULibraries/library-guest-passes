@@ -1,4 +1,4 @@
-const userLookupTrigger = (results, dropdownChoice, handleChange) => {
+const guestLookupTrigger = (results, dropdownChoice, handleChange) => {
   if (results?.length) {
     return (
       <div className="dropdown input-group mb-3">
@@ -23,8 +23,8 @@ const userLookupTrigger = (results, dropdownChoice, handleChange) => {
   return <div></div>;
 };
 
-const postUser = async (url, data) => {
-  return await fetch(`${url}/users`, {
+const postVisit = async (url, data) => {
+  return await fetch(`${url}/visit`, {
     method: "POST",
     mode: "cors",
     cache: "default",
@@ -45,23 +45,39 @@ const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
   }
 };
 
-const searchUserEffect = (url, name, fn, trigger) => {
-  const searchUser = () => {
-    const encodedURL = encodeURI(url + "/users/?name=" + name);
+const searchGuestEffect = (url, name, fn, trigger) => {
+  const searchGuest = () => {
+    const encodedURL = encodeURI(url + "/guest/?guest_name=" + name);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));
   };
 
   if (trigger) {
-    return searchUser();
+    return searchGuest();
   }
 };
 
+const chooseVisit = (e) => {
+  let highestNum = 0;
+  let chosenVisitObject;
+  for (let i = 0; i < e.length; i++){
+    if(e[i].id > highestNum){
+      highestNum = e[i].id;
+      chosenVisitObject = e[i];
+    }
+  }
+  return chosenVisitObject;
+}
+
 const dropdownChoiceEffect = (choice, obj, fn) => {
-  const chosenUser = JSON.parse(choice);
+  const chosenGuest = JSON.parse(choice);
+  //the most recent visit is chosen as the basis for the form autopopulation
+  const chosenVisit = chooseVisit(chosenGuest.Visits);
+  //then, the User's name is added to the object that will be mapped for the form
+  chosenVisit.guest_name = chosenGuest.name;
   return Object.keys(obj).map((e) => {
-    return fn({ [e]: chosenUser[e] });
+    return fn({ [e]: chosenVisit[e] });
   });
 };
 
@@ -78,10 +94,10 @@ const eraseMessageEffect = (msg, fn) => {
 };
 
 export {
-  userLookupTrigger,
-  postUser,
+  guestLookupTrigger,
+  postVisit,
   emptyForm,
-  searchUserEffect,
+  searchGuestEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
 };
