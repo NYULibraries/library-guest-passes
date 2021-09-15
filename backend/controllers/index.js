@@ -69,11 +69,43 @@ const nameSearch = async (req, res) => {
     return res.status(200).json(queryResults);
   } catch (error) {
     return res.sendStatus(500);
+  };
+};
+
+const getAllGuests = async (req, res) => {
+  try {
+    const guest = await Guest.findAll({
+        include: [
+            {
+                model: Visit
+            }
+        ]
+    });
+    return res.status(200).json({ guest });
+  } catch (error) {
+      return res.status(500).send(error.message);
+  }
+};
+
+const getAllAffiliates = async (req, res) => {
+  try {
+    const affiliate = await Affiliate.findAll({
+        include: [
+            {
+                model: Visit
+            }
+        ]
+    });
+    return res.status(200).json({ affiliate });
+  } catch (error) {
+      return res.status(500).send(error.message);
   }
 };
 
 
 module.exports = {
   nameSearch,
-  createVisit
+  createVisit,
+  getAllGuests,
+  getAllAffiliates
 }

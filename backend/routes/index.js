@@ -3,8 +3,8 @@ const controllers = require("../controllers");
 const router = Router();
 
 router.get("/name-search", controllers.nameSearch);
-// router.get("/guests");
-// router.get("/affiliates");
+router.get("/guests", controllers.getAllGuests );
+router.get("/affiliates", controllers.getAllAffiliates);
 // router.put("/guests/:id");
 // router.put("/affiliate/:id");
 // router.delete("/guests/:id");
