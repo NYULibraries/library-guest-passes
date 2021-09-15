@@ -47,7 +47,7 @@ const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
 
 const searchGuestEffect = (url, name, fn, trigger) => {
   const searchGuest = () => {
-    const encodedURL = encodeURI(url + "/guest/?guest_name=" + name);
+    const encodedURL = encodeURI(url + "/name-search/?guest_name=" + name);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));

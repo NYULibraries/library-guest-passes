@@ -2,8 +2,7 @@ const { Router } = require("express");
 const controllers = require("../controllers");
 const router = Router();
 
-router.get("/guest", controllers.lookupGuest);
-// router.get("/affiliate", controllers.lookupGuest);
+router.get("/name-search", controllers.nameSearch);
 // router.get("/guests");
 // router.get("/affiliates");
 // router.put("/guests/:id");

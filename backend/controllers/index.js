@@ -47,11 +47,20 @@ const createVisit = async (req, res) => {
   }
 }
 
-const lookupGuest = async (req, res) => {
+const nameSearch = async (req, res) => {
   try {
-    const queryResults = await Guest.findAll({
+    let nameVariable;
+    let Model;
+    if("affiliate_name" in req.query){
+      nameVariable = req.query.affiliate_name;
+      Model = Affiliate;
+    } else if ("guest_name" in req.query){
+      nameVariable = req.query.guest_name;
+      Model = Guest;
+    }
+    const queryResults = await Model.findAll({
       where: {
-        name: { [Op.startsWith]: `${req.query.guest_name}` },
+        name: { [Op.startsWith]: `${nameVariable}` },
       },
       include: [{
         model: Visit
@@ -63,7 +72,8 @@ const lookupGuest = async (req, res) => {
   }
 };
 
+
 module.exports = {
-  lookupGuest,
+  nameSearch,
   createVisit
 }
