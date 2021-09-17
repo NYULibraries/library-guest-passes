@@ -113,14 +113,16 @@ const getAllVisits = async (req, res) => {
 
 const deleteGuest = async (req, res) => {
   try {
-    console.log(req.params.id)
-    await Visit.destroy({where: {guest_id: req.params.id}});
-    await Guest.destroy({where: {id: req.params.id}});
+    const destroyVisit = await Visit.destroy({where: {guest_id: req.params.id}, force: true});
+    const destroyGuest = await Guest.destroy({where: {id: req.params.id}, force: true});
+    return res.status(204).json({
+      destroyGuest,
+      destroyVisit
+    });
   } catch (error) {
     return res.status(500).send(error.message);
   }
 }
-
 
 module.exports = {
   nameSearch,
