@@ -25,7 +25,7 @@ app.use(express.json({ type: "application/json" }));
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200,
-  methods: "GET, POST, PUT",
+  methods: "GET, POST, PUT, DELETE",
 };
 app.use(cors(corsOptions));
 app.use("/", routes);
