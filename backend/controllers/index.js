@@ -102,10 +102,31 @@ const getAllAffiliates = async (req, res) => {
   }
 };
 
+const getAllVisits = async (req, res) => {
+  try {
+    const e = await Visit.findAll();
+    return res.status(200).json({ e });
+  } catch (error) {
+      return res.status(500).send(error.message);
+  }
+};
+
+const deleteGuest = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    await Visit.destroy({where: {guest_id: req.params.id}});
+    await Guest.destroy({where: {id: req.params.id}});
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 
 module.exports = {
   nameSearch,
   createVisit,
   getAllGuests,
-  getAllAffiliates
+  getAllAffiliates,
+  deleteGuest,
+  getAllVisits
 }
