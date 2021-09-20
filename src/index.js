@@ -17,7 +17,7 @@ ReactDOM.render(
           <Switch>
             <Route exact path="/" component={Form} />
             <Route exact path="/admin/guests" component={Guest} />
-            <Route exact path="/admin/affiliate" component={Affiliate} />
+            <Route exact path="/admin/affiliates" component={Affiliate} />
             {/*
             previous visit view of guests
             <Route path="/admin/guests/:id" component={Tutorial} />

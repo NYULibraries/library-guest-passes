@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Visit.belongsTo(models.Guest);
-      Visit.belongsTo(models.Affiliate);
+      Visit.belongsTo(models.Affiliate, {
+        foreignKey: {
+          name: 'affiliate_id',
+          allowNull: true
+        }
+      });
     }
   };
   Visit.init({

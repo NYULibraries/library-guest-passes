@@ -124,11 +124,23 @@ const deleteGuest = async (req, res) => {
   }
 }
 
+const deleteAffiliate = async (req, res) => {
+  try {
+    const destroyAffiliate = await Affiliate.destroy({where: {id: req.params.id}, force: true});
+    return res.status(204).json({
+      destroyAffiliate
+    });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   nameSearch,
   createVisit,
   getAllGuests,
   getAllAffiliates,
   deleteGuest,
+  deleteAffiliate,
   getAllVisits
 }

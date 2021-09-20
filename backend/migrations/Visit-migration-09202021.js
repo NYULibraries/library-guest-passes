@@ -10,6 +10,7 @@ module.exports = {
       },
       guest_id:{
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Guest',
           key: 'id',
@@ -18,6 +19,7 @@ module.exports = {
       },
       affiliate_id:{
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: 'Affiliate',
           key: 'id',

@@ -5,17 +5,17 @@ module.exports = {
       id:{
         type: Sequelize.INTEGER,
         autoIncrement:true,
-        allowNull:false,
+        allowNull: false,
         primaryKey:true
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
       },
       permission_status: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
-        allowNull:false
+        allowNull: false
       },
     });
   },
