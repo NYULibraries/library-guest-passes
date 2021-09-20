@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-//import { deleteGuest } from '../helpers';
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"

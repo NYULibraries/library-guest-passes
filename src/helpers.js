@@ -93,26 +93,11 @@ const eraseMessageEffect = (msg, fn) => {
   }
 };
 
-const deleteGuest = (url, id) => {
-  fetch(`${url}/guests/${id}`, {
-    method: "DELETE",
-    mode: "cors",
-    cache: "default",
-    credentials: "omit",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  .then(res => res.text())
-  .then(res => console.log(res))
-}
-
 export {
   guestLookupTrigger,
   postVisit,
   emptyForm,
   searchGuestEffect,
   dropdownChoiceEffect,
-  eraseMessageEffect,
-  deleteGuest
+  eraseMessageEffect
 };
