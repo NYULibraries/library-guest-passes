@@ -1,25 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import { deleteGuest } from '../helpers';
+//import { deleteGuest } from '../helpers';
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
 }`;
 
 function Guest() {
-    const [data, setData] = useState({});
-    // GET request function to your Mock API
-    const fetchInventory = () => {
-      fetch(`${backendDomain}/guests`)
-        .then(res => res.json())
-        .then(json => setData(json));
-    }
+  const [data, setData] = useState([]);
 
-    // Calling the function on component mount
+  const fetchInventory = () => {
+    fetch(`${backendDomain}/guests`)
+      .then(res => res.json())
+      .then(json => setData(json));
+  }
 
-    useEffect(() => {
-      fetchInventory();
-      console.log(data);
-    }, []);
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const handleDelete = (url, id) => {
+    fetch(`${url}/guests/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "default",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
+
+    const guests = data.guest.filter(e => e.id !== id);
+    setData({ guest: guests })
+  }
 
   return (
     <div className="container">
@@ -51,7 +65,7 @@ function Guest() {
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                       </svg>
                     </button>
-                    <button className="btn btn-outline-secondary" type="button" onClick={() => deleteGuest(backendDomain, e.id)}>
+                    <button className="btn btn-outline-secondary" type="button" onClick={() => handleDelete(backendDomain, e.id, data, setData)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                         <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
