@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Affiliate.hasMany(models.Visit);
+      Affiliate.hasMany(models.Visit, {allowNull: true});
     };
   };
+  
   Affiliate.init({
     id:{
       type: DataTypes.INTEGER,

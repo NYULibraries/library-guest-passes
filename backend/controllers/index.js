@@ -126,7 +126,7 @@ const deleteGuest = async (req, res) => {
 
 const deleteAffiliate = async (req, res) => {
   try {
-    const destroyAffiliate = await Affiliate.destroy({where: {id: req.params.id}, force: true});
+    const destroyAffiliate = await Affiliate.destroy({where: {id: req.params.id}});
     return res.status(204).json({
       destroyAffiliate
     });
