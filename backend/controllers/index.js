@@ -47,6 +47,31 @@ const createVisit = async (req, res) => {
   }
 }
 
+const getPreviousVisits = async (req, res) =>{
+  try {
+    let Model;
+    if(req.params.typeOfVisitor === "affiliates"){
+      Model = Affiliate;
+    } else if (req.params.typeOfVisitor === "guests"){
+      Model = Guest;
+    }
+    
+    const queryResults = await Model.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [{
+        model: Visit
+      }]
+    });
+    return res.status(200).json(queryResults);
+  } catch (error) {
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
+  }
+}
+
 const nameSearch = async (req, res) => {
   try {
     let nameVariable;
@@ -68,19 +93,15 @@ const nameSearch = async (req, res) => {
     });
     return res.status(200).json(queryResults);
   } catch (error) {
-    return res.sendStatus(500);
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
   };
 };
 
 const getAllGuests = async (req, res) => {
   try {
-    const guest = await Guest.findAll({
-        include: [
-            {
-                model: Visit
-            }
-        ]
-    });
+    const guest = await Guest.findAll();
     return res.status(200).json({ guest });
   } catch (error) {
       return res.status(500).send(error.message);
@@ -89,13 +110,7 @@ const getAllGuests = async (req, res) => {
 
 const getAllAffiliates = async (req, res) => {
   try {
-    const affiliate = await Affiliate.findAll({
-        include: [
-            {
-                model: Visit
-            }
-        ]
-    });
+    const affiliate = await Affiliate.findAll();
     return res.status(200).json({ affiliate });
   } catch (error) {
       return res.status(500).send(error.message);
@@ -142,5 +157,6 @@ module.exports = {
   getAllAffiliates,
   deleteGuest,
   deleteAffiliate,
-  getAllVisits
+  getAllVisits,
+  getPreviousVisits,
 }

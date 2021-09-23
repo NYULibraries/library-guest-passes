@@ -7,6 +7,7 @@ import Form from "./components/Form";
 import Guest from "./components/Guest";
 import Banner from "./components/Banner";
 import Affiliate from "./components/Affiliate";
+import PreviousVisits from "./components/PreviousVisits"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,11 +19,7 @@ ReactDOM.render(
             <Route exact path="/" component={Form} />
             <Route exact path="/admin/guests" component={Guest} />
             <Route exact path="/admin/affiliates" component={Affiliate} />
-            {/*
-            previous visit view of guests
-            <Route path="/admin/guests/:id" component={Tutorial} />
-            previous visit view of affiliates
-            <Route path="/admin/affiliates/:id" component={Tutorial} /> */}
+            <Route path="/admin/:typeOfVisitor/:id" component={PreviousVisits} />
           </Switch>
         </BrowserRouter>
       </div>
