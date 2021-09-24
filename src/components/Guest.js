@@ -7,14 +7,14 @@ const backendDomain = `${
 function Guest() {
   const [data, setData] = useState([]);
 
-  const fetchInventory = () => {
+  const fetchGuests = () => {
     fetch(`${backendDomain}/guests`)
       .then(res => res.json())
       .then(json => setData(json));
   }
 
   useEffect(() => {
-    fetchInventory();
+    fetchGuests();
   }, []);
 
   const handleDelete = (url, id) => {

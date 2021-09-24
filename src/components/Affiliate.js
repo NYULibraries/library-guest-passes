@@ -7,14 +7,14 @@ const backendDomain = `${
 function Affiliate() {
   const [data, setData] = useState([]);
 
-  const fetchInventory = () => {
+  const fetchAffiliates = () => {
     fetch(`${backendDomain}/affiliates`)
       .then(res => res.json())
       .then(json => setData(json));
   }
 
   useEffect(() => {
-    fetchInventory();
+    fetchAffiliates();
   }, []);
 
   const handleDelete = (url, id) => {

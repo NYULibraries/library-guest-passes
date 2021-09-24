@@ -75,6 +75,7 @@ const dropdownChoiceEffect = (choice, obj, fn) => {
   //the most recent visit is chosen as the basis for the form autopopulation
   const chosenVisit = chooseVisit(chosenGuest.Visits);
   //then, the User's name is added to the object that will be mapped for the form
+  if(!chosenVisit) return false
   chosenVisit.guest_name = chosenGuest.name;
   return Object.keys(obj).map((e) => {
     return fn({ [e]: chosenVisit[e] });
