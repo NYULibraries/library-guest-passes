@@ -9,6 +9,7 @@ router.get("/:typeOfVisitor/:id", controllers.getPreviousVisits);
 // router.put("/affiliate/:id");
 router.delete("/guests/:id", controllers.deleteGuest);
 router.delete("/affiliates/:id", controllers.deleteAffiliate);
+router.delete("/visits/:id", controllers.deleteVisit);
 router.post("/visit", controllers.createVisit);
 
 

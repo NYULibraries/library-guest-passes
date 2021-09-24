@@ -143,11 +143,23 @@ const deleteAffiliate = async (req, res) => {
   }
 }
 
+const deleteVisit = async (req, res) => {
+  try {
+    const destroyVisit = await Visit.destroy({where: {id: req.params.id}, force: true});
+    return res.status(204).json({
+      destroyVisit
+    });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   nameSearch,
   createVisit,
   getAllVisitors,
   deleteGuest,
   deleteAffiliate,
+  deleteVisit,
   getPreviousVisits,
 }
