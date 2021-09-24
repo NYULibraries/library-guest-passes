@@ -30,7 +30,7 @@ function Affiliate() {
     .then(res => res.text())
     .then(res => console.log(res))
 
-    const affiliates = data.affiliate.filter(e => e.id !== id);
+    const affiliates = data.filter(e => e.id !== id);
     setData({ affiliate: affiliates })
   }
 
@@ -47,7 +47,7 @@ function Affiliate() {
         </thead>
         <tbody>
           {
-            data.affiliate ? data.affiliate.map((e) => (
+            data ? data.map((e) => (
               <tr key={e.id}>
                 <td>{e.name}</td>
                 <td>{e.permission_status.toString()}</td>
