@@ -4,36 +4,47 @@ const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
 }`;
 
-function PreviousVisits() {
+function PreviousVisits(props) {
   const [data, setData] = useState([]);
+  const { typeOfVisitor, id } = props.match.params
 
-  const fetchInventory = () => {
-    fetch(`${backendDomain}/guests`)
+  const fetchVisits = () => {
+    fetch(`${backendDomain}/${typeOfVisitor}/${id}`)
       .then(res => res.json())
       .then(json => setData(json));
   }
 
   useEffect(() => {
-    fetchInventory();
+    fetchVisits();
   }, []);
 
   return (
     <div className="container">
       <h1>Visits</h1>
+      { data.permission_status ? <div><h2>{data.name}</h2><h3>Permission Status: {data.permission_status.toString()}</h3></div> : <div></div>}
       <table className="table table-hover table-bordered">
         <thead>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Permission Status</th>
-          <th scope="col">View/Delete</th>
+          <th scope="col">Card Issued on:</th>
+          <th scope="col">Card Expires on:</th>
+          <th scope="col">Staff Initials</th>
+          <th scope="col">Type of ID</th>
+          <th scope="col">Restrictions</th>
+          <th scope="col">Status</th>
+          <th scope="col">Notes</th>
         </tr>
         </thead>
         <tbody>
           {
-            data.guest ? data.guest.map((e) => (
+            data.Visits ? data.Visits.map((e) => (
               <tr key={e.id}>
-                <td>{e.name}</td>
-                <td>{e.permission_status.toString()}</td>
+                <td>{new Date(e.cardissue).toDateString()}</td>
+                <td>{new Date(e.cardexp).toDateString()}</td>
+                <td>{e.initials}</td>
+                <td>{e.idtype}</td>
+                <td>{e.restrictions}</td>
+                <td>{e.status}</td>
+                <td>{e.notes}</td>
                 <td>
                   <div className="btn-group mb-3">
                     <button className="btn btn-outline-secondary">
