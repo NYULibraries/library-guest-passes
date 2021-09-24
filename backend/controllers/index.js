@@ -99,32 +99,25 @@ const nameSearch = async (req, res) => {
   };
 };
 
-const getAllGuests = async (req, res) => {
+const getAllVisitors = async (req, res) =>{
   try {
-    const guest = await Guest.findAll();
-    return res.status(200).json({ guest });
+    let Model;
+    if(req.params.typeOfVisitor === "affiliates"){
+      Model = Affiliate;
+    } else if (req.params.typeOfVisitor === "guests"){
+      Model = Guest;
+    }  else if (req.params.typeOfVisitor === "visits"){
+      Model = Visit;
+    }
+    
+    const visitor = await Model.findAll();
+    return res.status(200).json(visitor);
   } catch (error) {
-      return res.status(500).send(error.message);
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
   }
-};
-
-const getAllAffiliates = async (req, res) => {
-  try {
-    const affiliate = await Affiliate.findAll();
-    return res.status(200).json({ affiliate });
-  } catch (error) {
-      return res.status(500).send(error.message);
-  }
-};
-
-const getAllVisits = async (req, res) => {
-  try {
-    const e = await Visit.findAll();
-    return res.status(200).json({ e });
-  } catch (error) {
-      return res.status(500).send(error.message);
-  }
-};
+}
 
 const deleteGuest = async (req, res) => {
   try {
@@ -153,10 +146,8 @@ const deleteAffiliate = async (req, res) => {
 module.exports = {
   nameSearch,
   createVisit,
-  getAllGuests,
-  getAllAffiliates,
+  getAllVisitors,
   deleteGuest,
   deleteAffiliate,
-  getAllVisits,
   getPreviousVisits,
 }
