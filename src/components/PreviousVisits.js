@@ -31,9 +31,8 @@ function PreviousVisits(props) {
     .then(res => res.text())
     .then(res => console.log(res))
 
-    const visits = data.filter(e => e.id !== id);
-    if(visits) setData(visits);
-    else setData([])
+    const editedVisits = data.Visits.filter(e => e.id !== id);
+    setData({ Visits: editedVisits })
   }
 
   return (
