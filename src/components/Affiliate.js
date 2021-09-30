@@ -32,7 +32,7 @@ function Affiliate() {
     .then(res => console.log(res))
 
     const affiliates = data.filter(e => e.id !== id);
-    setData({ affiliate: affiliates })
+    setData(affiliates)
   }
 
   return (
