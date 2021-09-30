@@ -79,7 +79,7 @@ function PreviousVisits(props) {
               )) : <div></div>
             }
           </tbody>
-        </table> : <div><h1>No Visits Recorded</h1></div>
+        </table> : <div></div>
       }
     </div>
   );
