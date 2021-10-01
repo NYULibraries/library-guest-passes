@@ -1,5 +1,5 @@
-const uuid = require('uuid');
 
+'use strict';
 const {
   Model
 } = require('sequelize');
@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Affiliate.hasMany(models.Visit, {allowNull: true});
+      Affiliate.hasMany(models.Visit);
     };
   };
-  
   Affiliate.init({
     id:{
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
+      autoIncrement:true,
       allowNull:false,
       primaryKey:true
     },
@@ -37,8 +37,5 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
       underscored: true
     });
-  Affiliate.beforeCreate((affiliate, _ ) => {
-    return affiliate.id = uuid();
-  });
   return Affiliate;
 };

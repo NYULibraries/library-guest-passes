@@ -30,7 +30,6 @@ const createVisit = async (req, res) => {
           cardissue: req.body.cardissue,
           notes: req.body.notes,
       });
-      console.log(guest);
       await guest[0].addVisit(visit);
       if(affiliate){
         await affiliate[0].addVisit(visit);
