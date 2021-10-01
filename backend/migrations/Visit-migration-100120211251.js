@@ -4,12 +4,12 @@ module.exports = {
     await queryInterface.createTable('Visit', {
       id:{
         type: Sequelize.INTEGER,
-        autoIncrement: true,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
       guest_id:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Guest',
@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       affiliate_id:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: true,
         references: {
           model: 'Affiliate',

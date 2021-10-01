@@ -1,4 +1,5 @@
-'use strict';
+const uuid = require('uuid');
+
 const {
   Model
 } = require('sequelize');
@@ -16,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Visit.init({
     id:{
-      type: DataTypes.INTEGER,
-      autoIncrement:true,
+      type: DataTypes.UUID,
       allowNull:false,
       primaryKey:true
     },
@@ -61,5 +61,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       underscoredAll: true,
     });
+  Visit.beforeCreate((visit, _ ) => {
+    return visit.id = uuid();
+  });
   return Visit;
 };

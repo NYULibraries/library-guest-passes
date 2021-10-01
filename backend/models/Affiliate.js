@@ -1,4 +1,5 @@
-'use strict';
+const uuid = require('uuid');
+
 const {
   Model
 } = require('sequelize');
@@ -16,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   
   Affiliate.init({
     id:{
-      type: DataTypes.INTEGER,
-      autoIncrement:true,
+      type: DataTypes.UUID,
       allowNull:false,
       primaryKey:true
     },
@@ -37,5 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
       underscored: true
     });
+  Affiliate.beforeCreate((affiliate, _ ) => {
+    return affiliate.id = uuid();
+  });
   return Affiliate;
 };
