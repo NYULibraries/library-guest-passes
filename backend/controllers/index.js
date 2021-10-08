@@ -162,21 +162,13 @@ const updateVisitor = async (req, res) => {
     } else if (req.params.typeOfVisitor === "guests"){
       Model = Guest;
     };
+    
+    const response = await Model.update({ name: req.body.name, permission_status: req.body.permission_status }, {
+      where: {
+        id: req.params.id
+      }
+    });
 
-    let response;
-    if(req.body.type === "name") {
-      response = await Model.update({ name: req.body.variable }, {
-        where: {
-          id: req.params.id
-        }
-      });
-    } else if (req.body.type === "permission_status"){
-      response = await Model.update({ permission_status: req.body.variable }, {
-        where: {
-          id: req.params.id
-        }
-      });
-    };
     return res.status(200).json({
       response
     });

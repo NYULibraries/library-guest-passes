@@ -1,5 +1,8 @@
-import React,{ useState, useReducer } from 'react';
+import React,{ useReducer } from 'react';
 
+const backendDomain = `${
+  process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
+}`;
 
 const EditVisitor = (props) =>{
   const visitorObject = props.location.state; 
@@ -17,7 +20,24 @@ const EditVisitor = (props) =>{
 
   const handleSubmit = (e) => {
     e.preventDefault() 
-    console.log(userInput); 
+    if(userInput.name === ""){
+      setUserInput({name: visitorObject.name})
+    } else if (userInput.permission_status === "") {
+      setUserInput({permissionStatus: visitorObject.permission_status})
+    }
+
+    fetch(`${backendDomain}/${visitorObject.typeOfVisitor}/${visitorObject.id}`, {
+      method: "PUT",
+      mode: "cors",
+      cache: "default",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({name: userInput.name, permission_status: userInput.permissionStatus})
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
   }
 
     return (
