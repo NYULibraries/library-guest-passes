@@ -157,20 +157,31 @@ const deleteVisit = async (req, res) => {
 const updateVisitor = async (req, res) => {
   try {
     let Model;
+    let name;
+    let permission_status;
     if(req.params.typeOfVisitor === "affiliates"){
       Model = Affiliate;
     } else if (req.params.typeOfVisitor === "guests"){
       Model = Guest;
     };
     
-    const response = await Model.update({ name: req.body.name, permission_status: req.body.permission_status }, {
-      where: {
-        id: req.params.id
-      }
-    });
-
+    if(req.body.name) {
+      name = await Model.update({ name: req.body.name }, {
+        where: {
+          id: req.params.id
+        }
+      });
+    }
+    if (req.body.permission_status) {
+      permission_status = await Model.update({ permission_status: req.body.permission_status}, {
+        where: {
+          id: req.params.id
+        }
+      });
+    }
     return res.status(200).json({
-      response
+      name,
+      permission_status
     });
   } catch (error) {
     return res.status(500).send(error.message);
