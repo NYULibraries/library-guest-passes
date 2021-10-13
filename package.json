@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "start-backend": "node backend/app.js",
     "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/app.js"
@@ -48,6 +48,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-jest": "^27.2.5",
+    "jest": "^27.2.5",
     "nodemon": "^2.0.12"
   }
 }
