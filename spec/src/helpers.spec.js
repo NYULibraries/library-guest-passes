@@ -3,3 +3,10 @@ describe('tools', () => {
     expect(true).toBe(true);
   });
 });
+
+// guestLookupTrigger,
+// postVisit,
+// emptyForm,
+// searchGuestEffect,
+// dropdownChoiceEffect,
+// eraseMessageEffect
