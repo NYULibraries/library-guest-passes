@@ -94,11 +94,27 @@ const eraseMessageEffect = (msg, fn) => {
   }
 };
 
+const postEditVisitor = async (url, obj, name, status) =>{
+  await fetch(`${url}/${obj.typeOfVisitor}/${obj.id}`, {
+    method: "PUT",
+    mode: "cors",
+    cache: "default",
+    credentials: "omit",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({name: name, permission_status: status})
+  })
+  .then(res => res.text())
+  .then(res => console.log(res))
+}
+
 export {
   guestLookupTrigger,
   postVisit,
   emptyForm,
   searchGuestEffect,
   dropdownChoiceEffect,
-  eraseMessageEffect
+  eraseMessageEffect,
+  postEditVisitor
 };

@@ -1,30 +1,24 @@
-import React,{ useState, useReducer } from 'react';
+import React,{ useState } from 'react';
+import { postEditVisitor } from '../helpers';
+import { useHistory } from 'react-router';
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
 }`;
 
 const EditVisitor = (props) =>{
+  const history = useHistory()
   const visitorObject = props.state
   const [name, setName] = useState("");
   const [permissionStatus, setPermissionStatus] = useState();
 
-  const handleSubmit = (e) => {
-    console.log(props)
-    e.preventDefault() 
-      fetch(`${backendDomain}/${visitorObject.typeOfVisitor}/${visitorObject.id}`, {
-        method: "PUT",
-        mode: "cors",
-        cache: "default",
-        credentials: "omit",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({name: name, permission_status: permissionStatus})
-      })
-      .then(res => res.text())
-      .then(res => console.log(res))
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await postEditVisitor(backendDomain, visitorObject, name, permissionStatus);
+    setName("");
+    setPermissionStatus();
+    history.go();
+  };
 
   return (
     <div className="modal" id="editVisitor" role="dialog" tabindex="-1" aria-labelledby="Edit Guest Modal" aria-hidden="true">
