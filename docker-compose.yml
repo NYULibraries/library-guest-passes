@@ -41,9 +41,10 @@ services:
     image: guest-passes
     build: .
     command:
-      ["/tmp/wait-for", "db:3306", "--", "npm", "test", "--", "--watchAll=false"]
+      ["/tmp/wait-for", "db:3306", "--", "yarn", "test"]
     depends_on:
       - db
+    <<: *default-volumes
 
   curl-dev:
     image: appropriate/curl

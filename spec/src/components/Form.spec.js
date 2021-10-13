@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Form from "./components/Form";
+import Form from "../../../src/components/Form";
 
 beforeEach(() => render(<Form />));
 test("renders form", () => {
