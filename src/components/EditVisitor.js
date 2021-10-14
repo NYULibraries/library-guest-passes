@@ -1,6 +1,7 @@
 import React,{ useState } from 'react';
 import { postEditVisitor } from '../helpers';
 import { useHistory } from 'react-router';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
@@ -20,27 +21,38 @@ const EditVisitor = (props) =>{
     history.go();
   };
 
-  return (
-    <div className="modal" id="editVisitor" role="dialog" tabindex="-1" aria-labelledby="Edit Guest Modal" aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="edit">Edit</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              </button>
-            </div>
-            <div className="modal-body">
-              { 
-                visitorObject && visitorObject.hasOwnProperty('name') ? 
-                <form onSubmit={handleSubmit} id="edit-visitor">
-                  <input placeholder="Name" name="name" defaultValue={visitorObject.name} onChange={(e) => setName(e.target.value)} /> 
-                  <input placeholder="Permission Status" name="permission_status" defaultValue={visitorObject.permission_status} onChange={(e) => setPermissionStatus(e.target.value)} />
-                  <button type="submit" form="edit-visitor" className="btn btn-secondary">Save Changes</button>
-                </form> : <div></div>
-              }
-            </div>
-        </div>
-      </div>
+  return (<div>
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Edit
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          { 
+            visitorObject && visitorObject.hasOwnProperty('name') ? 
+            <Form onSubmit={handleSubmit} id="edit-visitor">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Name</Form.Label>
+                  <Form.Control placeholder="Name" name="name" defaultValue={visitorObject.name} onChange={(e) => setName(e.target.value)} /> 
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Permission Status</Form.Label>
+                  <Form.Control placeholder="Permission Status" name="permission_status" defaultValue={visitorObject.permission_status} onChange={(e) => setPermissionStatus(e.target.value)} />
+              </Form.Group>
+              <Button type="submit" form="edit-visitor" variant="secondary">Save Changes</Button>
+            </Form> : <div></div>
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }
