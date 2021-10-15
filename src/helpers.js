@@ -77,6 +77,7 @@ const dropdownChoiceEffect = (choice, obj, fn) => {
   //then, the User's name is added to the object that will be mapped for the form
   if(!chosenVisit) return false
   chosenVisit.guest_name = chosenGuest.name;
+  chosenVisit.permission_status = chosenGuest.permission_status;
   return Object.keys(obj).map((e) => {
     return fn({ [e]: chosenVisit[e] });
   });

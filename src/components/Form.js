@@ -27,10 +27,10 @@ const Form = () => {
       cardissue: "",
       notes: "",
       dropdownChoice: "",
+      permission_status: ""
     }
   );
 
-  const [permission, setPermission] = useState("-- enter name for permission status--");
   const [message, setMessage] = useState("");
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState("");
@@ -66,6 +66,7 @@ const Form = () => {
       status: userInput.status,
       idtype: userInput.idtype,
       notes: userInput.notes,
+      permission_status: userInput.permission_status
     };
 
     if (userInput.dropdownChoice === "empty") {
@@ -135,7 +136,8 @@ const Form = () => {
           )}
         </div>
         <label htmlFor="permission">Permission status</label>
-        <p name="permission">{permission}</p>
+        {console.log(userInput.permission_status)}
+        <p name="permission">{userInput.permission_status.toString()}</p>
         <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
           className="form-control"
