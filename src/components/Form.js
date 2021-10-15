@@ -4,7 +4,7 @@ import {
   guestLookupTrigger,
   postVisit,
   emptyForm,
-  searchGuestEffect,
+  searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
 } from "../helpers";
@@ -50,11 +50,13 @@ const Form = () => {
   }, [userInput.guest_name]);
 
   useEffect(() => {
-    searchGuestEffect(
+    const typeOfVisitor = "guest"
+    searchVisitorEffect(
       backendDomain,
       userInput.guest_name,
       setSearchResults,
-      debouncedName
+      debouncedName,
+      typeOfVisitor
     );
   }, [debouncedName]);
 
