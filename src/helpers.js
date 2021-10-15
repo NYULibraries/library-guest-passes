@@ -45,16 +45,16 @@ const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
   }
 };
 
-const searchGuestEffect = (url, name, fn, trigger) => {
-  const searchGuest = () => {
-    const encodedURL = encodeURI(url + "/name-search/?guest_name=" + name);
+const searchVisitorEffect = (url, name, fn, trigger, type) => {
+  const searchVisitor = () => {
+    const encodedURL = encodeURI(`${url}/name-search/?${type}_name=${name}`);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));
   };
 
   if (trigger) {
-    return searchGuest();
+    return searchVisitor();
   }
 };
 
@@ -114,7 +114,7 @@ export {
   guestLookupTrigger,
   postVisit,
   emptyForm,
-  searchGuestEffect,
+  searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
   postEditVisitor
