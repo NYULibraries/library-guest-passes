@@ -58,6 +58,14 @@ const searchVisitorEffect = (url, name, fn, trigger, type) => {
   }
 };
 
+const permissionLookupEffect = async (url, name, fn, type) => {
+  const encodedURL = encodeURI(`${url}/permission/?${type}_name=${name}`);
+  const visitor = await fetch(encodedURL).then((response) => response.json())
+  if(visitor.name === name){
+    fn(visitor.permission_status);
+  }
+};
+
 const chooseVisit = (e) => {
   let highestNum = 0;
   let chosenVisitObject;
@@ -117,5 +125,6 @@ export {
   searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
-  postEditVisitor
+  postEditVisitor,
+  permissionLookupEffect
 };

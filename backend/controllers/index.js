@@ -188,6 +188,30 @@ const updateVisitor = async (req, res) => {
   }
 }
 
+const permissionSearch = async (req, res) => {
+  try {
+    let nameVariable;
+    let Model;
+    if("affiliate_name" in req.query){
+      nameVariable = req.query.affiliate_name;
+      Model = Affiliate;
+    } else if ("guest_name" in req.query){
+      nameVariable = req.query.guest_name;
+      Model = Guest;
+    }
+    const queryResults = await Model.findOne({
+      where: {
+        name: { [Op.startsWith]: `${nameVariable}` },
+      }
+    });
+    return res.status(200).json(queryResults);
+  } catch (error) {
+    console.error(error.stack)
+    res.status(500)
+    res.render('error', { error: error })
+  };
+}
+
 module.exports = {
   nameSearch,
   createVisit,
@@ -197,4 +221,5 @@ module.exports = {
   deleteVisit,
   getPreviousVisits,
   updateVisitor,
+  permissionSearch
 }

@@ -7,6 +7,7 @@ import {
   searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
+  permissionLookupEffect,
 } from "../helpers";
 
 const backendDomain = `${
@@ -27,10 +28,11 @@ const Form = () => {
       cardissue: "",
       notes: "",
       dropdownChoice: "",
-      permission_status: ""
     }
   );
 
+  const [guestPermission, setGuestPermission] = useState("");
+  //const [affiliatePermission, setAffiliatePermission] = useState("");
   const [message, setMessage] = useState("");
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState("");
@@ -59,6 +61,17 @@ const Form = () => {
       typeOfVisitor
     );
   }, [debouncedName]);
+
+
+  useEffect(() => {
+    const typeOfVisitor = "guest"
+    permissionLookupEffect(
+      backendDomain,
+      userInput.guest_name,
+      setGuestPermission,
+      typeOfVisitor
+    );
+  }, [userInput.guest_name]);
 
   useEffect(() => {
     const chosenUserData = {
@@ -137,9 +150,8 @@ const Form = () => {
             handleChange
           )}
         </div>
-        <label htmlFor="permission">Permission status</label>
-        {console.log(userInput.permission_status)}
-        <p name="permission">{userInput.permission_status.toString()}</p>
+        <label htmlFor="guestPermission">Permission status</label>
+        <p name="guestPermission">{guestPermission.toString()}</p>
         <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
           className="form-control"
