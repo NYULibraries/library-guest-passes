@@ -4,7 +4,10 @@ describe('index controller', () => {
   let res, req;
   let affiliate, guest, visit;
   beforeEach( () => {
-    res = res || {};
+    res = res || {
+      status: jest.fn(_ => { return { json: jest.fn() }; }),
+      render: jest.fn(),
+    };
     req = req || {};
     affiliate = { name: 'Test Affiliate', permission_status: true }
     guest = { name: 'Test Guest', permission_status: true }

@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 
-import iconv from 'iconv-lite';
-import encodings from 'iconv-lite/encodings';
-iconv.encodings = encodings;
+require('mysql2/node_modules/iconv-lite').encodingExists('foo');
 
 global.React = React;
 
