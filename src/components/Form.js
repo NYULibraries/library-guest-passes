@@ -32,7 +32,7 @@ const Form = () => {
   );
 
   const [guestPermission, setGuestPermission] = useState("");
-  //const [affiliatePermission, setAffiliatePermission] = useState("");
+  const [affiliatePermission, setAffiliatePermission] = useState("");
   const [message, setMessage] = useState("");
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState("");
@@ -72,6 +72,17 @@ const Form = () => {
       typeOfVisitor
     );
   }, [userInput.guest_name]);
+
+
+  useEffect(() => {
+    const typeOfVisitor = "affiliate"
+    permissionLookupEffect(
+      backendDomain,
+      userInput.affiliate_name,
+      setAffiliatePermission,
+      typeOfVisitor
+    );
+  }, [userInput.affiliate_name]);
 
   useEffect(() => {
     const chosenUserData = {
@@ -161,6 +172,8 @@ const Form = () => {
           value={userInput.affiliate_name}
           onChange={handleChange}
         />
+        <label htmlFor="affiliatePermission">Permission status</label>
+        <p name="affiliatePermission">{affiliatePermission.toString()}</p>
         <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
