@@ -1,4 +1,4 @@
-const app = require('./app.js');
+const app = require('./app.js').app;
 const PORT = process.env.REACT_APP_PORT || 5000;
 const HOST = process.env.REACT_APP_HOST || "0.0.0.0";
 
