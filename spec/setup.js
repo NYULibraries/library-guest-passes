@@ -7,6 +7,6 @@ global.React = React;
 
 global.console = {
   ...console,
-  error: jest.fn(),
-  log: jest.fn(),
+  // error: jest.fn(),
+  // log: jest.fn(),
 };

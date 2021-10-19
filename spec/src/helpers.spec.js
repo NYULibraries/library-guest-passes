@@ -1,12 +1,22 @@
-describe('tools', () => {
-  it('should be true', () => {
-    expect(true).toBe(true);
+describe('helpers', () => {
+  describe('guestLookupTrigger', () => {
+    it('should be true', () => {
+      expect(true).toBe(true);
+    });
+  });
+  describe('postVisit', () => {
+
+  });
+  describe('emptyForm', () => {
+
+  });
+  describe('searchGuestEffect', () => {
+
+  });
+  describe('dropdownChoiceEffect', () => {
+
+  });
+  describe('eraseMessageEffect', () => {
+
   });
 });
-
-// guestLookupTrigger,
-// postVisit,
-// emptyForm,
-// searchGuestEffect,
-// dropdownChoiceEffect,
-// eraseMessageEffect
