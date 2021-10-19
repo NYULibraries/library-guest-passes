@@ -44,6 +44,11 @@ const Form = () => {
   };
 
   useEffect(() => {
+    setGuestPermission("Type name to see permission status. (available after 2nd visit)");
+    setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
+  }, []);
+
+  useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedName(userInput.guest_name);
     }, 500);
@@ -70,7 +75,7 @@ const Form = () => {
       backendDomain,
       userInput.guest_name,
       setGuestPermission,
-      typeOfVisitor
+      typeOfVisitor,
     );
   }, [userInput.guest_name]);
 
@@ -81,7 +86,7 @@ const Form = () => {
       backendDomain,
       userInput.affiliate_name,
       setAffiliatePermission,
-      typeOfVisitor
+      typeOfVisitor,
     );
   }, [userInput.affiliate_name]);
 
@@ -100,6 +105,8 @@ const Form = () => {
       const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
       emptyStates(arrayOfStates);
       emptyForm(userInput, setUserInput);
+      setGuestPermission("Type name to see permission status. (available after 2nd visit)");
+      setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
     } else if (userInput.dropdownChoice !== "") {
       dropdownChoiceEffect(
         userInput.dropdownChoice,
@@ -117,6 +124,8 @@ const Form = () => {
     const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
     emptyStates(arrayOfStates);
     emptyForm(userInput, setUserInput);
+    setGuestPermission("Type name to see permission status. (available after 2nd visit)");
+    setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
   }
 
   const handleSubmit = async (e) => {
@@ -142,6 +151,8 @@ const Form = () => {
       const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
       emptyStates(arrayOfStates);
       emptyForm(userInput, setUserInput);
+      setGuestPermission("Type name to see permission status");
+      setAffiliatePermission("Type name to see permission status");
     }
   };
 

@@ -62,10 +62,10 @@ const searchVisitorEffect = (url, name, fn, trigger, type) => {
 const permissionLookupEffect = async (url, name, fn, type) => {
   const encodedURL = encodeURI(`${url}/permission/?${type}_name=${name}`);
   const visitor = await fetch(encodedURL).then((response) => response.json())
-  if(visitor.name && visitor.name === name){
+  if(visitor && visitor.name === name){
     fn(visitor.permission_status);
   } else {
-    return 
+    return
   }
 };
 
