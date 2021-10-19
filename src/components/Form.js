@@ -277,7 +277,7 @@ const Form = () => {
           value={userInput.notes}
           onChange={handleChange}
         />
-        <div className="btn-group " role="group">
+        <div className="btn-group" role="group">
           <button className="btn btn-primary" type="submit">
             Submit
           </button>
