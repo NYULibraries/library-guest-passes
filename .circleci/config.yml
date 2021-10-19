@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Test if dev starts properly
           command: |
-            docker-compose up -d
+            docker-compose up dev -d
             timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
             script/check_dev.sh
       - <<: *auth_quay
