@@ -72,10 +72,15 @@ const getPreviousVisits = async (req, res) =>{
   }
 }
 
+// nameSearch searches for an existing user by name 
+// using affiliate name (first) or guest name (second) if present.
+// TODO: 
+//  - Name is not a unique way to query people, we'll need a better way, i.e. Name + DOB
 const nameSearch = async (req, res) => {
   try {
     let nameVariable;
     let Model;
+    
     if("affiliate_name" in req.query){
       nameVariable = req.query.affiliate_name;
       Model = Affiliate;
@@ -83,6 +88,7 @@ const nameSearch = async (req, res) => {
       nameVariable = req.query.guest_name;
       Model = Guest;
     }
+
     const queryResults = await Model.findAll({
       where: {
         name: { [Op.startsWith]: `${nameVariable}` },
@@ -91,11 +97,14 @@ const nameSearch = async (req, res) => {
         model: Visit
       }]
     });
+
     return res.status(200).json(queryResults);
   } catch (error) {
+
     console.error(error.stack)
     res.status(500)
     res.render('error', { error: error })
+  
   };
 };
 

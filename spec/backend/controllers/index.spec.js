@@ -1,14 +1,24 @@
-import { nameSearch } from '../../../backend/controllers/index.js'
+require('../../../backend/app');
+import { nameSearch } from '../../../backend/controllers/index';
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  res.render = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+const mockRequest = (queryData) => {
+  return {
+    query: queryData,
+  };
+};
 
 describe('index controller', () => {
   let res, req;
   let affiliate, guest, visit;
   beforeEach( () => {
-    res = res || {
-      status: jest.fn(_ => { return { json: jest.fn() }; }),
-      render: jest.fn(),
-    };
-    req = req || {};
     affiliate = { name: 'Test Affiliate', permission_status: true }
     guest = { name: 'Test Guest', permission_status: true }
     visit = {
@@ -23,32 +33,19 @@ describe('index controller', () => {
     }
   });
   describe('nameSearch', () => {
-    let result;
-    beforeEach( async () => {
-      // result = await nameSearch(req, res);
-      result = '';
-    });
     describe('when searching for affiliate name', () => {
       describe('and affiliate already exists', () => {
-        beforeAll( () => {
-          req = {
-            query: {
-              affiliate_name: "John Doe", 
-            }
-          };
-        });
-        it('should return the existing affiliate', () => {
-          expect(result).toEqual('');
+        it('should return the existing affiliate', async () => {
+          req = mockRequest(
+            { affiliate_name: 'Paul Atreides' },
+          );
+          res = mockResponse();
+          await nameSearch(req, res);
+          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.json).toHaveBeenCalledWith([]);
         });
       });
       describe('and affiliate does not already exists', () => {
-        beforeAll( () => {
-          req = {
-            query: {
-              affiliate_name: "New Name", 
-            }
-          };
-        });
         it('should return empty', () => {
 
         });
