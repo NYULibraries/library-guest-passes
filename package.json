@@ -24,8 +24,8 @@
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "start-backend": "node backend/app.js",
-    "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/app.js"
+    "start-backend": "node backend/server.js",
+    "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/server.js"
   },
   "eslintConfig": {
     "extends": [
