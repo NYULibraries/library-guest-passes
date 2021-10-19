@@ -10,11 +10,13 @@ import Banner from "./components/Banner";
 import Affiliate from "./components/Affiliate";
 import PreviousVisits from "./components/PreviousVisits";
 import EditVisitor from "./components/EditVisitor";
+import Breadcrumb from "./components/Breadcrumb";
 
 ReactDOM.render(
   <React.StrictMode>
     <div id="wrapper" role="main">
       <Banner />
+      <Breadcrumb />
       <div className="container mt-3">
         <BrowserRouter>
           <Switch>

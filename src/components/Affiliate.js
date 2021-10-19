@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import EditVisitor from './EditVisitor';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
