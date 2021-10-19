@@ -36,14 +36,15 @@ const postVisit = async (url, data) => {
   });
 };
 
-const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
+const emptyForm = (fieldsToEmpty, fn) => {
   Object.keys(fieldsToEmpty).map((e) => {
     return fn({ [e]: "" });
   });
-  if (optionalFn) {
-    optionalFn("");
-  }
 };
+
+const emptyStates = (arr) => {
+  arr.map((e) => e(""));
+}
 
 const searchVisitorEffect = (url, name, fn, trigger, type) => {
   const searchVisitor = () => {
@@ -124,6 +125,7 @@ export {
   guestLookupTrigger,
   postVisit,
   emptyForm,
+  emptyStates,
   searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,

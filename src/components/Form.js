@@ -4,6 +4,7 @@ import {
   guestLookupTrigger,
   postVisit,
   emptyForm,
+  emptyStates,
   searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
@@ -96,7 +97,9 @@ const Form = () => {
     };
 
     if (userInput.dropdownChoice === "empty") {
-      emptyForm(userInput, setUserInput, setSearchResults);
+      const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
+      emptyStates(arrayOfStates);
+      emptyForm(userInput, setUserInput);
     } else if (userInput.dropdownChoice !== "") {
       dropdownChoiceEffect(
         userInput.dropdownChoice,
@@ -109,6 +112,12 @@ const Form = () => {
   useEffect(() => {
     eraseMessageEffect(message, setMessage);
   }, [message]);
+
+  const handleClear = () => {
+    const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
+    emptyStates(arrayOfStates);
+    emptyForm(userInput, setUserInput);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -130,7 +139,9 @@ const Form = () => {
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
       setMessage("Success!");
-      emptyForm(userInput, setUserInput, setSearchResults);
+      const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
+      emptyStates(arrayOfStates);
+      emptyForm(userInput, setUserInput);
     }
   };
 
@@ -262,7 +273,7 @@ const Form = () => {
           <button
             className="btn btn-secondary"
             type="button"
-            onClick={() => emptyForm(userInput, setUserInput, setSearchResults)}
+            onClick={handleClear}
           >
             Clear
           </button>
