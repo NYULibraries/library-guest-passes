@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --forceExit",
     "eject": "react-scripts eject",
     "start-backend": "node backend/server.js",
     "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/server.js"
