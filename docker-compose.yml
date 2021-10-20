@@ -33,7 +33,6 @@ services:
       - 3306
     environment:
       MYSQL_ROOT_PASSWORD: test
-      MYSQL_DATABASE: database_development
 
   test:
     image: guest-passes
@@ -42,12 +41,12 @@ services:
       - /bin/sh
       - -c
       - |
-        /tmp/wait-for db_test:3306 -- sleep 5 &&
-        yarn test
+        /tmp/wait-for db:3306 -- sleep 5 && yarn test
     depends_on:
       - setup_tests
     environment:
-      DB_HOST: db_test
+      DB_HOST: db
+      NODE_ENV: test
     # <<: *default-volumes
 
   setup_tests:
@@ -57,22 +56,13 @@ services:
       - /bin/sh
       - -c
       - |
-        /tmp/wait-for db_test:3306 -- yarn sequelize db:create &&
-        yarn sequelize db:migrate #&& 
-        # yarn sequelize db:seed --seed ./backend/seeders/10927-guests.js &&
-        # yarn sequelize db:seed --seed ./backend/seeders/20210927-affiliates.js
+        /tmp/wait-for db:3306 -t 60 -- 
+        yarn sequelize db:create &&
+        yarn sequelize db:migrate 
     environment:
       NODE_ENV: test
     depends_on:
-      - db_test
-
-  db_test:
-    image: mysql:5.7
-    expose:
-      - 3306
-    environment:
-      MYSQL_ROOT_PASSWORD: test
-      MYSQL_DATABASE: database_test
+      - db
 
   curl-dev:
     image: appropriate/curl
