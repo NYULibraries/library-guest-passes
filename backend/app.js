@@ -1,8 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
 const app = express();
-const routes = require("./routes");
-const cors = require("cors");
 
 const DB_HOST = process.env.DB_HOST || "db";
 const DB_USER = process.env.DB_USER || "root";
@@ -19,11 +17,6 @@ db.connect((err) => {
   console.log("MySql Connected...");
 });
 
-app.use(express.json({ type: "application/json" }));
-const corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200,
-  methods: "GET, POST, PUT, DELETE",
+module.exports = {
+  app, 
 };
-app.use(cors(corsOptions));
-app.use("/", routes);
