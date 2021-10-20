@@ -1,5 +1,6 @@
 require('../../../backend/app');
 import { nameSearch } from '../../../backend/controllers/index';
+import { Affiliate, Guest } from '../../../backend/models';
 
 const mockResponse = () => {
   const res = {};
@@ -17,69 +18,83 @@ const mockRequest = (queryData) => {
 
 describe('index controller', () => {
   let res, req;
-  let affiliate, guest, visit;
-  beforeEach( () => {
-    affiliate = { name: 'Test Affiliate', permission_status: true }
-    guest = { name: 'Test Guest', permission_status: true }
-    visit = {
-      initials: 'TST',
-      restrictions: 'Gen. Coll. + AFC',
-      status: 'Day Pass (Forgotten NYU ID)',
-      idtype: 'Passport',
-      cardissue: '3020-01-01',
-      cardexp: '3020-01-10',
-      user_status: 'Good Status',
-      notes: 'Nothing of interest',
-    }
+  afterEach( async () => {
+    await Affiliate.destroy({ where: {} });
   });
   describe('nameSearch', () => {
     describe('when searching for affiliate name', () => {
       describe('and affiliate already exists', () => {
-        it('should return the existing affiliate', async () => {
+        beforeEach( async () => {
+          await Affiliate.create({ name: "Adam" });
           req = mockRequest(
-            { affiliate_name: 'Paul Atreides' },
+            { affiliate_name: 'Adam' },
           );
           res = mockResponse();
           await nameSearch(req, res);
+        });
+        it('should return the existing affiliate', () => {
           expect(res.status).toHaveBeenCalledWith(200);
-          expect(res.json).toHaveBeenCalledWith([]);
+          expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(
+            [expect.objectContaining(
+              {name:"Adam", permission_status: true}
+            )]
+          ));
         });
       });
       describe('and affiliate does not already exists', () => {
+        beforeEach( async () => {
+          await nameSearch(req, res);
+        });
         it('should return empty', () => {
-
+          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(
+            []
+          ));
         });
       });
     });
     describe('when searching for guest name', () => {
       describe('and guest already exists', () => {
-        beforeAll( () => {
-          req = {
-            query: {
-              guest_name: "John Doe", 
-            }
-          };
+        beforeEach( async () => {
+          await Guest.create({ name: "Paul" });
+          req = mockRequest(
+            { guest_name: 'Paul' },
+          );
+          res = mockResponse();
+          await nameSearch(req, res);
         });
         it('should return the existing guest', () => {
-
+          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(
+            [expect.objectContaining(
+              {name:"Paul", permission_status: true}
+            )]
+          ));
         });
       });
       describe('and guest does not already exists', () => {
-        beforeAll( () => {
-          req = {
-            query: {
-              guest_name: "New Name", 
-            }
-          };
+        beforeEach( async () => {
+          await nameSearch(req, res);
         });
         it('should return empty', () => {
-
+          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(
+            []
+          ));
         });
       });
     });
     describe('when searching for something else unknown', () => {
+      beforeEach( async () => {
+        req = mockRequest(
+          { villain: 'Vladimir Harkonnen' },
+        );
+        res = mockResponse();
+        await nameSearch(req, res);
+      });
       it('should return an error', () => {
-
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.render).toHaveBeenCalled();
       });
     });
 
