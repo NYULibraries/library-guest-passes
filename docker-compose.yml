@@ -48,7 +48,7 @@ services:
       - setup_tests
     environment:
       DB_HOST: db_test
-    <<: *default-volumes
+    # <<: *default-volumes
 
   setup_tests:
     image: guest-passes
