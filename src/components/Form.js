@@ -15,6 +15,8 @@ const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
 }`;
 
+const permissionStatusMessage = "For returning guests, type name to see permission status"
+
 const Form = () => {
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -44,8 +46,8 @@ const Form = () => {
   };
 
   useEffect(() => {
-    setGuestPermission("Type name to see permission status. (available after 2nd visit)");
-    setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
+    setGuestPermission(permissionStatusMessage);
+    setAffiliatePermission(permissionStatusMessage);
   }, []);
 
   useEffect(() => {
@@ -105,8 +107,8 @@ const Form = () => {
       const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
       emptyStates(arrayOfStates);
       emptyForm(userInput, setUserInput);
-      setGuestPermission("Type name to see permission status. (available after 2nd visit)");
-      setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
+      setGuestPermission(permissionStatusMessage);
+      setAffiliatePermission(permissionStatusMessage);
     } else if (userInput.dropdownChoice !== "") {
       dropdownChoiceEffect(
         userInput.dropdownChoice,
@@ -124,8 +126,8 @@ const Form = () => {
     const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
     emptyStates(arrayOfStates);
     emptyForm(userInput, setUserInput);
-    setGuestPermission("Type name to see permission status. (available after 2nd visit)");
-    setAffiliatePermission("Type name to see permission status. (available after 2nd visit)");
+    setGuestPermission(permissionStatusMessage);
+    setAffiliatePermission(permissionStatusMessage);
   }
 
   const handleSubmit = async (e) => {
@@ -183,7 +185,7 @@ const Form = () => {
             handleChange
           )}
         </div>
-        <label htmlFor="guestPermission">Permission status</label>
+        <label htmlFor="guestPermission"> Guest's Permission status</label>
         <p name="guestPermission">{guestPermission.toString()}</p>
         <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
@@ -194,7 +196,7 @@ const Form = () => {
           value={userInput.affiliate_name}
           onChange={handleChange}
         />
-        <label htmlFor="affiliatePermission">Permission status</label>
+        <label htmlFor="affiliatePermission">Affiliate's Permission status</label>
         <p name="affiliatePermission">{affiliatePermission.toString()}</p>
         <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
         <input
