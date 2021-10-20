@@ -23,6 +23,8 @@ services:
     command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
     ports:
       - "5000:5000"
+    environment:
+      NODE_ENV: development
     depends_on:
       - db
         #<<: *default-volumes
@@ -45,7 +47,6 @@ services:
     depends_on:
       - setup_tests
     environment:
-      DB_HOST: db
       NODE_ENV: test
     # <<: *default-volumes
 
