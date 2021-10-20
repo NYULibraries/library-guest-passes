@@ -39,7 +39,11 @@ services:
     image: guest-passes
     build: .
     command:
-      ["/tmp/wait-for", "db_test:3306", "--", "yarn", "test"]
+      - /bin/sh
+      - -c
+      - |
+        /tmp/wait-for db_test:3306 -- sleep 5 &&
+        yarn test
     depends_on:
       - setup_tests
     environment:
@@ -54,8 +58,9 @@ services:
       - -c
       - |
         /tmp/wait-for db_test:3306 -- yarn sequelize db:create &&
-        yarn sequelize db:migrate && 
-        yarn sequelize db:seed:all --seed ./backend/seeders
+        yarn sequelize db:migrate #&& 
+        # yarn sequelize db:seed --seed ./backend/seeders/10927-guests.js &&
+        # yarn sequelize db:seed --seed ./backend/seeders/20210927-affiliates.js
     environment:
       NODE_ENV: test
     depends_on:
