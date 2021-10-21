@@ -21,9 +21,15 @@ const mockRequest = (queryData, params = {}) => {
 describe('index controller', () => {
   let res, req;
   afterEach( async () => {
-    await Affiliate.destroy({ where: {} });
-    await Guest.destroy({ where: {} });
-    await Visit.destroy({ where: {} });
+    await Affiliate.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+    await Guest.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+    await Visit.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+    await Affiliate.truncate();
+    await Guest.truncate();
+    await Visit.truncate();
+    await Affiliate.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
+    await Guest.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
+    await Visit.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
   });
   describe('nameSearch', () => {
     describe('when searching for affiliate name', () => {
@@ -126,7 +132,7 @@ describe('index controller', () => {
         res = mockResponse();
         await deleteAffiliate(req, res);
       });
-      it.skip('should delete affiliate', () => {
+      it('should delete affiliate', () => {
         expect(res.status).toHaveBeenCalledWith(204); 
         expect(res.json).toHaveBeenCalledWith({"destroyAffiliate": 1});
       });
