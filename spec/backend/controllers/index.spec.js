@@ -1,18 +1,20 @@
 require('../../../backend/app');
-import { nameSearch } from '../../../backend/controllers/index';
-import { Affiliate, Guest } from '../../../backend/models';
+import { nameSearch, deleteAffiliate } from '../../../backend/controllers/index';
+import { Affiliate, Guest, Visit } from '../../../backend/models';
 
 const mockResponse = () => {
   const res = {};
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);
   res.render = jest.fn().mockReturnValue(res);
+  res.send = jest.fn().mockReturnValue(res);
   return res;
 };
 
-const mockRequest = (queryData) => {
+const mockRequest = (queryData, params = {}) => {
   return {
     query: queryData,
+    params: params,
   };
 };
 
@@ -20,6 +22,8 @@ describe('index controller', () => {
   let res, req;
   afterEach( async () => {
     await Affiliate.destroy({ where: {} });
+    await Guest.destroy({ where: {} });
+    await Visit.destroy({ where: {} });
   });
   describe('nameSearch', () => {
     describe('when searching for affiliate name', () => {
@@ -99,10 +103,36 @@ describe('index controller', () => {
     });
 
   });
-  describe('deleteGuest', () => {
-
-  });
   describe('deleteAffiliate', () => {
+    let guest, affiliate, visit;
+    describe('when affiliate already exists', () => {
+      beforeEach( async () => {
+        guest = await Guest.create({ name: "Paul" });
+        affiliate = await Affiliate.create({ name: "Stilgar" });
+        visit = await Visit.create({
+          initials: "TT",
+          restrictions: "Gen. Coll. + AFC",
+          status: "Day Pass (Forgotten NYU ID)",
+          idtype: "Passport",
+          cardexp: "1980-01-01",
+          cardissue: "1990-01-01",
+          notes: "Persona Non Grata",
+        });
+        await guest.addVisit(visit);
+        await affiliate.addVisit(visit);
+        req = mockRequest({}, 
+          { id: affiliate.id },
+        );
+        res = mockResponse();
+        await deleteAffiliate(req, res);
+      });
+      it.skip('should delete affiliate', () => {
+        expect(res.status).toHaveBeenCalledWith(204); 
+        expect(res.json).toHaveBeenCalledWith({"destroyAffiliate": 1});
+      });
+    });
+  });
+  describe('deleteGuest', () => {
 
   });
   describe('createVisit', () => {
