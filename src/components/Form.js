@@ -40,12 +40,21 @@ const Form = () => {
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState("");
 
+  const clearFormWrapper = () => {
+    const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
+    emptyStates(arrayOfStates);
+    emptyForm(userInput, setUserInput);
+    setGuestPermission(permissionStatusMessage);
+    setAffiliatePermission(permissionStatusMessage);
+  }
+
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setUserInput({ [name]: value });
   };
 
   useEffect(() => {
+    // Initialize permission status
     setGuestPermission(permissionStatusMessage);
     setAffiliatePermission(permissionStatusMessage);
   }, []);
@@ -72,6 +81,7 @@ const Form = () => {
 
 
   useEffect(() => {
+    // Look up guest's permission status
     const typeOfVisitor = "guest"
     permissionLookupEffect(
       backendDomain,
@@ -83,6 +93,7 @@ const Form = () => {
 
 
   useEffect(() => {
+    // Look up affiliate's permission status
     const typeOfVisitor = "affiliate"
     permissionLookupEffect(
       backendDomain,
@@ -104,11 +115,7 @@ const Form = () => {
     };
 
     if (userInput.dropdownChoice === "empty") {
-      const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
-      emptyStates(arrayOfStates);
-      emptyForm(userInput, setUserInput);
-      setGuestPermission(permissionStatusMessage);
-      setAffiliatePermission(permissionStatusMessage);
+      clearFormWrapper();
     } else if (userInput.dropdownChoice !== "") {
       dropdownChoiceEffect(
         userInput.dropdownChoice,
@@ -123,11 +130,7 @@ const Form = () => {
   }, [message]);
 
   const handleClear = () => {
-    const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
-    emptyStates(arrayOfStates);
-    emptyForm(userInput, setUserInput);
-    setGuestPermission(permissionStatusMessage);
-    setAffiliatePermission(permissionStatusMessage);
+    clearFormWrapper();
   }
 
   const handleSubmit = async (e) => {
@@ -150,11 +153,7 @@ const Form = () => {
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
       setMessage("Success!");
-      const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
-      emptyStates(arrayOfStates);
-      emptyForm(userInput, setUserInput);
-      setGuestPermission("Type name to see permission status");
-      setAffiliatePermission("Type name to see permission status");
+      clearFormWrapper();
     }
   };
 
