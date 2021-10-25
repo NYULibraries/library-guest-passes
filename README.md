@@ -2,7 +2,7 @@
 
 ### Library guest passes microservice
 
-A form to be used by staff for checking in students and guests to the library (i.e. a student forgot their ID). Once the guest is approved, the app will print out a pass for them.
+A form to be used by staff for checking in students and guests to the library (i.e. a student forgot their ID). Once the guest is approved, the app will print out a pass for them. It also features an Admin mode where staff can edit a guest's information, view all of their past visits, and delete them if necessary.
 
 ### Develop
 

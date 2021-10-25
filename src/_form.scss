@@ -2,6 +2,14 @@ body {
   margin: 0;
   font-family: "Gotham SSm A", "Gotham SSm B", Helvetica, Arial, sans-serif;
   background: #fff;
+  a{
+    color: #57068c;
+    text-decoration: none;
+  }
+  a:hover{
+    color: #57068c;
+    text-decoration: underline;
+  }
 }
 
 #wrapper {
@@ -15,6 +23,9 @@ body {
     p{
       display: flex;
       flex-direction: row;
+    }
+    #required-text{
+      display: flex;
     }
   }
   #logo {

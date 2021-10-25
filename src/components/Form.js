@@ -4,14 +4,18 @@ import {
   guestLookupTrigger,
   postVisit,
   emptyForm,
-  searchGuestEffect,
+  emptyStates,
+  searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
+  permissionLookupEffect,
 } from "../helpers";
 
 const backendDomain = `${
   process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
 }`;
+
+const permissionStatusMessage = "For returning guests, type name to see permission status"
 
 const Form = () => {
   const [userInput, setUserInput] = useReducer(
@@ -30,15 +34,30 @@ const Form = () => {
     }
   );
 
-  const [permission, setPermission] = useState("-- enter name for permission status--");
+  const [guestPermission, setGuestPermission] = useState("");
+  const [affiliatePermission, setAffiliatePermission] = useState("");
   const [message, setMessage] = useState("");
   const [searchResults, setSearchResults] = useState();
   const [debouncedName, setDebouncedName] = useState("");
+
+  const clearFormWrapper = () => {
+    const arrayOfStates = [setGuestPermission, setAffiliatePermission, setSearchResults]
+    emptyStates(arrayOfStates);
+    emptyForm(userInput, setUserInput);
+    setGuestPermission(permissionStatusMessage);
+    setAffiliatePermission(permissionStatusMessage);
+  }
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setUserInput({ [name]: value });
   };
+
+  useEffect(() => {
+    // Initialize permission status
+    setGuestPermission(permissionStatusMessage);
+    setAffiliatePermission(permissionStatusMessage);
+  }, []);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -50,13 +69,39 @@ const Form = () => {
   }, [userInput.guest_name]);
 
   useEffect(() => {
-    searchGuestEffect(
+    const typeOfVisitor = "guest"
+    searchVisitorEffect(
       backendDomain,
       userInput.guest_name,
       setSearchResults,
-      debouncedName
+      debouncedName,
+      typeOfVisitor
     );
   }, [debouncedName]);
+
+
+  useEffect(() => {
+    // Look up guest's permission status
+    const typeOfVisitor = "guest"
+    permissionLookupEffect(
+      backendDomain,
+      userInput.guest_name,
+      setGuestPermission,
+      typeOfVisitor,
+    );
+  }, [userInput.guest_name]);
+
+
+  useEffect(() => {
+    // Look up affiliate's permission status
+    const typeOfVisitor = "affiliate"
+    permissionLookupEffect(
+      backendDomain,
+      userInput.affiliate_name,
+      setAffiliatePermission,
+      typeOfVisitor,
+    );
+  }, [userInput.affiliate_name]);
 
   useEffect(() => {
     const chosenUserData = {
@@ -66,10 +111,11 @@ const Form = () => {
       status: userInput.status,
       idtype: userInput.idtype,
       notes: userInput.notes,
+      permission_status: userInput.permission_status
     };
 
     if (userInput.dropdownChoice === "empty") {
-      emptyForm(userInput, setUserInput, setSearchResults);
+      clearFormWrapper();
     } else if (userInput.dropdownChoice !== "") {
       dropdownChoiceEffect(
         userInput.dropdownChoice,
@@ -82,6 +128,10 @@ const Form = () => {
   useEffect(() => {
     eraseMessageEffect(message, setMessage);
   }, [message]);
+
+  const handleClear = () => {
+    clearFormWrapper();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,16 +153,18 @@ const Form = () => {
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
       setMessage("Success!");
-      emptyForm(userInput, setUserInput, setSearchResults);
+      clearFormWrapper();
     }
   };
 
   return (
+  <div>
     <div id="header">
       <h2>Library Privileges</h2>
       <h3>Passes Form</h3>
-      <p>Required fields are marked with an <p style={{ color: "red" }}>&#160;*</p></p>
+      <div id="required-text">Required fields are marked with an <div style={{ color: "red" }}>&#160;*</div></div>
       <hr />
+    </div>
     <form data-testid="passes-form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
         <label htmlFor="guest_name">Guest Name<div style={{ color: "red" }}>*</div></label>
@@ -132,8 +184,8 @@ const Form = () => {
             handleChange
           )}
         </div>
-        <label htmlFor="permission">Permission status</label>
-        <p name="permission">{permission}</p>
+        <label htmlFor="guestPermission"> Guest's Permission status</label>
+        <p name="guestPermission">{guestPermission.toString()}</p>
         <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
           className="form-control"
@@ -143,6 +195,8 @@ const Form = () => {
           value={userInput.affiliate_name}
           onChange={handleChange}
         />
+        <label htmlFor="affiliatePermission">Affiliate's Permission status</label>
+        <p name="affiliatePermission">{affiliatePermission.toString()}</p>
         <label htmlFor="initials">Employee Initials<div style={{ color: "red" }}>*</div></label>
         <input
           className="form-control"
@@ -224,14 +278,14 @@ const Form = () => {
           value={userInput.notes}
           onChange={handleChange}
         />
-        <div className="btn-group " role="group">
+        <div className="btn-group" role="group">
           <button className="btn btn-primary" type="submit">
             Submit
           </button>
           <button
             className="btn btn-secondary"
             type="button"
-            onClick={() => emptyForm(userInput, setUserInput, setSearchResults)}
+            onClick={handleClear}
           >
             Clear
           </button>

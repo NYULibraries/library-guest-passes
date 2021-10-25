@@ -2,16 +2,16 @@ const { Router } = require("express");
 const controllers = require("../controllers");
 const router = Router();
 
-router.get("/guest", controllers.lookupGuest);
-// router.get("/affiliate", controllers.lookupGuest);
-// router.get("/guests");
-// router.get("/affiliates");
-// router.put("/guests/:id");
-// router.put("/affiliate/:id");
-// router.delete("/guests/:id");
-// router.delete("/affiliates/:id");
-
+router.get("/name-search", controllers.nameSearch);
+router.get("/permission", controllers.permissionSearch);
+router.get("/:typeOfVisitor", controllers.getAllVisitors);
+router.get("/:typeOfVisitor/:id", controllers.getPreviousVisits);
+router.put("/:typeOfVisitor/:id", controllers.updateVisitor);
 router.post("/visit", controllers.createVisit);
+router.delete("/guests/:id", controllers.deleteGuest);
+router.delete("/affiliates/:id", controllers.deleteAffiliate);
+router.delete("/visits/:id", controllers.deleteVisit);
+
 
 
 module.exports = router;

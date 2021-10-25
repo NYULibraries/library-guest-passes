@@ -36,25 +36,36 @@ const postVisit = async (url, data) => {
   });
 };
 
-const emptyForm = (fieldsToEmpty, fn, optionalFn) => {
+const emptyForm = (fieldsToEmpty, fn) => {
   Object.keys(fieldsToEmpty).map((e) => {
     return fn({ [e]: "" });
   });
-  if (optionalFn) {
-    optionalFn("");
-  }
 };
 
-const searchGuestEffect = (url, name, fn, trigger) => {
-  const searchGuest = () => {
-    const encodedURL = encodeURI(url + "/guest/?guest_name=" + name);
+const emptyStates = (arr) => {
+  arr.map((e) => e(""));
+}
+
+const searchVisitorEffect = (url, name, fn, trigger, type) => {
+  const searchVisitor = () => {
+    const encodedURL = encodeURI(`${url}/name-search/?${type}_name=${name}`);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));
   };
 
   if (trigger) {
-    return searchGuest();
+    return searchVisitor();
+  }
+};
+
+const permissionLookupEffect = async (url, name, fn, type) => {
+  const encodedURL = encodeURI(`${url}/permission/?${type}_name=${name}`);
+  const visitor = await fetch(encodedURL).then((response) => response.json())
+  if(visitor && visitor.name === name){
+    fn(visitor.permission_status);
+  } else {
+    return
   }
 };
 
@@ -75,7 +86,9 @@ const dropdownChoiceEffect = (choice, obj, fn) => {
   //the most recent visit is chosen as the basis for the form autopopulation
   const chosenVisit = chooseVisit(chosenGuest.Visits);
   //then, the User's name is added to the object that will be mapped for the form
+  if(!chosenVisit) return false
   chosenVisit.guest_name = chosenGuest.name;
+  chosenVisit.permission_status = chosenGuest.permission_status;
   return Object.keys(obj).map((e) => {
     return fn({ [e]: chosenVisit[e] });
   });
@@ -93,11 +106,29 @@ const eraseMessageEffect = (msg, fn) => {
   }
 };
 
+const postEditVisitor = async (url, obj, name, status) =>{
+  await fetch(`${url}/${obj.typeOfVisitor}/${obj.id}`, {
+    method: "PUT",
+    mode: "cors",
+    cache: "default",
+    credentials: "omit",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({name: name, permission_status: status})
+  })
+  .then(res => res.text())
+  .then(res => console.log(res))
+}
+
 export {
   guestLookupTrigger,
   postVisit,
   emptyForm,
-  searchGuestEffect,
+  emptyStates,
+  searchVisitorEffect,
   dropdownChoiceEffect,
   eraseMessageEffect,
+  postEditVisitor,
+  permissionLookupEffect
 };
