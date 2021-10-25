@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@babel/runtime": "^7.15.4",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",
     "cors": "^2.8.5",
@@ -24,10 +22,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --forceExit",
     "eject": "react-scripts eject",
-    "start-backend": "node backend/app.js",
-    "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/app.js"
+    "start-backend": "node backend/server.js",
+    "start-dev-backend": "sequelize db:create; sequelize db:migrate; nodemon backend/server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +46,16 @@
     ]
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-transform-runtime": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.3.0",
+    "babel-jest": "^27.2.5",
+    "jest": "^27.2.5",
+    "nodemon": "^2.0.12",
+    "react-test-renderer": "^17.0.2"
   }
 }

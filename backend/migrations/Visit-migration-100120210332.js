@@ -18,6 +18,8 @@ module.exports = {
       },
       affiliate_id:{
         type: Sequelize.INTEGER,
+        allowNull: true,
+        onDelete: 'SET NULL',
         references: {
           model: 'Affiliate',
           key: 'id',

@@ -23,6 +23,8 @@ services:
     command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
     ports:
       - "5000:5000"
+    environment:
+      NODE_ENV: development
     depends_on:
       - db
         #<<: *default-volumes
@@ -33,15 +35,33 @@ services:
       - 3306
     environment:
       MYSQL_ROOT_PASSWORD: test
-    # restart: always
-    # cap_add:
-    #   - SYS_NICE
 
   test:
     image: guest-passes
     build: .
     command:
-      ["/tmp/wait-for", "db:3306", "--", "npm", "test", "--", "--watchAll=false"]
+      - /bin/sh
+      - -c
+      - |
+        /tmp/wait-for db:3306 -- sleep 5 && yarn test
+    depends_on:
+      - setup_tests
+    environment:
+      NODE_ENV: test
+    # <<: *default-volumes
+
+  setup_tests:
+    image: guest-passes
+    build: .
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /tmp/wait-for db:3306 -t 60 -- 
+        yarn sequelize db:create &&
+        yarn sequelize db:migrate 
+    environment:
+      NODE_ENV: test
     depends_on:
       - db
 

@@ -1,6 +1,9 @@
+// If the value of a querystring parameter is blank
+// and the key is not optional, return true
 const emptyFields = (obj) => {
+  const optionalFields = ["notes", "affiliate_name"]
   for (const key in obj) {
-    if (obj[key] === "" && key !== "notes" && key !== "affiliate_name") return true;
+    if (obj[key] === "" && !optionalFields.includes(key)) return true;
   }
   return false;
 };
