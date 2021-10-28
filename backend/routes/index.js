@@ -2,6 +2,7 @@ const { Router } = require("express");
 const controllers = require("../controllers");
 const router = Router();
 
+router.get("/healthcheck", controllers.healthcheck)
 router.get("/name-search", controllers.nameSearch);
 router.get("/permission", controllers.permissionSearch);
 router.get("/:typeOfVisitor", controllers.getAllVisitors);

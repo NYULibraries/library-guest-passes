@@ -221,6 +221,10 @@ const permissionSearch = async (req, res) => {
   };
 }
 
+const healthcheck = async (req, res) => {
+  res.status(200).json({success: true})
+}
+
 module.exports = {
   nameSearch,
   createVisit,
@@ -230,5 +234,6 @@ module.exports = {
   deleteVisit,
   getPreviousVisits,
   updateVisitor,
-  permissionSearch
+  permissionSearch,
+  healthcheck
 }
