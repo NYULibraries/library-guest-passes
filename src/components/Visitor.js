@@ -49,7 +49,7 @@ function Visitor(props) {
   return (
     <div className="admin-container">
       {
-        typeOfVisitor === "guest" ? <h1>Guests</h1> : <h1>Affiliates</h1>
+        typeOfVisitor === "guests" ? <h1>Guests</h1> : <h1>Affiliates</h1>
       }
       <table className="table table-hover table-bordered">
         <thead>
