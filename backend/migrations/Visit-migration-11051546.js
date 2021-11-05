@@ -35,7 +35,6 @@ module.exports = {
       },
       affiliate_name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       initials: {
         type: Sequelize.STRING,

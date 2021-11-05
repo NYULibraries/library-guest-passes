@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     affiliate_name: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     initials: {
       type: DataTypes.STRING,
