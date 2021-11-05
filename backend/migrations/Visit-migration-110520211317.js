@@ -26,6 +26,17 @@ module.exports = {
           as: 'affiliate_id',
         }
       },
+      logincount: {
+        type: Sequelize.INTEGER
+      },
+      guest_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      affiliate_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       initials: {
         type: Sequelize.STRING,
         allowNull: false,

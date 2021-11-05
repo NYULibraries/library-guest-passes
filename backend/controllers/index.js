@@ -4,6 +4,8 @@ const { emptyFields } = require("../tools");
 
 const createVisit = async (req, res) => {
   try {
+    // Instantiate numberOfVisits including the new Visit
+    let numberOfVisits = 1;
     if (emptyFields(req.body) === true) return res.sendStatus(500);
     else {
       const guest = await Guest.findOrCreate({
@@ -12,6 +14,18 @@ const createVisit = async (req, res) => {
           name: req.body.guest_name
         }
       });
+      // If guest has visited before, check how many times
+      if(!guest[0].isNewRecord){
+        const queryResults = await Guest.findOne({
+          where: {
+            id: guest[0].dataValues.id,
+          },
+          include: [{
+            model: Visit
+          }]
+        });
+        numberOfVisits += queryResults.Visits.length;
+      }
       let affiliate;
       if(req.body?.affiliate_name){
         affiliate = await Affiliate.findOrCreate({
@@ -22,13 +36,16 @@ const createVisit = async (req, res) => {
         });
       }
       const visit = await Visit.create({
-          initials: req.body.initials,
-          restrictions: req.body.restrictions,
-          status: req.body.status,
-          idtype: req.body.idtype,
-          cardexp: req.body.cardexp,
-          cardissue: req.body.cardissue,
-          notes: req.body.notes,
+        guest_name: req.body.guest_name,
+        affiliate_name: req.body.affiliate_name,
+        initials: req.body.initials,
+        restrictions: req.body.restrictions,
+        status: req.body.status,
+        idtype: req.body.idtype,
+        cardexp: req.body.cardexp,
+        cardissue: req.body.cardissue,
+        notes: req.body.notes,
+        logincount: numberOfVisits
       });
       await guest[0].addVisit(visit);
       if(affiliate){
