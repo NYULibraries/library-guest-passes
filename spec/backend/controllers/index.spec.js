@@ -116,6 +116,8 @@ describe('index controller', () => {
         guest = await Guest.create({ name: "Paul" });
         affiliate = await Affiliate.create({ name: "Stilgar" });
         visit = await Visit.create({
+          guest_name: "Paul",
+          affiliate_name: "Stilgar",
           initials: "TT",
           restrictions: "Gen. Coll. + AFC",
           status: "Day Pass (Forgotten NYU ID)",
