@@ -1,6 +1,6 @@
-require('../../../backend/app');
 import { nameSearch, deleteAffiliate } from '../../../backend/controllers/index';
 import { Affiliate, Guest, Visit } from '../../../backend/models';
+require('../../../backend/app');
 
 const mockResponse = () => {
   const res = {};
