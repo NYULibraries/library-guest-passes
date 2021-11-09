@@ -72,16 +72,17 @@ const getPreviousVisits = async (req, res) =>{
     } else if (req.params.typeOfVisitor === "guests"){
       Model = Guest;
     }
-    
-    const queryResults = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [{
-        model: Visit
-      }]
-    });
-    return res.status(200).json(queryResults);
+    if (req.params.id){
+      const queryResults = await Model.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [{
+          model: Visit
+        }]
+      });
+      return res.status(200).json(queryResults);
+    }
   } catch (error) {
     console.error(error.stack)
     res.status(500)
