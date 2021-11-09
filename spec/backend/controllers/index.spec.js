@@ -104,7 +104,7 @@ describe('index controller', () => {
       });
       it('should return an error', () => {
         expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.render).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({error: expect.any(Object)}));
       });
     });
 
