@@ -60,7 +60,7 @@ const createVisit = async (req, res) => {
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.render('error', { error: error })
+    res.json({message: err.message, error: err})
   }
 }
 
@@ -85,7 +85,7 @@ const getPreviousVisits = async (req, res) =>{
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.render('error', { error: error })
+    res.json({message: err.message, error: err})
   }
 }
 
@@ -120,7 +120,7 @@ const nameSearch = async (req, res) => {
 
     console.error(error.stack)
     res.status(500)
-    res.render('error', { error: error })
+    res.json({message: err.message, error: err})
   
   };
 };
@@ -141,7 +141,7 @@ const getAllVisitors = async (req, res) =>{
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.render('error', { error: error })
+    res.json({message: err.message, error: err})
   }
 }
 
@@ -234,7 +234,7 @@ const permissionSearch = async (req, res) => {
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.render('error', { error: error })
+    res.json({message: err.message, error: err})
   };
 }
 
