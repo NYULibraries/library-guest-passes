@@ -67,21 +67,22 @@ const createVisit = async (req, res) => {
 const getPreviousVisits = async (req, res) =>{
   try {
     let Model;
-    if(req.params.typeOfVisitor === "affiliates"){
+    if (req.params.typeOfVisitor === "affiliates"){
       Model = Affiliate;
     } else if (req.params.typeOfVisitor === "guests"){
       Model = Guest;
     }
-    
-    const queryResults = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [{
-        model: Visit
-      }]
-    });
-    return res.status(200).json(queryResults);
+    if (req.params.id){
+      const queryResults = await Model.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [{
+          model: Visit
+        }]
+      });
+      return res.status(200).json(queryResults);
+    }
   } catch (error) {
     console.error(error.stack)
     res.status(500)
