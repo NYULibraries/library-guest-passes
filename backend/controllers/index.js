@@ -60,7 +60,7 @@ const createVisit = async (req, res) => {
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.json({message: err.message, error: err})
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -85,7 +85,7 @@ const getPreviousVisits = async (req, res) =>{
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.json({message: err.message, error: err})
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -120,7 +120,7 @@ const nameSearch = async (req, res) => {
 
     console.error(error.stack)
     res.status(500)
-    res.json({message: err.message, error: err})
+    res.json({message: error.message, error: error})
   
   };
 };
@@ -141,7 +141,7 @@ const getAllVisitors = async (req, res) =>{
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.json({message: err.message, error: err})
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -154,7 +154,9 @@ const deleteGuest = async (req, res) => {
       destroyVisit
     });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error.stack)
+    res.status(500)
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -165,7 +167,9 @@ const deleteAffiliate = async (req, res) => {
       destroyAffiliate
     });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error.stack)
+    res.status(500)
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -176,7 +180,9 @@ const deleteVisit = async (req, res) => {
       destroyVisit
     });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error.stack)
+    res.status(500)
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -210,7 +216,9 @@ const updateVisitor = async (req, res) => {
       permission_status
     });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error.stack)
+    res.status(500)
+    res.json({message: error.message, error: error})
   }
 }
 
@@ -234,7 +242,7 @@ const permissionSearch = async (req, res) => {
   } catch (error) {
     console.error(error.stack)
     res.status(500)
-    res.json({message: err.message, error: err})
+    res.json({message: error.message, error: error})
   };
 }
 
