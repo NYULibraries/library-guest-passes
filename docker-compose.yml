@@ -65,6 +65,12 @@ services:
     depends_on:
       - db
 
+  e2e:
+    build:
+      context: .
+      dockerfile: ./cypress/Dockerfile
+    command: ["yarn", "cypress", "run", "--headless"]
+
   curl-dev:
     image: appropriate/curl
     command: ["dev:3000"]
