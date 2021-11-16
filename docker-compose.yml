@@ -70,6 +70,11 @@ services:
       context: .
       dockerfile: ./cypress/Dockerfile
     command: ["yarn", "cypress", "run", "--headless"]
+    depends_on:
+      - dev
+    environment:
+      DOMAIN: http://dev:3000/
+      CYPRESS_BASE_URL: http://dev:3000/
 
   curl-dev:
     image: appropriate/curl
