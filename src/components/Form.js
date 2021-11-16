@@ -149,7 +149,7 @@ const Form = () => {
 
     const response = await postVisit(backendDomain, data);
 
-    if (response.status === 500) {
+    if (response.status !== 201 ) {
       setMessage("Oops! Something went wrong. Please fill out all fields.");
     } else {
       setMessage("Success!");
