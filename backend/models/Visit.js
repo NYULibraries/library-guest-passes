@@ -21,6 +21,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       primaryKey:true
     },
+    logincount: {
+      type: DataTypes.INTEGER
+    },
+    guest_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    affiliate_name: {
+      type: DataTypes.STRING,
+    },
     initials: {
       type: DataTypes.STRING,
       allowNull:false

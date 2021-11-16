@@ -104,7 +104,7 @@ describe('index controller', () => {
       });
       it('should return an error', () => {
         expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.render).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({error: expect.any(Object)}));
       });
     });
 
@@ -116,6 +116,8 @@ describe('index controller', () => {
         guest = await Guest.create({ name: "Paul" });
         affiliate = await Affiliate.create({ name: "Stilgar" });
         visit = await Visit.create({
+          guest_name: "Paul",
+          affiliate_name: "Stilgar",
           initials: "TT",
           restrictions: "Gen. Coll. + AFC",
           status: "Day Pass (Forgotten NYU ID)",
