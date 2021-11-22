@@ -102,7 +102,7 @@ const eraseMessageEffect = (msg, fn) => {
   } else if (msg.includes("Oops")) {
     setTimeout(() => {
       fn("");
-    }, 8000);
+    }, 5000);
   }
 };
 

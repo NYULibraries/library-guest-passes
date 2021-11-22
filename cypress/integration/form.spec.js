@@ -13,7 +13,10 @@ describe('The Home Page', function () {
   describe('Submit', () => {
     it('returns error message on incomplete form', function(){
       cy.get('button.btn-primary').click();
-      cy.get('msgWrap').contains('Oops!');
+      cy.get('div.msgWrap > em').contains('Oops!');
+    })
+    it('successfully submits form if all necessary fields are filled', function(){
+      
     })
   })
 })  
