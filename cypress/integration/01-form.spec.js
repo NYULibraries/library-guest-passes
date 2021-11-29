@@ -46,12 +46,12 @@ describe('The Home Page', function () {
         .type('e2e test user', {force: true})
       cy.get('button.btn-primary')
         .should('be.visible')
-        .click()
+        .click({force: true})
       cy.get('div.msgWrap > em').contains('Success');
     });
 
     it('returns error message on empty form', function(){
-      cy.get('button.btn-primary').click();
+      cy.get('button.btn-primary').click({force: true});
       cy.get('div.msgWrap > em').contains('Oops!');
     })
 
