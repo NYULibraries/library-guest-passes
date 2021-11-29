@@ -185,7 +185,7 @@ const Form = () => {
           )}
         </div>
         <label htmlFor="guestPermission"> Guest's Permission status</label>
-        <p name="guestPermission">{guestPermission.toString()}</p>
+        <p name="guestPermission" id="guestPermission">{guestPermission.toString()}</p>
         <label htmlFor="affiliate_name">Affiliate Name</label>
         <input
           className="form-control"
@@ -283,6 +283,7 @@ const Form = () => {
             Submit
           </button>
           <button
+            id="clear-btn"
             className="btn btn-secondary"
             type="button"
             onClick={handleClear}
