@@ -30,13 +30,21 @@ describe('The Home Page', function () {
       cy.get('#status')
         .should('be.visible')
         .select('Sponsored Access')
-      // cy.get('button[type="submit"]')
-      //   .should('be.visible')
-      //   .click()
-  
-      cy.contains('You will receive an email to finish the purchase.')
+      cy.get('#cardissue')
         .should('be.visible')
-    })
+        .type('2021-12-01')
+      cy.get('#cardexp')
+        .should('be.visible')
+        .type('2021-12-12')
+      cy.get('#notes')
+        .should('be.visible')
+        .type('e2e test user')
+      cy.get('button.btn-primary')
+        .should('be.visible')
+        .click()
+      cy.get('div.msgWrap > em').contains('Success');
+    });
+
     it('returns error message on incomplete form', function(){
       cy.get('button.btn-primary').click();
       cy.get('div.msgWrap > em').contains('Oops!');
