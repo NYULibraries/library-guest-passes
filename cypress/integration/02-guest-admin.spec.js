@@ -12,5 +12,8 @@ describe('Admin - Guest', function () {
   })
 
   describe('shows guests who have visited', () => {
+    it('has a list of guests', () => {
+      cy.get('#guests-list').children()
+    })
   })
 })
