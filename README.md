@@ -4,6 +4,9 @@
 
 A form to be used by staff for checking in students and guests to the library (i.e. a student forgot their ID). Once the guest is approved, the app will print out a pass for them. It also features an Admin mode where staff can edit a guest's information, view all of their past visits, and delete them if necessary.
 
+
+<img width="500" alt="Preview of guest passes application, purple header with NYU logo and a form is visible" src="https://user-images.githubusercontent.com/49990405/144086507-5697c054-d92f-486a-b922-3e6213393d96.png">
+
 ### Develop
 
 To develop the client side locally, run
