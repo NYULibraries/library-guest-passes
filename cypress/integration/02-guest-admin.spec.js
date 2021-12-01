@@ -13,7 +13,11 @@ describe('Admin - Guest', function () {
 
   describe('shows guests who have visited', () => {
     it('has a list of guests', () => {
-      cy.get('#guests-list').children()
+      cy.get('#guests-list').children().contains('John Doe');
+    })
+
+    it('can view guest\'s previous visits', () =>{
+      
     })
   })
 })
