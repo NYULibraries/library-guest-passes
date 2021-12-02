@@ -17,7 +17,13 @@ describe('Admin - Guest', function () {
     })
 
     it('can view guest\'s previous visits', () =>{
-      
+      cy.contains('td', 'John Doe')
+        .parent()
+        .within($tr => {
+          cy.get('td button.view')
+            .click()
+        })
+      cy.url().should('match', /\/admin\/guests\/\d/)
     })
   })
 })
