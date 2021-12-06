@@ -56,5 +56,22 @@ describe('Admin - Guest', function () {
         })
       cy.get('input.edit-name').invoke('val').should('equal', 'Juan del Pueblo Test')
     })
+
+    it('can edit user\'s name and status', () => {
+      cy.get('input.edit-name').invoke('val').should('equal', 'Juan del Pueblo Test')
+      cy.get('input.edit-name')
+        .clear()
+        .type('Juanito del Pueblo')
+      cy.get('input.edit-permission_status').invoke('val').should('equal', 'true')
+      cy.get('input.edit-permission_status')
+        .clear()
+        .type('false')
+      
+      cy.get('form').submit()  
+    })
+
+    // it('can delete guests', () => {
+
+    // })
   })
 })
