@@ -13,11 +13,11 @@ describe('Admin - Guest', function () {
 
   describe('shows guests who have visited', () => {
     it('has a list of guests', () => {
-      cy.get('#guests-list').children().contains('John Doe');
+      cy.get('#guests-list').children().contains('Juan del Pueblo Test');
     })
 
     it('can view guest\'s previous visits', () =>{
-      cy.contains('td', 'John Doe')
+      cy.contains('td', 'Juan del Pueblo Test')
         .parent()
         .within($tr => {
           cy.get('td button.view')
@@ -27,18 +27,16 @@ describe('Admin - Guest', function () {
     })
 
     it('list does not contain visits not created by e2e', () => {
+      cy.contains('Juan del Pueblo Test')
       cy.get('td.notes').each($td => {
         cy.contains('e2e')
       })
     })
 
     it('deletes visits using the delete button', () => {
-      cy.contains('td', 'e2e test user')
-        .parent()
-        .within($tr => {
-          cy.get('td button.delete-btn')
-            .click({multiple: true})
-        })
+      cy.contains('Juan del Pueblo Test')
+      cy.get('td button.delete-btn')
+        .click({multiple: true})
       cy.get('tr').should('not.exist');
     })
   })
