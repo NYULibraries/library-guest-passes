@@ -40,4 +40,21 @@ describe('Admin - Guest', function () {
       cy.get('tr').should('not.exist');
     })
   })
+
+  describe('back to all guests view', () => {
+    it('still contains test user after deleting their visits', () =>{
+      cy.get('#guest-breadcrumb').click();
+      cy.contains('Juan del Pueblo Test');
+    })
+
+    it('can open the module to edit a user\'s information', () => {
+      cy.contains('td', 'Juan del Pueblo Test')
+        .parent()
+        .within($tr => {
+          cy.get('td button.edit')
+            .click()
+        })
+      cy.get('input.edit-name').invoke('val').should('equal', 'Juan del Pueblo Test')
+    })
+  })
 })

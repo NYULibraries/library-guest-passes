@@ -39,11 +39,11 @@ const EditVisitor = (props) =>{
             <Form onSubmit={handleSubmit} id="edit-visitor">
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Name</Form.Label>
-                  <Form.Control placeholder="Name" name="name" defaultValue={visitorObject.name} onChange={(e) => setName(e.target.value)} /> 
+                  <Form.Control className='edit-name' placeholder="Name" name="name" defaultValue={visitorObject.name} onChange={(e) => setName(e.target.value)} /> 
               </Form.Group>
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Permission Status</Form.Label>
-                  <Form.Control placeholder="Permission Status" name="permission_status" defaultValue={visitorObject.permission_status} onChange={(e) => setPermissionStatus(e.target.value)} />
+                  <Form.Control className="edit-permission_status" placeholder="Permission Status" name="permission_status" defaultValue={visitorObject.permission_status} onChange={(e) => setPermissionStatus(e.target.value)} />
               </Form.Group>
               <Button type="submit" form="edit-visitor" variant="secondary">Save Changes</Button>
             </Form> : <div></div>
