@@ -37,8 +37,9 @@ describe('Admin - Guest', function () {
         .parent()
         .within($tr => {
           cy.get('td button.delete-btn')
-            .click()
+            .click({multiple: true})
         })
+      cy.get('tr').should('not.exist');
     })
   })
 })
