@@ -25,5 +25,20 @@ describe('Admin - Guest', function () {
         })
       cy.url().should('match', /\/admin\/guests\/\d/)
     })
+
+    it('list does not contain visits not created by e2e', () => {
+      cy.get('td.notes').each($td => {
+        cy.contains('e2e')
+      })
+    })
+
+    it('deletes visits using the delete button', () => {
+      cy.contains('td', 'e2e test user')
+        .parent()
+        .within($tr => {
+          cy.get('td button.delete-btn')
+            .click()
+        })
+    })
   })
 })

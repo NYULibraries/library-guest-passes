@@ -57,14 +57,13 @@ function PreviousVisits(props) {
             {
               data && data.hasOwnProperty("Visits") && data.Visits.length ? data.Visits.map((e) => (
                 <tr key={e.id} id={id}>
-                  {console.log(data.Visits.length, data.hasOwnProperty("Visits"))}
-                  <td>{new Date(e.cardissue).toDateString()}</td>
-                  <td>{new Date(e.cardexp).toDateString()}</td>
-                  <td>{e.initials}</td>
-                  <td>{e.idtype}</td>
-                  <td>{e.restrictions}</td>
-                  <td>{e.status}</td>
-                  <td>{e.notes}</td>
+                  <td  className="cardissue">{new Date(e.cardissue).toDateString()}</td>
+                  <td className="cardexp">{new Date(e.cardexp).toDateString()}</td>
+                  <td className="initials">{e.initials}</td>
+                  <td className="idtype">{e.idtype}</td>
+                  <td className="restrictions">{e.restrictions}</td>
+                  <td className="status">{e.status}</td>
+                  <td className="notes">{e.notes}</td>
                   <td>
                     <div className="">
                       <button className="btn btn-outline-secondary delete-btn" type="button" onClick={() => handleDelete(backendDomain, e.id)} >
