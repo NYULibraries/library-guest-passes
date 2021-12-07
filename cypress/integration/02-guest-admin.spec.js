@@ -70,8 +70,13 @@ describe('Admin - Guest', function () {
       cy.get('form').submit()  
     })
 
-    // it('can delete guests', () => {
-
-    // })
+    it('can delete guests', () => {
+      cy.contains('td', 'Juanito del Pueblo')
+        .parent()
+        .within($tr => {
+          cy.get('td button.delete')
+            .click()
+        })
+    })
   })
 })
