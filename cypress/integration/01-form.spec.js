@@ -19,10 +19,10 @@ describe('The Home Page', function () {
     it('successfully submits form if all necessary fields are filled', function(){
       cy.get('#guest_name')
         .should('be.visible')
-        .type('Juan del Pueblo Test', {force: true})
+        .type('Jotaro del Pueblo Test', {force: true})
       cy.get('#affiliate_name')
         .should('be.visible')
-        .type('Juana del Pueblo Test', {force: true})
+        .type('Joanna del Pueblo Test', {force: true})
       cy.get('#initials')
         .should('be.visible')
         .type('LN', {force: true})
@@ -57,7 +57,7 @@ describe('The Home Page', function () {
 
     it('returns error message on incomplete form', function(){
       cy.get('#guest_name')
-        .type('Juan del Pueblo Test', {force: true})
+        .type('Jotaro del Pueblo Test', {force: true})
       cy.get('button.btn-primary').click({force: true});
       cy.get('div.msgWrap > em').contains('Oops!');
     })
@@ -66,16 +66,16 @@ describe('The Home Page', function () {
   describe('User Lookup', () => {
     it('looks up returning guests', function () {
       cy.get('#guest_name')
-        .type('Juan', {force: true})
+        .type('Jotaro', {force: true})
 
       cy.get('div.dropdown > select.form-select')
         .should('be.visible')
-        .select('Juan del Pueblo Test', {force: true});
+        .select('Jotaro del Pueblo Test', {force: true});
     });
 
     it('does not show permission status if name is incomplete', function (){
       cy.get('#guest_name')
-        .type('Juan', {force: true})
+        .type('Jotaro', {force: true})
       
       cy.get('#guestPermission')
         .contains("For returning guests, type name to see permission status");

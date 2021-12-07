@@ -13,11 +13,11 @@ describe('Admin - Guest', function () {
 
   describe('shows guests who have visited', () => {
     it('has a list of guests', () => {
-      cy.get('#guests-list').children().contains('Juan del Pueblo Test');
+      cy.get('#guests-list').children().contains('Jotaro del Pueblo Test');
     })
 
     it('can view guest\'s previous visits', () =>{
-      cy.contains('td', 'Juan del Pueblo Test')
+      cy.contains('td', 'Jotaro del Pueblo Test')
         .parent()
         .within($tr => {
           cy.get('td button.view')
@@ -27,14 +27,14 @@ describe('Admin - Guest', function () {
     })
 
     it('list does not contain visits not created by e2e', () => {
-      cy.contains('Juan del Pueblo Test')
+      cy.contains('Jotaro del Pueblo Test')
       cy.get('td.notes').each($td => {
         cy.contains('e2e')
       })
     })
 
     it('deletes visits using the delete button', () => {
-      cy.contains('Juan del Pueblo Test')
+      cy.contains('Jotaro del Pueblo Test')
       cy.get('td button.delete-btn')
         .click({multiple: true})
       cy.get('tr').should('not.exist');
@@ -44,21 +44,21 @@ describe('Admin - Guest', function () {
   describe('back to all guests view', () => {
     it('still contains test user after deleting their visits', () =>{
       cy.get('#guest-breadcrumb').click();
-      cy.contains('Juan del Pueblo Test');
+      cy.contains('Jotaro del Pueblo Test');
     })
 
     it('can open the module to edit a user\'s information', () => {
-      cy.contains('td', 'Juan del Pueblo Test')
+      cy.contains('td', 'Jotaro del Pueblo Test')
         .parent()
         .within($tr => {
           cy.get('td button.edit')
             .click()
         })
-      cy.get('input.edit-name').invoke('val').should('equal', 'Juan del Pueblo Test')
+      cy.get('input.edit-name').invoke('val').should('equal', 'Jotaro del Pueblo Test')
     })
 
     it('can edit user\'s name and status', () => {
-      cy.get('input.edit-name').invoke('val').should('equal', 'Juan del Pueblo Test')
+      cy.get('input.edit-name').invoke('val').should('equal', 'Jotaro del Pueblo Test')
       cy.get('input.edit-name')
         .clear()
         .type('Juanito del Pueblo')
