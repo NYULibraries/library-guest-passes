@@ -72,23 +72,24 @@ services:
       dockerfile: ./cypress/Dockerfile
     #command: ["yarn", "cypress", "run", "--headless"]
     depends_on:
-      - dev_e2e
+      - dev-e2e
       - backend
     environment:
-      DOMAIN: http://dev_e2e:3000/
+      DOMAIN: http://dev-e2e:4000/
       NODE_ENV: test
-      CYPRESS_BASE_URL: http://dev_e2e:3000/
+      CYPRESS_BASE_URL: http://dev-e2e:4000/
     ipc: host
 
-  dev_e2e:
+  dev-e2e:
     image: guest-passes
     build: .
     command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
     ports:
-      - "3000:3001"
+      - "4000:4000"
     depends_on:
       - backend
     environment:
+      PORT: 4000
       REACT_APP_BACKEND_FULL_HOST: http://backend:5000
         #<<: *default-volumes
 
