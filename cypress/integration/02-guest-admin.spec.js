@@ -1,6 +1,8 @@
 describe('Admin - Guest', function () {
   before(() => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
+    //cy.visit('http://dev:3000/')
+    //cy.visit('https://library.nyu.edu/')
   });
 
   describe('breadcrumb navigates to guest',() => {

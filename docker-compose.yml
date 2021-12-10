@@ -65,14 +65,20 @@ services:
     depends_on:
       - db
 
-  # e2e:
-  #   build:
-  #     context: .
-  #     dockerfile: ./cypress/Dockerfile
-  #   command: ["yarn", "cypress", "run", "--headless"]
-  #   depends_on:
-  #     - dev
-  #   ipc: host
+  e2e:
+    image: guest-passes-e2e
+    build:
+      context: .
+      dockerfile: ./cypress/Dockerfile
+    #command: ["yarn", "cypress", "run", "--headless"]
+    depends_on:
+      - dev
+      - backend
+    environment:
+      DOMAIN: http://dev:3000/
+      NODE_ENV: test
+      CYPRESS_BASE_URL: http://dev:3000/
+    ipc: host
 
   curl-dev:
     image: appropriate/curl
