@@ -33,6 +33,8 @@ jobs:
           name: Docker Pull
           command: |
             docker-compose pull db
+            docker pull quay.io/nyulibraries/guest-passes:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes:latest
+            #docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:latest
       - run:
           name: Build
           command: |
@@ -58,8 +60,12 @@ jobs:
             export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
             docker tag guest-passes quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}
             docker tag guest-passes quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
+            docker tag guest-passes-e2e quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}
+            docker tag guest-passes-e2e quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
             docker push quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}
             docker push quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
+            docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}
+            docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
 
 
   deploy-dev:
