@@ -36,9 +36,13 @@ jobs:
           command: |
             docker-compose build
       - run:
-          name: Test
+          name: Unit Tests
           command: |
             docker-compose run test
+      - run:
+          name: Integration Tests
+          command: |
+            docker-compose run e2e
       - run:
           name: Test if dev starts properly
           command: |
