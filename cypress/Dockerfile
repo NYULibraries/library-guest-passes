@@ -7,4 +7,4 @@ RUN yarn install
 
 RUN yarn cypress verify
 
-CMD /app/cypress/script/wait_for.sh $DOMAIN && yarn cypress run --headless
+CMD /app/cypress/script/wait_for.sh $DOMAIN && yarn cypress run --config-file cypress/cypress.json --headless
