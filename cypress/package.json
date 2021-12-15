@@ -1,0 +1,12 @@
+{
+  "name": "library-guest-passes-cypress",
+  "version": "1.0.0",
+  "description": "Cypress E2E tests for library-guest-passes",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "cypress": "^8.7.0"
+  }
+}
+

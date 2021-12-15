@@ -28,3 +28,6 @@ yarn-error.log*
 
 test.json
 test.sh
+
+cypress/screenshots/
+cypress/videos/

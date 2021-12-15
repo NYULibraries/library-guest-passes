@@ -18,8 +18,8 @@ x-build: &x-build
 x-build-e2e: &x-build-e2e
   image: guest-passes-e2e
   build:
-    context: .
-    dockerfile: ./cypress/Dockerfile
+    context: ./cypress
+      #dockerfile: ./cypress/Dockerfile
     cache_from:
       - guest-passes-e2e
       - "quay.io/nyulibraries/guest-passes-e2e"
