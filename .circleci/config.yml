@@ -34,7 +34,7 @@ jobs:
           command: |
             docker-compose pull db
             docker pull quay.io/nyulibraries/guest-passes:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes:latest
-            #docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:latest
+            docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:latest
       - run:
           name: Build
           command: |
