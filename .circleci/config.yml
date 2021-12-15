@@ -48,12 +48,12 @@ jobs:
           name: Integration Tests
           command: |
             docker-compose run e2e
-      - run:
-          name: Test if dev starts properly
-          command: |
-            docker-compose up -d dev 
-            timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
-            script/check_dev.sh
+            #- run:
+            #    name: Test if dev starts properly
+            #    command: |
+            #      docker-compose up -d dev 
+            #      timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
+            #      script/check_dev.sh
       - <<: *auth_quay
       - run:
           name: Push image
