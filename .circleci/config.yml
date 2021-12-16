@@ -16,10 +16,8 @@ hermes_deploy: &hermes_deploy
       export TAG=${CIRCLE_BRANCH//\//_}-${CIRCLE_SHA1}
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-nodejs -tag=$TAG
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-react-nginx -tag=$TAG
-      #timeout 3m sh -c 'until docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs -wait=false; do sleep 5; done'
-      #timeout 1m sh -c 'until docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx -wait=false; do sleep 5; done'
-      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=6s -e HERMES_WAIT_PAUSE_MAX=9s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
-      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=6s -e HERMES_WAIT_PAUSE_MAX=9s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
+      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
+      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
 
 version: 2
 jobs:
