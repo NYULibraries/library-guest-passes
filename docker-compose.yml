@@ -6,10 +6,28 @@ x-default-volumes: &default-volumes
     - ./migrations:/app/migrations
     - node_modules:/app/node_modules
 
+x-build: &x-build
+  image: guest-passes
+  build:
+    context: .
+    cache_from:
+      - guest-passes
+      - "quay.io/nyulibraries/guest-passes"
+      - "quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}"
+
+x-build-e2e: &x-build-e2e
+  image: guest-passes-e2e
+  build:
+    context: ./cypress
+      #dockerfile: ./cypress/Dockerfile
+    cache_from:
+      - guest-passes-e2e
+      - "quay.io/nyulibraries/guest-passes-e2e"
+      - "quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}"
+
 services:
   dev:
-    image: guest-passes
-    build: .
+    <<: *x-build
     command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
     ports:
       - "3000:3000"
@@ -18,8 +36,7 @@ services:
         #<<: *default-volumes
 
   backend:
-    image: guest-passes
-    build: .
+    <<: *x-build
     command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
     ports:
       - "5000:5000"
@@ -37,8 +54,7 @@ services:
       MYSQL_ROOT_PASSWORD: test
 
   test:
-    image: guest-passes
-    build: .
+    <<: *x-build
     command:
       - /bin/sh
       - -c
@@ -51,8 +67,7 @@ services:
     # <<: *default-volumes
 
   setup_tests:
-    image: guest-passes
-    build: .
+    <<: *x-build
     command:
       - /bin/sh
       - -c
@@ -64,6 +79,30 @@ services:
       NODE_ENV: test
     depends_on:
       - db
+
+  e2e:
+    <<: *x-build-e2e
+    #command: ["yarn", "cypress", "run", "--headless"]
+    depends_on:
+      - dev-e2e
+      - backend
+    environment:
+      DOMAIN: http://dev-e2e:4000/
+      NODE_ENV: test
+      CYPRESS_BASE_URL: http://dev-e2e:4000/
+    ipc: host
+
+  dev-e2e:
+    <<: *x-build
+    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
+    ports:
+      - "4000:4000"
+    depends_on:
+      - backend
+    environment:
+      PORT: 4000
+      REACT_APP_BACKEND_FULL_HOST: http://backend:5000
+        #<<: *default-volumes
 
   curl-dev:
     image: appropriate/curl

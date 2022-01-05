@@ -98,11 +98,11 @@ const eraseMessageEffect = (msg, fn) => {
   if (msg.includes("Success")) {
     setTimeout(() => {
       fn("");
-    }, 2000);
+    }, 5000);
   } else if (msg.includes("Oops")) {
     setTimeout(() => {
       fn("");
-    }, 2000);
+    }, 5000);
   }
 };
 

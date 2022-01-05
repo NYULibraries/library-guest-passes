@@ -16,8 +16,8 @@ hermes_deploy: &hermes_deploy
       export TAG=${CIRCLE_BRANCH//\//_}-${CIRCLE_SHA1}
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-nodejs -tag=$TAG
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-react-nginx -tag=$TAG
-      docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master rolloutStatus -deployment=guestpasses-nodejs
-      docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master rolloutStatus -deployment=guestpasses-react-nginx
+      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
+      docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
 
 version: 2
 jobs:
@@ -31,20 +31,27 @@ jobs:
           name: Docker Pull
           command: |
             docker-compose pull db
+            docker pull quay.io/nyulibraries/guest-passes:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes:latest
+            docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:latest
       - run:
           name: Build
           command: |
+            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
             docker-compose build
       - run:
-          name: Test
+          name: Unit Tests
           command: |
             docker-compose run test
       - run:
-          name: Test if dev starts properly
+          name: Integration Tests
           command: |
-            docker-compose up -d dev 
-            timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
-            script/check_dev.sh
+            docker-compose run e2e
+            #- run:
+            #    name: Test if dev starts properly
+            #    command: |
+            #      docker-compose up -d dev 
+            #      timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
+            #      script/check_dev.sh
       - <<: *auth_quay
       - run:
           name: Push image
@@ -52,8 +59,12 @@ jobs:
             export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
             docker tag guest-passes quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}
             docker tag guest-passes quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
+            docker tag guest-passes-e2e quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}
+            docker tag guest-passes-e2e quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
             docker push quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}
             docker push quay.io/nyulibraries/guest-passes:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
+            docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}
+            docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
 
 
   deploy-dev:

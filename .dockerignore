@@ -5,3 +5,9 @@ build
 **/.git
 **/.DS_Store
 **/node_modules
+.circleci
+.gitignore
+.git
+node_modules
+cypress/screenshots/
+cypress/videos/
