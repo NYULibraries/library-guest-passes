@@ -64,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   }, {
+    // options added to avoid synchronization issues from Sequelize abstractions
       sequelize,
       modelName: 'Visit',
       timestamps: false,

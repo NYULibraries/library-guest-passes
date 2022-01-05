@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
   }, {
+    // options added to avoid synchronization issues from Sequelize abstractions
       sequelize,
       modelName: 'Affiliate',
       timestamps: false,
