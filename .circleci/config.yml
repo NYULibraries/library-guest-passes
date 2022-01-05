@@ -31,8 +31,8 @@ jobs:
           name: Docker Pull
           command: |
             docker-compose pull db
-            docker pull quay.io/nyulibraries/guest-passes:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes:main
-            docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:chore_dockerize_e2e
+            docker pull quay.io/nyulibraries/guest-passes:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes:latest
+            docker pull quay.io/nyulibraries/guest-passes-e2e:${CIRCLE_BRANCH//\//_} || docker pull quay.io/nyulibraries/guest-passes-e2e:latest
       - run:
           name: Build
           command: |
