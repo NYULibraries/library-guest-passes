@@ -10,7 +10,7 @@ const backendDomain = `${
 function Visitor(props) {
   const [data, setData] = useState([]);
   const [visitorInfo, setVisitorInfo] = useState({})
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const typeOfVisitor = props.location.pathname.includes('guests') ? "guests" : "affiliates";
   
   const fetchVisitors = () => {
