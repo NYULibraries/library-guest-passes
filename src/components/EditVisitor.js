@@ -3,10 +3,6 @@ import { postEditVisitor } from '../helpers';
 import { useHistory } from 'react-router';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const backendDomain = `${
-  process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
-}`;
-
 const EditVisitor = (props) =>{
   const history = useHistory()
   const visitorObject = props.state
@@ -15,7 +11,7 @@ const EditVisitor = (props) =>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postEditVisitor(backendDomain, visitorObject, name, permissionStatus);
+    await postEditVisitor(visitorObject, name, permissionStatus);
     setName("");
     setPermissionStatus();
     history.go();

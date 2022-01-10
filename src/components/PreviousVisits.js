@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-
-const backendDomain = `${
-  process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
-}`;
+import {
+  deleteVisit
+  getVisits
+} from "../helpers";
 
 function PreviousVisits(props) {
   const [data, setData] = useState([]);
   const { typeOfVisitor, id } = props.match.params
 
-  const fetchVisits = () => {
-    fetch(`${backendDomain}/${typeOfVisitor}/${id}`)
-      .then(res => res.json())
+  const fetchVisits = async () => {
+    getVisits(typeOfVisitor, id)
       .then(json => setData(json));
   }
 
@@ -19,17 +18,7 @@ function PreviousVisits(props) {
   }, []);
 
   const handleDelete = (url, id) => {
-    fetch(`${url}/visits/${id}`, {
-      method: "DELETE",
-      mode: "cors",
-      cache: "default",
-      credentials: "omit",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then(res => res.text())
-    .then(res => console.log(res))
+		await deleteVisit(id);
 
     const editedVisits = data.Visits.filter(e => e.id !== id);
     setData({ Visits: editedVisits })
@@ -66,7 +55,7 @@ function PreviousVisits(props) {
                   <td className="notes">{e.notes}</td>
                   <td>
                     <div className="">
-                      <button className="btn btn-outline-secondary delete-btn" type="button" onClick={() => handleDelete(backendDomain, e.id)} >
+                      <button className="btn btn-outline-secondary delete-btn" type="button" onClick={() => handleDelete(e.id)} >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                           <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
