@@ -146,7 +146,7 @@ const getVisits = async (typeOfVisitor, id) => {
 }
 
 const deleteVisitor = async (typeOfVisitor, id) => {
-  await fetch(`${url}/${typeOfVisitor}/${id}`, {
+  await fetch(`${backendDomain}/${typeOfVisitor}/${id}`, {
     method: "DELETE",
     mode: "cors",
     cache: "default",
@@ -175,6 +175,7 @@ export {
   postEditVisitor,
   permissionLookupEffect,
   deleteVisit,
+  getVisits,
   deleteVisitor,
   getVisitors
 };

@@ -14,7 +14,7 @@ function Visitor(props) {
   const typeOfVisitor = props.location.pathname.includes('guests') ? "guests" : "affiliates";
   
   const fetchVisitors = async () => {
-    getVisitors(typeOfVisitors)
+    await getVisitors(typeOfVisitor)
       .then(json => setData(json));
   }
 
@@ -22,8 +22,8 @@ function Visitor(props) {
     fetchVisitors();
   }, []);
 
-  const handleDelete = (id) => {
-    deleteVisitor(typeOfVisitor, id);
+  const handleDelete = async (id) => {
+    await deleteVisitor(typeOfVisitor, id);
 
     const visitor = data.filter(e => e.id !== id);
     setData(visitor)

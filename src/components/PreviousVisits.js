@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-  deleteVisit
+  deleteVisit,
   getVisits
 } from "../helpers";
 
@@ -17,7 +17,7 @@ function PreviousVisits(props) {
     fetchVisits();
   }, []);
 
-  const handleDelete = (url, id) => {
+  const handleDelete = async (url, id) => {
 		await deleteVisit(id);
 
     const editedVisits = data.Visits.filter(e => e.id !== id);
