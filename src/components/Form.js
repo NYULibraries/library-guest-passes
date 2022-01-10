@@ -11,10 +11,6 @@ import {
   permissionLookupEffect,
 } from "../helpers";
 
-const backendDomain = `${
-  process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
-}`;
-
 const permissionStatusMessage = "For returning guests, type name to see permission status"
 
 const Form = () => {
@@ -71,7 +67,6 @@ const Form = () => {
   useEffect(() => {
     const typeOfVisitor = "guest"
     searchVisitorEffect(
-      backendDomain,
       userInput.guest_name,
       setSearchResults,
       debouncedName,
@@ -84,7 +79,6 @@ const Form = () => {
     // Look up guest's permission status
     const typeOfVisitor = "guest"
     permissionLookupEffect(
-      backendDomain,
       userInput.guest_name,
       setGuestPermission,
       typeOfVisitor,
@@ -96,7 +90,6 @@ const Form = () => {
     // Look up affiliate's permission status
     const typeOfVisitor = "affiliate"
     permissionLookupEffect(
-      backendDomain,
       userInput.affiliate_name,
       setAffiliatePermission,
       typeOfVisitor,
@@ -147,7 +140,7 @@ const Form = () => {
       notes: userInput.notes,
     };
 
-    const response = await postVisit(backendDomain, data);
+    const response = await postVisit(data);
 
     if (response.status !== 201 ) {
       setMessage("Oops! Something went wrong. Please fill out all fields.");

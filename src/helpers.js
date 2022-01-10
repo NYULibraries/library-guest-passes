@@ -1,3 +1,8 @@
+const backendDomain = `${
+  process.env.REACT_APP_BACKEND_FULL_HOST || "http://localhost:5000"
+}`;
+
+
 const guestLookupTrigger = (results, dropdownChoice, handleChange) => {
   if (results?.length) {
     return (
@@ -23,8 +28,8 @@ const guestLookupTrigger = (results, dropdownChoice, handleChange) => {
   return <div></div>;
 };
 
-const postVisit = async (url, data) => {
-  return await fetch(`${url}/visit`, {
+const postVisit = async (data) => {
+  return await fetch(`${backendDomain}/visit`, {
     method: "POST",
     mode: "cors",
     cache: "default",
@@ -46,9 +51,9 @@ const emptyStates = (arr) => {
   arr.map((e) => e(""));
 }
 
-const searchVisitorEffect = (url, name, fn, trigger, type) => {
+const searchVisitorEffect = (name, fn, trigger, type) => {
   const searchVisitor = () => {
-    const encodedURL = encodeURI(`${url}/name-search/?${type}_name=${name}`);
+    const encodedURL = encodeURI(`${backendDomain}/name-search/?${type}_name=${name}`);
     fetch(encodedURL)
       .then((response) => response.json())
       .then((data) => fn(data));
@@ -59,8 +64,8 @@ const searchVisitorEffect = (url, name, fn, trigger, type) => {
   }
 };
 
-const permissionLookupEffect = async (url, name, fn, type) => {
-  const encodedURL = encodeURI(`${url}/permission/?${type}_name=${name}`);
+const permissionLookupEffect = async (name, fn, type) => {
+  const encodedURL = encodeURI(`${backendDomain}/permission/?${type}_name=${name}`);
   const visitor = await fetch(encodedURL).then((response) => response.json())
   if(visitor && visitor.name === name){
     fn(visitor.permission_status);
@@ -106,8 +111,8 @@ const eraseMessageEffect = (msg, fn) => {
   }
 };
 
-const postEditVisitor = async (url, obj, name, status) =>{
-  await fetch(`${url}/${obj.typeOfVisitor}/${obj.id}`, {
+const postEditVisitor = async (obj, name, status) =>{
+  await fetch(`${backendDomain}/${obj.typeOfVisitor}/${obj.id}`, {
     method: "PUT",
     mode: "cors",
     cache: "default",
@@ -121,6 +126,44 @@ const postEditVisitor = async (url, obj, name, status) =>{
   .then(res => console.log(res))
 }
 
+const deleteVisit = async (id) => {
+  await fetch(`${backendDomain}/visits/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "default",
+    credentials: "omit",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then(res => res.text())
+  //.then(res => console.log(res))
+}
+
+const getVisits = async (typeOfVisitor, id) => {
+  return await fetch(`${backendDomain}/${typeOfVisitor}/${id}`)
+    .then(res => res.json())
+}
+
+const deleteVisitor = async (typeOfVisitor, id) => {
+  await fetch(`${backendDomain}/${typeOfVisitor}/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "default",
+    credentials: "omit",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then(res => res.text())
+  //.then(res => console.log(res))
+}
+
+const getVisitors = async (typeOfVisitor) => {
+  return await fetch(`${backendDomain}/${typeOfVisitor}`)
+    .then(res => res.json())
+}
+
 export {
   guestLookupTrigger,
   postVisit,
@@ -130,5 +173,9 @@ export {
   dropdownChoiceEffect,
   eraseMessageEffect,
   postEditVisitor,
-  permissionLookupEffect
+  permissionLookupEffect,
+  deleteVisit,
+  getVisits,
+  deleteVisitor,
+  getVisitors
 };
