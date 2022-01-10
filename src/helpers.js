@@ -33,7 +33,7 @@ const postVisit = async (data) => {
     method: "POST",
     mode: "cors",
     cache: "default",
-    credentials: "omit",
+    //credentials: "omit",
     headers: {
       "Content-Type": "application/json",
     },
@@ -116,7 +116,7 @@ const postEditVisitor = async (obj, name, status) =>{
     method: "PUT",
     mode: "cors",
     cache: "default",
-    credentials: "omit",
+    //credentials: "omit",
     headers: {
       "Content-Type": "application/json",
     },
@@ -131,7 +131,7 @@ const deleteVisit = async (id) => {
     method: "DELETE",
     mode: "cors",
     cache: "default",
-    credentials: "omit",
+    //credentials: "omit",
     headers: {
       "Content-Type": "application/json",
     },
@@ -150,7 +150,7 @@ const deleteVisitor = async (typeOfVisitor, id) => {
     method: "DELETE",
     mode: "cors",
     cache: "default",
-    credentials: "omit",
+    //credentials: "omit",
     headers: {
       "Content-Type": "application/json",
     },
