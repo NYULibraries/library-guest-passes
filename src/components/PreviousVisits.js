@@ -17,7 +17,7 @@ function PreviousVisits(props) {
     fetchVisits();
   }, []);
 
-  const handleDelete = async (url, id) => {
+  const handleDelete = async (id) => {
 		await deleteVisit(id);
 
     const editedVisits = data.Visits.filter(e => e.id !== id);
