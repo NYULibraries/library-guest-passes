@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import EditVisitor from './EditVisitor';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import {
   deleteVisitor,
-  getVisitors
+  getVisitors,
+	searchVisitorEffect
 } from "../helpers";
 
 function Visitor(props) {
   const [data, setData] = useState([]);
-  const [visitorInfo, setVisitorInfo] = useState({})
+  const [visitorInfo, setVisitorInfo] = useState({});
   const [modalShow, setModalShow] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
   const typeOfVisitor = props.location.pathname.includes('guests') ? "guests" : "affiliates";
   
   const fetchVisitors = async () => {
@@ -35,11 +37,42 @@ function Visitor(props) {
     setModalShow(true)
   }
 
+  useEffect(() => {
+    if (searchInput === "") {
+      return fetchVisitors();
+    }
+
+    searchVisitorEffect(
+      searchInput,
+      setData,
+      searchInput,
+      typeOfVisitor.slice(0, -1)
+    );
+  }, [searchInput]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(searchInput);
+    //await postEditVisitor(visitorObject, name, permissionStatus);
+    //setName("");
+    //setPermissionStatus();
+    //history.go();
+  };
+
   return (
     <div className="admin-container">
       {
         typeOfVisitor === "guests" ? <h1>Guests</h1> : <h1>Affiliates</h1>
       }
+
+      <Form onSubmit={handleSubmit} id="search-visitors">
+        <Form.Group className="mb-3" controlId="search-input">
+          <Form.Label>Search Name</Form.Label>
+            <Form.Control className='edit-search-input' placeholder="Search Name" search-input="search-input" onChange={(e) => setSearchInput(e.target.value)} />
+        </Form.Group>
+        {/* <Button type="submit" form="search-visitors" variant="secondary">Search</Button> */}
+      </Form>
+
       <table className="table table-hover table-bordered">
         <thead>
         <tr>
