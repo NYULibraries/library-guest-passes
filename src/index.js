@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./_form.scss";
 import "./_admin.scss";
 import Form from "./components/Form";
@@ -18,13 +18,13 @@ ReactDOM.render(
       <Breadcrumb />
       <div className="container mt-3">
         <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={Form} />
-            <Route exact path="/admin/guests" component={Visitor} />
-            <Route exact path="/admin/affiliates" component={Visitor} />
-            <Route exact path="/admin/:typeOfVisitor/:id" component={PreviousVisits} />
-            <Route path="/admin/:typeOfVisitor/:id/edit" component={EditVisitor} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Form />} />
+            <Route path="/admin/guests" element={<Visitor />} />
+            <Route path="/admin/affiliates" element={<Visitor />} />
+            <Route path="/admin/:typeOfVisitor/:id" element={<PreviousVisits />} />
+            <Route path="/admin/:typeOfVisitor/:id/edit" element={<EditVisitor />} />
+          </Routes>
         </BrowserRouter>
       </div>
     </div>
