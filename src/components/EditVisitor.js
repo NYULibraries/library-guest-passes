@@ -14,7 +14,7 @@ const EditVisitor = (props) =>{
     await postEditVisitor(visitorObject, name, permissionStatus);
     setName("");
     setPermissionStatus();
-    navigate();
+    navigate(0);
   };
 
   return (<div>
