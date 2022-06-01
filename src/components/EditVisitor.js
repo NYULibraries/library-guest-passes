@@ -1,10 +1,10 @@
 import React,{ useState } from 'react';
 import { postEditVisitor } from '../helpers';
-import { useNavigate} from 'react-router';
+import { useNavigate} from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 const EditVisitor = (props) =>{
-  const history = useNavigate()
+  const navigate = useNavigate()
   const visitorObject = props.state
   const [name, setName] = useState("");
   const [permissionStatus, setPermissionStatus] = useState();
@@ -14,7 +14,7 @@ const EditVisitor = (props) =>{
     await postEditVisitor(visitorObject, name, permissionStatus);
     setName("");
     setPermissionStatus();
-    history.go();
+    navigate();
   };
 
   return (<div>
