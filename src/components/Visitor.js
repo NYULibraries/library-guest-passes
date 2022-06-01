@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import EditVisitor from './EditVisitor';
 import { Button } from 'react-bootstrap';
 import {
@@ -7,11 +7,13 @@ import {
   getVisitors
 } from "../helpers";
 
-function Visitor(props) {
+function Visitor() {
   const [data, setData] = useState([]);
   const [visitorInfo, setVisitorInfo] = useState({})
-  const [modalShow, setModalShow] = useState(false);
-  const typeOfVisitor = props.location.pathname.includes('guests') ? "guests" : "affiliates";
+  const [modalShow, setModalShow] = useState(false); 
+
+  const { pathname } = useLocation();
+  const typeOfVisitor = pathname.includes('guests') ? "guests" : "affiliates";
   
   const fetchVisitors = async () => {
     await getVisitors(typeOfVisitor)

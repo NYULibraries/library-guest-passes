@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import { useParams } from 'react-router-dom';
 import {
   deleteVisit,
   getVisits
 } from "../helpers";
 
-function PreviousVisits(props) {
+function PreviousVisits() {
   const [data, setData] = useState([]);
-  const { typeOfVisitor, id } = props.match.params
+  const { typeOfVisitor, id } = useParams();
 
   const fetchVisits = async () => {
     getVisits(typeOfVisitor, id)
