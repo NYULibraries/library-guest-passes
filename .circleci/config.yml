@@ -1,14 +1,3 @@
-docker-defaults: &docker-defaults
-  docker:
-    - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
-  working_directory: ~/app
-
-docker_build: &docker_build
-  run:
-    name: Docker build
-    command: |
-      docker-compose build test e2e compile
-
 auth_quay: &auth_quay
   run:
     name: Authenticate Quay
@@ -22,29 +11,22 @@ aws_env: &aws_env
       echo 'export AWS_ACCESS_KEY_ID=${S3_GUESTPASSES_WEBSITE_AWS_ACCESS_KEY_ID}' >> $BASH_ENV
       echo 'export AWS_SECRET_ACCESS_KEY=${S3_GUESTPASSES_WEBSITE_AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
 
-s3_deploy: &s3_deploy
-  aws-s3/sync:
-    from: dist
-    to: '${S3_URI}/nyulibraries-dev-guestpasses'
-    arguments: |
-      --delete
-    overwrite: true
-
 copy_build: &copy_build
   run:
     name: Copy build
     command: |
       docker cp $(docker ps -a -q --filter name=compile):/app/build ./
 
-test_build: &test_build
+docker_build: &docker_build
   run:
-    name: Test that correct files were built
+    name: Docker build
     command: |
-      test -e build/index.html
-      test -e build/css/main.*.css
-      test -e build/css/main.*.map
-      test -e build/js/main.*.css
-      test -e build/js/main.*.css
+      docker-compose build test e2e compile
+
+docker-defaults: &docker-defaults
+  docker:
+    - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
+  working_directory: ~/app
 
 hermes_deploy: &hermes_deploy
   run:
@@ -55,6 +37,24 @@ hermes_deploy: &hermes_deploy
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-react-nginx -tag=$TAG
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
+
+s3_deploy: &s3_deploy
+  aws-s3/sync:
+    from: dist
+    to: '${S3_URI}/nyulibraries-dev-guestpasses'
+    arguments: |
+      --delete
+    overwrite: true
+
+test_build: &test_build
+  run:
+    name: Test that correct files were built
+    command: |
+      test -e build/index.html
+      test -e build/css/main.*.css
+      test -e build/css/main.*.map
+      test -e build/js/main.*.css
+      test -e build/js/main.*.css
 
 version: 2.1
 orbs:
