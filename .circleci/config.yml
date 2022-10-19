@@ -3,12 +3,49 @@ docker-defaults: &docker-defaults
     - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
   working_directory: ~/app
 
+docker_build: &docker_build
+  run:
+    name: Docker build
+    command: |
+      docker-compose build test e2e compile
+
 auth_quay: &auth_quay
   run:
     name: Authenticate Quay
     command: |
       docker login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io
-      
+
+aws_env: &aws_env
+  run:
+    name: Export AWS env vars
+    command: |
+      echo 'export AWS_ACCESS_KEY_ID=${S3_GUESTPASSES_WEBSITE_AWS_ACCESS_KEY_ID}' >> $BASH_ENV
+      echo 'export AWS_SECRET_ACCESS_KEY=${S3_GUESTPASSES_WEBSITE_AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
+
+s3_deploy: &s3_deploy
+  aws-s3/sync:
+    from: dist
+    to: '${S3_URI}/nyulibraries-dev-guestpasses'
+    arguments: |
+      --delete
+    overwrite: true
+
+copy_build: &copy_build
+  run:
+    name: Copy build
+    command: |
+      docker cp $(docker ps -a -q --filter name=compile):/app/build ./
+
+test_build: &test_build
+  run:
+    name: Test that correct files were built
+    command: |
+      test -e build/index.html
+      test -e build/css/main.*.css
+      test -e build/css/main.*.map
+      test -e build/js/main.*.css
+      test -e build/js/main.*.css
+
 hermes_deploy: &hermes_deploy
   run:
     name: Deploy via Hermes
@@ -76,8 +113,21 @@ jobs:
   deploy-dev:
     <<: *docker-defaults
     steps:
+      - checkout
       - setup_remote_docker
+      - *docker_build
       - <<: *auth_quay
+      - run:
+          # Currently there is only one build script in package.json.
+          # Later we will perhaps have build:dev and/or build:stage (and build:prod, naturally)
+          name: Build prod
+          command: |
+            # Compile services only builds prod, so no need to pass a build script name argument.
+            docker-compose run compile
+      - *copy_build
+      - *test_build
+      - *aws_env
+      - *s3_deploy
       - run:
           name: Export Hermes Dev env vars
           command: |
