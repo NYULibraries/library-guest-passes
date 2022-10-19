@@ -122,10 +122,18 @@ jobs:
           # Later we will perhaps have build:dev and/or build:stage (and build:prod, naturally)
           name: Build prod
           command: |
-            # Compile services only builds prod, so no need to pass a build script name argument.
             docker-compose run compile
       - *copy_build
       - *test_build
+      - run:
+          name: Run unit tests
+          command: |
+            docker-compose run test
+      # Doesn't look like e2e tests are ready yet.
+      # - run:
+      #   name: Run e2e tests
+      #   command: |
+      #     docker-compose run e2e
       - *aws_env
       - *s3_deploy
       - run:
