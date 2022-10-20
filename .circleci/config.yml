@@ -45,7 +45,6 @@ s3_deploy: &s3_deploy
     to: '${S3_URI_DEV}'
     arguments: |
       --delete
-    overwrite: true
 
 test_build: &test_build
   run:
