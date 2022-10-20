@@ -51,10 +51,11 @@ test_build: &test_build
     name: Test that correct files were built
     command: |
       test -e build/index.html
-      test -e build/css/main.*.css
-      test -e build/css/main.*.map
-      test -e build/js/main.*.css
-      test -e build/js/main.*.css
+      test -e build/asset-manifest.json
+      test -e build/static/css/main.*.css
+      test -e build/static/css/main.*.map
+      test -e build/static/js/main.*.css
+      test -e build/static/js/main.*.css
 
 version: 2.1
 orbs:
