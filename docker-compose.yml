@@ -39,7 +39,7 @@ services:
 
   compile:
     build: .
-    image: statuspage-embed
+    image: guest-passes
     command: [ "yarn build" ]
     #<<: *x-default-volumes
 
