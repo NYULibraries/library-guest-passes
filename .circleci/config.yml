@@ -41,7 +41,7 @@ hermes_deploy: &hermes_deploy
 
 s3_deploy: &s3_deploy
   aws-s3/sync:
-    from: dist
+    from: build
     to: '${S3_URI_DEV}'
     arguments: |
       --delete
