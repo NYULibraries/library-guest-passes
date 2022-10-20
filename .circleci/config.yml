@@ -8,8 +8,9 @@ aws_env: &aws_env
   run:
     name: Export AWS env vars
     command: |
-      echo 'export AWS_ACCESS_KEY_ID=${S3_GUESTPASSES_WEBSITE_AWS_ACCESS_KEY_ID}' >> $BASH_ENV
-      echo 'export AWS_SECRET_ACCESS_KEY=${S3_GUESTPASSES_WEBSITE_AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
+      # AWS IAM user web-s3-guestpasses-website 
+      echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' >> $BASH_ENV
+      echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
 
 copy_build: &copy_build
   run:
@@ -41,7 +42,7 @@ hermes_deploy: &hermes_deploy
 s3_deploy: &s3_deploy
   aws-s3/sync:
     from: dist
-    to: '${S3_URI}/nyulibraries-dev-guestpasses'
+    to: '${S3_URI_DEV}'
     arguments: |
       --delete
     overwrite: true
