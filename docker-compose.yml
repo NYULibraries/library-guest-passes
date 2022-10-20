@@ -38,9 +38,12 @@ services:
       #<<: *default-volumes
 
   compile:
-    build: .
+    build:
+      context: .
+      args:
+        production: true
     image: guest-passes
-    command: [ "yarn build" ]
+    command: ["NODE_ENV=production", "yarn", "build"]
     #<<: *x-default-volumes
 
   curl-dev:
