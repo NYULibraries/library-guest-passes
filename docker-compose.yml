@@ -41,7 +41,7 @@ services:
     build:
       context: .
       args:
-        production: true
+        production: "true"
     image: guest-passes
     command: ["NODE_ENV=production", "yarn", "build"]
     #<<: *x-default-volumes
