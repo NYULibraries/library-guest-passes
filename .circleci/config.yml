@@ -104,13 +104,17 @@ jobs:
             docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
             docker push quay.io/nyulibraries/guest-passes-e2e:latest
 
-
   deploy-dev:
     <<: *docker-defaults
     steps:
       - checkout
       - setup_remote_docker
       - <<: *auth_quay
+      - run:
+          name: Build prod frontend
+          command: |
+            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+            docker-compose run compile-frontend-prod
       - *copy_build
       - *test_build
       - *aws_env

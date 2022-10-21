@@ -37,7 +37,7 @@ services:
       - db
       #<<: *default-volumes
 
-  compile:
+  compile-frontend-prod:
     build:
       context: .
       args:
