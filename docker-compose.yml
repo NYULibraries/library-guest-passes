@@ -43,7 +43,9 @@ services:
       args:
         production: "true"
     image: guest-passes
-    command: ["NODE_ENV=production", "yarn", "build"]
+    environment:
+      NODE_ENV: production
+    command: ["yarn", "build"]
     #<<: *x-default-volumes
 
   curl-dev:
