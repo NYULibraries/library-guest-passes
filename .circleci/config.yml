@@ -16,7 +16,7 @@ copy_build: &copy_build
   run:
     name: Copy build
     command: |
-      docker cp $(docker ps -a -q --filter name=compile):/app/build ./
+      docker cp $(docker ps -a -q --filter name=guest-passes-frontend-prod):/app/build ./
 
 docker-defaults: &docker-defaults
   docker:

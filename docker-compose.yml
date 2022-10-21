@@ -42,7 +42,7 @@ services:
       context: .
       args:
         production: "true"
-    image: guest-passes
+    image: guest-passes-frontend-prod
     environment:
       NODE_ENV: production
     command: ["yarn", "build"]
