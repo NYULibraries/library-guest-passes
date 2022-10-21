@@ -71,7 +71,7 @@ jobs:
           name: Build
           command: |
             export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-            docker-compose run compile
+            docker-compose build
       - run:
           name: Unit Tests
           command: |
