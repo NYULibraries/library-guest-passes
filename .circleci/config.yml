@@ -8,7 +8,7 @@ aws_env: &aws_env
   run:
     name: Export AWS env vars
     command: |
-      # AWS IAM user web-s3-guestpasses-website 
+      # AWS IAM user web-s3-guestpasses-website
       echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' >> $BASH_ENV
       echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
 
@@ -83,7 +83,7 @@ jobs:
             #- run:
             #    name: Test if dev starts properly
             #    command: |
-            #      docker-compose up -d dev 
+            #      docker-compose up -d dev
             #      timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
             #      script/check_dev.sh
       - <<: *auth_quay
@@ -129,8 +129,18 @@ jobs:
   deploy-prod:
     <<: *docker-defaults
     steps:
+      - checkout
       - setup_remote_docker
-      - <<: *auth_quay
+      -   <<: *auth_quay
+      -   run:
+            name: Build prod frontend
+            command: |
+              export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+              docker-compose run compile-frontend-prod
+      - *copy_build
+      - *test_build
+      - *aws_env
+      - *s3_deploy
       - run:
           name: Export Hermes Prod env vars
           command: |
