@@ -1,14 +1,28 @@
-docker-defaults: &docker-defaults
-  docker:
-    - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
-  working_directory: ~/app
-
 auth_quay: &auth_quay
   run:
     name: Authenticate Quay
     command: |
       docker login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io
-      
+
+aws_env: &aws_env
+  run:
+    name: Export AWS env vars
+    command: |
+      # AWS IAM user web-s3-guestpasses-website 
+      echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' >> $BASH_ENV
+      echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
+
+copy_build: &copy_build
+  run:
+    name: Copy build
+    command: |
+      docker cp $(docker ps -a -q --filter name=compile-frontend-prod):/app/build ./
+
+docker-defaults: &docker-defaults
+  docker:
+    - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
+  working_directory: ~/app
+
 hermes_deploy: &hermes_deploy
   run:
     name: Deploy via Hermes
@@ -19,7 +33,27 @@ hermes_deploy: &hermes_deploy
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
 
-version: 2
+s3_deploy: &s3_deploy
+  aws-s3/sync:
+    from: build
+    to: '${S3_URI_DEV}'
+    arguments: |
+      --delete
+
+test_build: &test_build
+  run:
+    name: Test that correct files were built
+    command: |
+      test -e build/index.html
+      test -e build/asset-manifest.json
+      test -e build/static/css/main.*.css
+      test -e build/static/css/main.*.map
+      test -e build/static/js/main.*.js
+      test -e build/static/js/main.*.map
+
+version: 2.1
+orbs:
+    aws-s3: circleci/aws-s3@3.0.0
 jobs:
   build-test:
     <<: *docker-defaults
@@ -70,12 +104,21 @@ jobs:
             docker push quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}-${CIRCLE_SHA1}
             docker push quay.io/nyulibraries/guest-passes-e2e:latest
 
-
   deploy-dev:
     <<: *docker-defaults
     steps:
+      - checkout
       - setup_remote_docker
       - <<: *auth_quay
+      - run:
+          name: Build prod frontend
+          command: |
+            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+            docker-compose run compile-frontend-prod
+      - *copy_build
+      - *test_build
+      - *aws_env
+      - *s3_deploy
       - run:
           name: Export Hermes Dev env vars
           command: |

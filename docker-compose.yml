@@ -26,15 +26,6 @@ x-build-e2e: &x-build-e2e
       - "quay.io/nyulibraries/guest-passes-e2e:${BRANCH_NO_SLASH}"
 
 services:
-  dev:
-    <<: *x-build
-    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-        #<<: *default-volumes
-
   backend:
     <<: *x-build
     command: ["/tmp/wait-for", "db:3306", "--", "yarn", "start-dev-backend"]
@@ -44,7 +35,24 @@ services:
       NODE_ENV: development
     depends_on:
       - db
-        #<<: *default-volumes
+      #<<: *default-volumes
+
+  compile-frontend-prod:
+    build:
+      context: .
+      args:
+        production: "true"
+    image: guest-passes-frontend-prod
+    environment:
+      NODE_ENV: production
+    command: ["yarn", "build"]
+    #<<: *x-default-volumes
+
+  curl-dev:
+    image: appropriate/curl
+    command: [ "dev:3000" ]
+    depends_on:
+      - dev
 
   db:
     image: mysql:5.7
@@ -53,32 +61,26 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: test
 
-  test:
+  dev:
     <<: *x-build
-    command:
-      - /bin/sh
-      - -c
-      - |
-        /tmp/wait-for db:3306 -- sleep 5 && yarn test
+    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
+    ports:
+      - "3000:3000"
     depends_on:
-      - setup_tests
-    environment:
-      NODE_ENV: test
-    # <<: *default-volumes
+      - backend
+      #<<: *default-volumes
 
-  setup_tests:
+  dev-e2e:
     <<: *x-build
-    command:
-      - /bin/sh
-      - -c
-      - |
-        /tmp/wait-for db:3306 -t 60 -- 
-        yarn sequelize db:create &&
-        yarn sequelize db:migrate 
-    environment:
-      NODE_ENV: test
+    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
+    ports:
+      - "4000:4000"
     depends_on:
-      - db
+      - backend
+    environment:
+      PORT: 4000
+      REACT_APP_BACKEND_FULL_HOST: http://backend:5000
+      #<<: *default-volumes
 
   e2e:
     <<: *x-build-e2e
@@ -92,23 +94,32 @@ services:
       CYPRESS_BASE_URL: http://dev-e2e:4000/
     ipc: host
 
-  dev-e2e:
+  setup_tests:
     <<: *x-build
-    command: ["/tmp/wait-for", "backend:5000", "-t 60", "--", "yarn", "start"]
-    ports:
-      - "4000:4000"
-    depends_on:
-      - backend
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /tmp/wait-for db:3306 -t 60 -- 
+        yarn sequelize db:create &&
+        yarn sequelize db:migrate
     environment:
-      PORT: 4000
-      REACT_APP_BACKEND_FULL_HOST: http://backend:5000
-        #<<: *default-volumes
-
-  curl-dev:
-    image: appropriate/curl
-    command: ["dev:3000"]
+      NODE_ENV: test
     depends_on:
-      - dev
+      - db
+
+  test:
+    <<: *x-build
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /tmp/wait-for db:3306 -- sleep 5 && yarn test
+    depends_on:
+      - setup_tests
+    environment:
+      NODE_ENV: test
+    # <<: *default-volumes
 
 volumes:
   node_modules:
