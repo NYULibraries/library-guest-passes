@@ -72,6 +72,7 @@ commands:
 
 orbs:
     aws-s3: circleci/aws-s3@3.0.0
+
 jobs:
   build-test:
     <<: *docker-defaults
@@ -101,7 +102,7 @@ jobs:
             #- run:
             #    name: Test if dev starts properly
             #    command: |
-            #      docker-compose up -d dev 
+            #      docker-compose up -d dev
             #      timeout 1m sh -c 'until docker-compose run curl-dev; do sleep 5; done'
             #      script/check_dev.sh
       - <<: *auth_quay
