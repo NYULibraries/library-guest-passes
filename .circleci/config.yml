@@ -1,4 +1,9 @@
 version: 2.1
+
+# Environments
+dev: &dev 'DEV'
+prod: &prod 'PROD'
+
 auth_quay: &auth_quay
   run:
     name: Authenticate Quay
@@ -23,6 +28,11 @@ docker-defaults: &docker-defaults
   docker:
     - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
   working_directory: ~/app
+
+environment-parameter: &environment-parameter
+  environment:
+    type: enum
+    enum: [ *dev, *prod]
 
 hermes_deploy: &hermes_deploy
   run:
