@@ -24,7 +24,7 @@ docker-defaults: &docker-defaults
 environment-parameter: &environment-parameter
   environment:
     type: enum
-    enum: [ *dev, *prod]
+    enum: [ *dev, *prod ]
 
 hermes_deploy: &hermes_deploy
   run:
