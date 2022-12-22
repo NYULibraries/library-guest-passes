@@ -1,16 +1,14 @@
+version: 2.1
+
+# Environments
+dev: &dev 'DEV'
+prod: &prod 'PROD'
+
 auth_quay: &auth_quay
   run:
     name: Authenticate Quay
     command: |
       docker login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io
-
-aws_env: &aws_env
-  run:
-    name: Export AWS env vars
-    command: |
-      # AWS IAM user web-s3-guestpasses-website
-      echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' >> $BASH_ENV
-      echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
 
 copy_build: &copy_build
   run:
@@ -23,6 +21,11 @@ docker-defaults: &docker-defaults
     - image: quay.io/nyulibraries/circleci_docker:19.03.13-dc-1.27.4-0
   working_directory: ~/app
 
+environment-parameter: &environment-parameter
+  environment:
+    type: enum
+    enum: [ *dev, *prod ]
+
 hermes_deploy: &hermes_deploy
   run:
     name: Deploy via Hermes
@@ -32,13 +35,6 @@ hermes_deploy: &hermes_deploy
       docker run -e HERMES_HOST -e HERMES_SECRET quay.io/nyulibraries/hermesclient:master setImage -deployment=guestpasses-react-nginx -tag=$TAG
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-nodejs
       docker run -e HERMES_HOST -e HERMES_SECRET -e HERMES_WAIT_PAUSE_MIN=1s -e HERMES_WAIT_PAUSE_MAX=2s quay.io/nyulibraries/hermesclient:chore_configure_pause rolloutStatus -deployment=guestpasses-react-nginx
-
-s3_deploy: &s3_deploy
-  aws-s3/sync:
-    from: build
-    to: '${S3_URI_DEV}'
-    arguments: |
-      --delete
 
 test_build: &test_build
   run:
@@ -51,9 +47,80 @@ test_build: &test_build
       test -e build/static/js/main.*.js
       test -e build/static/js/main.*.map
 
-version: 2.1
+commands:
+  aws-env:
+    description: Set AWS environment variables
+    parameters:
+      <<: *environment-parameter
+    steps:
+      -   run:
+            name: Export AWS env vars
+            command: |
+              # AWS IAM user web-s3-guestpasses-website
+              echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_<< parameters.environment >>}' >> $BASH_ENV
+              echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_<< parameters.environment >>}' >> $BASH_ENV
+
+  deploy-application:
+    description: Build application, test the build, deploy to S3, and export Hermes env vars
+    parameters:
+        <<: *environment-parameter
+    steps:
+      - checkout
+      - setup_remote_docker
+      - <<: *auth_quay
+      - run:
+          name: Build << parameters.environment >> frontend
+          command: |
+            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
+            docker-compose run compile-frontend-prod
+      - *copy_build
+      - *test_build
+      - aws-env:
+          environment: << parameters.environment >>
+      - s3-sync:
+          environment: << parameters.environment >>
+      - export-hermes-env-vars:
+          environment: << parameters.environment >>
+      - <<: *hermes_deploy
+
+  export-hermes-env-vars:
+    description: Export Hermes env vars
+    parameters:
+        <<: *environment-parameter
+    steps:
+      - when:
+          condition:
+            equal: [ *dev, << parameters.environment >> ]
+          steps:
+            - run:
+                name: Export Hermes env vars
+                command: |
+                  echo 'export HERMES_HOST=https://hermes-dev.library.nyu.edu' >> $BASH_ENV
+                  echo 'export HERMES_SECRET=$HERMES_SECRET_DEV' >> $BASH_ENV
+      - when:
+          condition:
+            equal: [ *prod, << parameters.environment >> ]
+          steps:
+            - run:
+                name: Export Hermes env vars
+                command: |
+                  echo 'export HERMES_HOST=https://hermes.library.nyu.edu' >> $BASH_ENV
+                  echo 'export HERMES_SECRET=$HERMES_SECRET_PROD' >> $BASH_ENV
+
+  s3-sync:
+    description: Sync with S3 bucket
+    parameters:
+        <<: *environment-parameter
+    steps:
+      - aws-s3/sync:
+          from: build
+          to: '${S3_URI_<< parameters.environment >>}'
+          arguments: |
+            --delete
+
 orbs:
     aws-s3: circleci/aws-s3@3.0.0
+
 jobs:
   build-test:
     <<: *docker-defaults
@@ -107,49 +174,16 @@ jobs:
   deploy-dev:
     <<: *docker-defaults
     steps:
-      - checkout
-      - setup_remote_docker
-      - <<: *auth_quay
-      - run:
-          name: Build prod frontend
-          command: |
-            export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-            docker-compose run compile-frontend-prod
-      - *copy_build
-      - *test_build
-      - *aws_env
-      - *s3_deploy
-      - run:
-          name: Export Hermes Dev env vars
-          command: |
-            echo 'export HERMES_HOST=https://hermes-dev.library.nyu.edu' >> $BASH_ENV
-            echo 'export HERMES_SECRET=$HERMES_SECRET_DEV' >> $BASH_ENV
-      - <<: *hermes_deploy
+      - deploy-application:
+          environment: *dev
 
   deploy-prod:
     <<: *docker-defaults
     steps:
-      - checkout
-      - setup_remote_docker
-      -   <<: *auth_quay
-      -   run:
-            name: Build prod frontend
-            command: |
-              export BRANCH_NO_SLASH=${CIRCLE_BRANCH//\//_}
-              docker-compose run compile-frontend-prod
-      - *copy_build
-      - *test_build
-      - *aws_env
-      - *s3_deploy
-      - run:
-          name: Export Hermes Prod env vars
-          command: |
-            echo 'export HERMES_HOST=https://hermes.library.nyu.edu' >> $BASH_ENV
-            echo 'export HERMES_SECRET=$HERMES_SECRET_PROD' >> $BASH_ENV
-      - <<: *hermes_deploy
+      - deploy-application:
+          environment: *prod
 
 workflows:
-  version: 2
   build-test-and-deploy:
     jobs:
       - build-test
